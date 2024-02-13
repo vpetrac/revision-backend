@@ -30,6 +30,11 @@ class StoreRevisionRequest extends FormRequest
             'control_system' => 'nullable|string|max:65535',
             'revision_plans' => 'nullable|json',
             'deviation_reasons' => 'nullable|string|max:65535',
+
+            'subjects' => 'nullable|json',
+            'supervisor' => 'nullable|string|max:65535',
+            'auditTeamHead' => 'nullable|string|max:65535',
+            'auditTeamMembers' => 'nullable|json',
             // Add rules for any other fields you have
         ];
     }

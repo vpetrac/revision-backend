@@ -29,6 +29,7 @@ class Revision extends Model
         'revision_plans',
         'deviation_reasons',
 
+        'subjects',
         'supervisor',
         'auditTeamHead',
         'auditTeamMembers'

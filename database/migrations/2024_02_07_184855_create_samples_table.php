@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('samples', function (Blueprint $table) {
             $table->id();
-            $table->string('sample_name');
-            $table->integer('population_size');
-            $table->string('sampling_method');
-            $table->integer('sample_size');
-            $table->string('collection_method');
+            $table->text('sample_name');
+            $table->text('population_size');
+            $table->text('sampling_method');
+            $table->text('sample_size');
+            $table->text('collection_method');
             $table->text('method_explanation');
             $table->unsignedBigInteger('revision_id'); // Foreign key to revisions table
 

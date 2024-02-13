@@ -21,15 +21,17 @@ return new class extends Migration
             $table->date('actual_draft_of_revision_report')->nullable();
             $table->date('planned_final_revision_report')->nullable();
             $table->date('actual_final_revision_report')->nullable();
-
-            $table->unsignedBigInteger('organization_id')->nullable();
-            $table->unsignedBigInteger('supervisor_id')->nullable();
-            $table->unsignedBigInteger('audit_team_head_id')->nullable();
-
-            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null');
-            $table->foreign('supervisor_id')->references('id')->on('users')->onDelete('set null');
-            $table->foreign('audit_team_head_id')->references('id')->on('users')->onDelete('set null');
-
+            $table->text('revision_goals_descrption')->nullable();
+            $table->json('revision_goals')->nullable();
+            $table->json('revision_scope')->nullable();
+            $table->text('report_users')->nullable();
+            $table->text('control_system')->nullable();
+            $table->text('revision_plans')->nullable();
+            $table->text('deviation_reasons')->nullable();
+            $table->json('subjects')->nullable();
+            $table->text('supervisor')->nullable();
+            $table->text('auditTeamHead')->nullable();
+            $table->json('auditTeamMembers')->nullable();
             $table->timestamps();
         });
     }
