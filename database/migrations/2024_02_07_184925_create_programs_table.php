@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->string('possible_risk_causes')->nullable();
-            $table->string('possible_risk_consequences')->nullable();
-            $table->string('expected_controls')->nullable();
-            $table->string('existing_controls')->nullable();
-            $table->string('test_purpose')->nullable();
-            $table->string('testing_method')->nullable();
+            $table->text('possible_risk_causes')->nullable();
+            $table->text('possible_risk_consequences')->nullable();
+            $table->text('expected_controls')->nullable();
+            $table->text('existing_controls')->nullable();
+            $table->text('test_purpose')->nullable();
+            $table->text('testing_method')->nullable();
             $table->text('testing_questions')->nullable(); // Assuming this could be a longer text.
             $table->text('testing_results')->nullable(); // Same as above.
             $table->text('conclusions_for_drafting_report')->nullable(); // Same as above.
