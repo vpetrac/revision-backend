@@ -17,9 +17,9 @@ class UpdateSampleRequest extends FormRequest
     {
         return [
             'sample_name' => 'sometimes|nullable|string|max:255',
-            'population_size' => 'sometimes|nullable|integer',
+            'population_size' => 'sometimes|nullable|string',
             'sampling_method' => 'sometimes|nullable|string|max:255',
-            'sample_size' => 'sometimes|nullable|integer',
+            'sample_size' => 'sometimes|nullable|string',
             'collection_method' => 'sometimes|nullable|string|max:255',
             'method_explanation' => 'sometimes|nullable|string',
             'revision_id' => 'sometimes|required|exists:revisions,id',

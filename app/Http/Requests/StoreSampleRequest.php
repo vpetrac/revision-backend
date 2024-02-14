@@ -16,9 +16,9 @@ class StoreSampleRequest extends FormRequest
     {
         return [
             'sample_name' => 'nullable|string|max:255',
-            'population_size' => 'nullable|integer',
+            'population_size' => 'nullable|string',
             'sampling_method' => 'nullable|string|max:255',
-            'sample_size' => 'nullable|integer',
+            'sample_size' => 'nullable|string',
             'collection_method' => 'nullable|string|max:255',
             'method_explanation' => 'nullable|string',
             'revision_id' => 'required|exists:revisions,id', // Make sure the revision exists
