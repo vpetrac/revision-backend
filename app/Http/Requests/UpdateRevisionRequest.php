@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateRevisionRequest extends FormRequest
+class StoreRevisionRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,21 +15,13 @@ class UpdateRevisionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|required|string|max:255',
-            'code' => [
-                'sometimes',
-                'required',
-                'string',
-                'max:100',
-                Rule::unique('revisions')->ignore($this->revision)->where(function ($query) {
-                    return $query->where('code', '!=', $this->code);
-                }),
-            ],
-            'planned_start_of_internal_revision' => 'sometimes|nullable|date',
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:100|unique:revisions,code',
+            'planned_start_of_internal_revision' => 'nullable|date',
             'actual_start_of_internal_revision' => 'nullable|date',
-            'planned_draft_of_revision_report' => 'sometimes|nullable|date',
+            'planned_draft_of_revision_report' => 'nullable|date',
             'actual_draft_of_revision_report' => 'nullable|date',
-            'planned_final_revision_report' => 'sometimes|nullable|date',
+            'planned_final_revision_report' => 'nullable|date',
             'actual_final_revision_report' => 'nullable|date',
             'revision_goals_descrption' => 'nullable|string|max:65535',
             'revision_goals' => 'nullable|json',
@@ -48,3 +39,4 @@ class UpdateRevisionRequest extends FormRequest
         ];
     }
 }
+
