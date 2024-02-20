@@ -12,7 +12,7 @@ class ProgramController extends Controller
     public function index($revisionId): JsonResponse
     {
         // If 'revision_id' is provided, return programs for that revision; otherwise, return all programs
-        $programs = $revisionId ? Program::where('revision_id', $revisionId)->get() : Program::all();
+        $programs = Program::where('revision_id', $revisionId)->get();
 
         return response()->json($programs);
     }

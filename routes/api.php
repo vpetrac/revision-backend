@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FindingController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SampleController;
 use Illuminate\Http\Request;
@@ -66,6 +68,28 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Delete a specific sample by ID
     Route::delete('/samples/{id}', [SampleController::class, 'destroy']);
+
+    // List all reports or reports for a specific revision
+    Route::get('/reports/{revisionId}', [ReportController::class, 'index']);
+
+    // Create a new report
+    Route::post('/reports', [ReportController::class, 'store']);
+
+    // Get a specific report by ID
+    Route::get('/reports/{id}', [ReportController::class, 'show']);
+
+    // Update a specific report by ID
+    Route::put('/reports/{id}', [ReportController::class, 'update']);
+    // Alternatively, use Route::patch for partial updates
+
+    // Delete a specific report by ID
+    Route::delete('/reports/{id}', [ReportController::class, 'destroy']);
+
+    Route::get('/findings/{revisionId}', [FindingController::class, 'index']);
+    Route::post('/findings', [FindingController::class, 'store']);
+    Route::get('/findings/{id}', [FindingController::class, 'show']);
+    Route::put('/findings/{id}', [FindingController::class, 'update']);
+    Route::delete('/findings/{id}', [FindingController::class, 'destroy']);
 });
 
 // Here's the route to retrieve the authenticated user, snugly inside Sanctum's embrace

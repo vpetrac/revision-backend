@@ -60,6 +60,11 @@ class Revision extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function goals(): HasMany
+    {
+        return $this->hasMany(Goal::class);
+    }
+
     public function programs(): HasMany
     {
         return $this->hasMany(Program::class);
@@ -73,5 +78,15 @@ class Revision extends Model
     public function organizationUnits(): HasMany
     {
         return $this->hasMany(OrganizationalUnit::class);
+    }
+
+    public function reports(): HasMany
+    {
+        return $this->hasMany(Report::class);
+    }
+
+    public function findings()
+    {
+        return $this->hasMany(Finding::class);
     }
 }

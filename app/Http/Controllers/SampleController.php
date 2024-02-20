@@ -12,7 +12,7 @@ class SampleController extends Controller
     public function index($revisionId): JsonResponse
     {
         // If 'revision_id' is provided, return samples for that revision; otherwise, return all samples
-        $samples = $revisionId ? Sample::where('revision_id', $revisionId)->get() : Sample::all();
+        $samples = Sample::where('revision_id', $revisionId)->get();
 
         return response()->json($samples);
     }
