@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRevisionRequest extends FormRequest
 {
@@ -15,8 +16,16 @@ class UpdateRevisionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'code' => 'required|string|max:100|unique:revisions,code',
+            'name' => 'sometimes|required|string|max:255',
+            'code' => [
+                'sometimes',
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('revisions')->ignore($this->revision)->where(function ($query) {
+                    return $query->where('code', '!=', $this->code);
+                }),
+            ],
             'planned_start_of_internal_revision' => 'nullable|date',
             'actual_start_of_internal_revision' => 'nullable|date',
             'planned_draft_of_revision_report' => 'nullable|date',
@@ -39,4 +48,3 @@ class UpdateRevisionRequest extends FormRequest
         ];
     }
 }
-
