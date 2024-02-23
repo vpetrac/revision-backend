@@ -27,4 +27,9 @@ class Finding extends Model
     {
         return $this->belongsTo(Revision::class);
     }
+
+    public function implementationActivities()
+    {
+        return $this->hasMany(ImplementationActivity::class);
+    }
 }

@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('samples', function (Blueprint $table) {
             $table->id();
             $table->text('sample_name');
-            $table->text('population_size');
-            $table->text('sampling_method');
-            $table->text('sample_size');
-            $table->text('collection_method');
-            $table->text('method_explanation');
+            $table->text('population_size')->nullable();
+            $table->text('sampling_method')->nullable();
+            $table->text('sample_size')->nullable();
+            $table->text('collection_method')->nullable();
+            $table->text('method_explanation')->nullable();
             $table->unsignedBigInteger('revision_id'); // Foreign key to revisions table
 
             $table->foreign('revision_id')->references('id')->on('revisions')->onDelete('cascade');

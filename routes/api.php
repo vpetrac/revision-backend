@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FindingController;
+use App\Http\Controllers\ImplementationActivityController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RevisionController;
@@ -90,6 +91,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/findings/{id}', [FindingController::class, 'show']);
     Route::put('/findings/{id}', [FindingController::class, 'update']);
     Route::delete('/findings/{id}', [FindingController::class, 'destroy']);
+
+    // List all implementation activities for a specific finding
+    Route::get('/findings/{findingId}/activities', [ImplementationActivityController::class, 'index']);
+
+    // Create a new implementation activity
+    Route::post('/activities', [ImplementationActivityController::class, 'store']);
+
+    // Get a specific implementation activity by ID
+    Route::get('/activities/{id}', [ImplementationActivityController::class, 'show']);
+
+    // Update a specific implementation activity by ID
+    Route::put('/activities/{id}', [ImplementationActivityController::class, 'update']);
+
+    // Delete a specific implementation activity by ID
+    Route::delete('/activities/{id}', [ImplementationActivityController::class, 'destroy']);
 });
 
 // Here's the route to retrieve the authenticated user, snugly inside Sanctum's embrace
