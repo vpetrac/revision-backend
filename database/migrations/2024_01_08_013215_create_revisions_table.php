@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('actual_final_revision_report')->nullable();
             $table->text('revision_goals_descrption')->nullable();
             $table->json('revision_goals')->nullable();
-            $table->json('revision_scope')->nullable();
+            $table->text('revision_scope')->nullable();
             $table->text('report_users')->nullable();
             $table->text('control_system')->nullable();
             $table->text('revision_plans')->nullable();

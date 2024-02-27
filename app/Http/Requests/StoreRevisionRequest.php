@@ -24,7 +24,7 @@ class StoreRevisionRequest extends FormRequest
             'planned_final_revision_report' => 'nullable|date',
             'actual_final_revision_report' => 'nullable|date',
             'revision_goals_descrption' => 'nullable|string|max:65535',
-            'revision_goals' => 'nullable|json',
+            'revision_goals' => 'nullable|array',
             'revision_scope' => 'nullable|string|max:65535',
             'report_users' => 'nullable|string|max:65535',
             'control_system' => 'nullable|string|max:65535',

@@ -36,10 +36,10 @@ return [
             'throw' => false,
         ],
 
-        'public' => [
+        'revisions' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/revisions'),
+            'url' => env('APP_URL').'/storage/revisions',
             'visibility' => 'public',
             'throw' => false,
         ],
@@ -70,7 +70,7 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('storage') => storage_path('app/revisions'),
     ],
 
 ];

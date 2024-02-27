@@ -31,4 +31,9 @@ class Program extends Model
     {
         return $this->belongsTo(Revision::class);
     }
+
+    public function goals()
+    {
+        return $this->belongsToMany(Goal::class, 'goal_program');
+    }
 }

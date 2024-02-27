@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GoalController;
+use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\FindingController;
 use App\Http\Controllers\ImplementationActivityController;
 use App\Http\Controllers\ProgramController;
@@ -37,6 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Delete a specific revision by ID
     Route::delete('/revisions/{id}', [RevisionController::class, 'destroy']);
+
+    Route::get('/revisions/{revisionId}/plans', [RevisionController::class, 'getLatestRevisionPlans']);
 
     // List all programs or programs for a specific revision
     Route::get('/programs/{revisionId?}', [ProgramController::class, 'index']);
@@ -106,7 +110,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Delete a specific implementation activity by ID
     Route::delete('/activities/{id}', [ImplementationActivityController::class, 'destroy']);
+
+    // List all implementation activities for a specific finding
+    Route::post('/attach-programs', [GoalController::class, 'attachProgramsToGoal']);
+
+    Route::get('/attach-programs/{revisionId}', [GoalController::class, 'getGoalsWithPrograms']);
+
+    Route::put('/attach-programs/', [GoalController::class, 'syncProgramsToGoal']);
 });
+
+Route::any('/files/{action}', [FileManagerController::class, 'actions']);
 
 // Here's the route to retrieve the authenticated user, snugly inside Sanctum's embrace
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {

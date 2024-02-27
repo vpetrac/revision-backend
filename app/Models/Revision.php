@@ -22,7 +22,6 @@ class Revision extends Model
         'planned_final_revision_report',
         'actual_final_revision_report',
         'revision_goals_descrption',
-        'revision_goals',
         'revision_scope',
         'report_users',
         'control_system',
