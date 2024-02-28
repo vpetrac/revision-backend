@@ -29,6 +29,9 @@ class UpdateFindingRequest extends FormRequest
             'activities' => 'nullable|string',
             'responsibility' => 'sometimes|required|string|max:255',
             'deadline' => 'nullable|date',
+            'real_deadline' => 'nullable|date',
+            'finished_date' => 'nullable|date',
+            'finished_date_confirmed' => 'nullable|date',
             'revision_id' => 'sometimes|required|exists:revisions,id', // Make sure revision exists if provided
         ];
     }

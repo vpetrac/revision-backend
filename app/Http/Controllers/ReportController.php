@@ -61,7 +61,7 @@ class ReportController extends Controller
     {
         $report = Report::find($id);
         if (!$report) {
-            return response()->json(['message' => 'Report not found'], Response::HTTP_NOT_FOUND);
+            return response()->json(['message' => "Report not found: $id"], Response::HTTP_NOT_FOUND);
         }
 
         $report->delete();

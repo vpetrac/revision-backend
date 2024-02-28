@@ -17,6 +17,9 @@ class Finding extends Model
         'activities', // 'Aktivnosti'
         'responsibility', // 'Odgovornost' assumed to be 'responsibility'
         'deadline', // 'Rok' translates to 'deadline'
+        'real_deadline', // 'Rok' translates to 'deadline'
+        'finished_date', // 'Rok' translates to 'deadline'
+        'finished_date_confirmed', // 'Rok' translates to 'deadline'
         'revision_id', // Foreign key to connect with 'Revision'
     ];
 

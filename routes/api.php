@@ -116,7 +116,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/attach-programs/{revisionId}', [GoalController::class, 'getGoalsWithPrograms']);
 
-    Route::put('/attach-programs/', [GoalController::class, 'syncProgramsToGoal']);
+    Route::put('/attach-programs', [GoalController::class, 'syncProgramsToGoal']);
 });
 
 Route::any('/files/{action}', [FileManagerController::class, 'actions']);
