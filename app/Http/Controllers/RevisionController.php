@@ -46,7 +46,7 @@ class RevisionController extends Controller
 
 
         // Magic starts here - Creating a directory named after the revision
-        $baseDir = 'revisions/' . $revision->name;
+        $baseDir = $revision->name;
         Storage::makeDirectory($baseDir);
 
         // Creating three subdirectories for the revision
@@ -120,8 +120,8 @@ class RevisionController extends Controller
         }
 
         // Directory names based on the old and new revision names
-        $oldDir = 'revisions/' . $oldName;
-        $newDir = 'revisions/' . $newName;
+        $oldDir = $oldName;
+        $newDir = $newName;
 
         // If the revision name has changed, and the old directory exists, rename it
         if ($oldName !== $newName && Storage::exists($oldDir)) {

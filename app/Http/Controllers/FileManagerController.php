@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Revision;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -23,19 +24,20 @@ class FileManagerController extends BaseController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|\Symfony\Component\HttpFoundation\BinaryFileResponse
      */
-    public function actions(Request $request)
+    public function actions($id, Request $request)
     {
+        $revision = Revision::findOrFail($id); // Make sure to use the Revision model
         $action = $request->input('action');
         $responseData = null;
         switch ($action) {
             case 'read':
                 $path = $request->input('path');
+                $path = "$revision->name/$path";
                 $extensionsAllow = $request->input('extensionsAllow');
                 $selectedItems = $request->input('selectedItems');
                 $responseData = [
-                    'files' => $this->read($path, $extensionsAllow, $selectedItems),
+                    'files' => $this->read($path, $extensionsAllow, $selectedItems, $revision->name),
                     'cwd' => [
-                        'dateModified' => date('Y/m/d h:i:s', FacadesStorage::lastModified($path)),
                         'isFile' => false,
                         'name' => basename($path),
                         'hasChild' => false,
@@ -45,9 +47,11 @@ class FileManagerController extends BaseController
                 break;
             case 'create':
                 $path = $request->input('path');
+                $path = "$revision->name/$path";
                 $name = $request->input('name');
                 $selectedItems = $request->input('selectedItems');
                 $responseData = [
+                    'pathCreation'=> $path,
                     'files' => $this->createFolder($path, $name, $selectedItems),
                     'details' => null,
                     'error' => null
@@ -55,12 +59,13 @@ class FileManagerController extends BaseController
                 break;
             case 'delete':
                 $path = $request->input('path');
+                $path = "$revision->name/$path";
                 $names = $request->input('names');
                 $extensionsAllow = $request->input('extensionsAllow');
                 $selectedItems = $request->input('data');
                 $this->delete($path, $names, $selectedItems);
                 $responseData = [
-                    'files' => $this->read($path, $extensionsAllow, $selectedItems),
+                    'files' => $this->read($path, $extensionsAllow, $selectedItems, $revision->name),
                     'cwd' => [
                         'dateModified' => date('Y/m/d h:i:s', FacadesStorage::lastModified($path)),
                         'isFile' => false,
@@ -72,6 +77,7 @@ class FileManagerController extends BaseController
                 break;
             case 'save':
                 $path = $request->input('path');
+                $path = "$revision->name/$path";
                 $fileUpload = $request->file('uploadFiles');
                 $selectedItems = $request->input('selectedItems');
                 $this->upload($path, $fileUpload, $selectedItems);
@@ -81,6 +87,7 @@ class FileManagerController extends BaseController
                 break;
             case 'rename':
                 $path = $request->input('path');
+                $path = "$revision->name/$path";
                 $name = $request->input('name');
                 $extensionsAllow = $request->input('extensionsAllow');
                 $newName = $request->input('newName');
@@ -88,7 +95,7 @@ class FileManagerController extends BaseController
                 $selectedItems = $request->input('selectedItems');
                 $this->rename($path, $name, $newName, $commonFiles, $selectedItems);
                 $responseData = [
-                    'files' => $this->read($path, $extensionsAllow, $selectedItems),
+                    'files' => $this->read($path, $extensionsAllow, $selectedItems, $revision->name),
                     'cwd' => [
                         'dateModified' => date('Y/m/d h:i:s', FacadesStorage::lastModified($path)),
                         'isFile' => false,
@@ -108,9 +115,10 @@ class FileManagerController extends BaseController
                 break;
             case 'download':
                 $path = $request->input('path');
+                $path === '/' ? $path = "$revision->name/" : "$revision->name/$path";
                 $names = $request->input('names');
                 $selectedItems = $request->input('data');
-                return response()->download($this->download($path, $names, $selectedItems));
+                return null;
                 break;
             case 'GetImage':
                 $path = $request->input('Path');
@@ -130,7 +138,7 @@ class FileManagerController extends BaseController
      * @param array $selectedItems
      * @return array
      */
-    private function read($path, $extensionsAllow = null, $selectedItems = [])
+    private function read($path, $extensionsAllow = null, $selectedItems = [], $revisionName)
     {
         $files = FacadesStorage::files($path);
         $directories = FacadesStorage::directories($path);
@@ -143,7 +151,7 @@ class FileManagerController extends BaseController
                 continue;
             }
 
-            $fullPath = $path . '/' . $item; // Construct the full path to the item
+            $fullPath = $revisionName . '/' . $path . '/' . $item; // Construct the full path to the item
 
             $isFile = !FacadesStorage::exists($fullPath) || !FacadesStorage::directories($fullPath); // Check if the item is not a directory
 
@@ -153,6 +161,7 @@ class FileManagerController extends BaseController
                 'hasChild' => $mimeType == 'directory',
                 'isFile' => $mimeType ? true : false,
                 'type' => $mimeType,
+                '$fullPath' => $fullPath,
                 'dateModified' => date('Y/m/d h:i:s', FacadesStorage::lastModified($item)),
             ]);
         }

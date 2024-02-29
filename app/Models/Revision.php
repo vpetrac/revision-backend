@@ -88,4 +88,9 @@ class Revision extends Model
     {
         return $this->hasMany(Finding::class);
     }
+
+    public function approval()
+    {
+        return $this->hasOne(RevisionApproval::class);
+    }
 }

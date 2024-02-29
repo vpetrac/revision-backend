@@ -22,7 +22,9 @@ return new class extends Migration
             $table->date('deadline')->nullable();
             $table->date('real_deadline')->nullable();
             $table->date('finished_date')->nullable();
+            $table->boolean('finished_date_concluded')->default(false);
             $table->date('finished_date_confirmed')->nullable();
+            $table->boolean('finished_date_confirmed_concluded')->default(false);
             $table->unsignedBigInteger('revision_id'); // Foreign key to revisions table
             $table->timestamps();
 

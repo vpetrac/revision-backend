@@ -31,7 +31,10 @@ class StoreFindingRequest extends FormRequest
             'deadline' => 'nullable|date',
             'real_deadline' => 'nullable|date',
             'finished_date' => 'nullable|date',
+            'finished_date_concluded' => 'nullable|boolean',
             'finished_date_confirmed' => 'nullable|date',
+            'finished_date_confirmed_concluded' => 'nullable|boolean',
+
             'revision_id' => 'required|exists:revisions,id', // Make sure revision exists
         ];
     }

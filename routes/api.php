@@ -6,6 +6,7 @@ use App\Http\Controllers\FindingController;
 use App\Http\Controllers\ImplementationActivityController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RevisionApprovalController;
 use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SampleController;
 use Illuminate\Http\Request;
@@ -117,9 +118,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/attach-programs/{revisionId}', [GoalController::class, 'getGoalsWithPrograms']);
 
     Route::put('/attach-programs', [GoalController::class, 'syncProgramsToGoal']);
+
+    Route::get('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'index']);
+    Route::post('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'store']);
+    Route::get('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'show']);
+    Route::put('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'update']);
+    Route::delete('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'destroy']);
 });
 
-Route::any('/files/{action}', [FileManagerController::class, 'actions']);
+Route::any('/files/{id}', [FileManagerController::class, 'actions']);
 
 // Here's the route to retrieve the authenticated user, snugly inside Sanctum's embrace
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {

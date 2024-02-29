@@ -20,6 +20,8 @@ class Finding extends Model
         'real_deadline', // 'Rok' translates to 'deadline'
         'finished_date', // 'Rok' translates to 'deadline'
         'finished_date_confirmed', // 'Rok' translates to 'deadline'
+        'finished_date_concluded', // 'Rok' translates to 'deadline'
+        'finished_date_confirmed_concluded', // 'Rok' translates to 'deadline'
         'revision_id', // Foreign key to connect with 'Revision'
     ];
 
