@@ -9,8 +9,10 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage as FacadesStorage;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 /**
  * Class FileManagerController
@@ -51,7 +53,7 @@ class FileManagerController extends BaseController
                 $name = $request->input('name');
                 $selectedItems = $request->input('selectedItems');
                 $responseData = [
-                    'pathCreation'=> $path,
+                    'pathCreation' => $path,
                     'files' => $this->createFolder($path, $name, $selectedItems),
                     'details' => null,
                     'error' => null
@@ -105,20 +107,30 @@ class FileManagerController extends BaseController
                     ],
                 ];
                 break;
-            case 'GetDetails':
-                $path = $request->input('Path');
-                $names = $request->input('Names');
-                $selectedItems = $request->input('SelectedItems');
+            case 'details':
+                $path = $request->input('path');
+                $names = $request->input('names');
+                $selectedItems = $request->input('data');
                 $responseData = [
                     'details' => $this->getDetails($path, $names, $selectedItems)
                 ];
                 break;
             case 'download':
                 $path = $request->input('path');
-                $path === '/' ? $path = "$revision->name/" : "$revision->name/$path";
+                $path = "$revision->name/$path";
                 $names = $request->input('names');
                 $selectedItems = $request->input('data');
-                return null;
+                return $this->downloadFile($path, $names, $selectedItems, $revision->name);
+                break;
+            case 'search':
+                $path = $request->input('path');
+                $path = "$revision->name/$path";
+                $searchString = $request->input('searchString');
+                $showHiddenItems = $request->input('showHiddenItems', false);
+                $caseSensitive = $request->input('caseSensitive', false);
+                $responseData = [
+                    'files' => $this->search($path, $searchString, $showHiddenItems, $caseSensitive, $revision->name),
+                ];
                 break;
             case 'GetImage':
                 $path = $request->input('Path');
@@ -161,7 +173,7 @@ class FileManagerController extends BaseController
                 'hasChild' => $mimeType == 'directory',
                 'isFile' => $mimeType ? true : false,
                 'type' => $mimeType,
-                '$fullPath' => $fullPath,
+                'fullPath' => $fullPath,
                 'dateModified' => date('Y/m/d h:i:s', FacadesStorage::lastModified($item)),
             ]);
         }
@@ -260,16 +272,80 @@ class FileManagerController extends BaseController
     }
 
     /**
-     * @param $path
-     * @param $name
-     * @param $selectedItems
-     * @param bool $isImage
+     * Download one or multiple files.
+     * 
+     * @param string $path The base path.
+     * @param array $names The names of files to download.
+     * @param array $selectedItems Additional selected items, if any.
      * @return mixed
      */
-    private function download($path, $name, $selectedItems, $isImage = false)
+    private function downloadFile($path, $names, $selectedItems, $revisionName)
     {
-        $file = $isImage ? $path : "$path/$name";
-        $filePath = FacadesStorage::getDriver()->getAdapter()->applyPathPrefix($file);
-        return $filePath;
+        if (count($names) === 1) {
+            // Handle single file download
+            $filePath = FacadesStorage::path("$path/" . $names[0]);
+            return response()->download($filePath, $names[0]);
+        } else {
+            // Create a zip file for multiple files
+            $zip = new ZipArchive();
+            $zipFileName = 'downloads.zip';
+            $zipFilePath = storage_path($zipFileName);
+
+            if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+                foreach ($names as $name) {
+                    $fileFullPath = FacadesStorage::path("$path/$name");
+                    if (FacadesStorage::exists("$path/$name")) {
+                        $zip->addFile($fileFullPath, $name);
+                    }
+                }
+                $zip->close();
+
+                // Download zip file
+                return response()->download($zipFilePath)->deleteFileAfterSend(true);
+            } else {
+                return response()->json(['error' => 'Could not create a zip file.'], 500);
+            }
+        }
+    }
+    private function search($path, $searchString, $showHiddenItems, $caseSensitive, $revisionName)
+    {
+        $allFiles = []; // This will hold the search results
+
+        // Get all items (files and directories) from the directory
+        $items = FacadesStorage::allFiles("/$revisionName/"); // You might want to list directories too
+
+        foreach ($items as $item) {
+            $filename = basename($item);
+
+            // Skip hidden items if not allowed
+            if (!$showHiddenItems && $filename[0] === '.') {
+                continue;
+            }
+
+            // Apply case sensitivity
+            if ($caseSensitive) {
+                $matches = strpos($filename, $searchString) !== false;
+            } else {
+                $matches = stripos($filename, $searchString) !== false;
+            }
+
+            // If matches, add to results
+            if ($matches) {
+                $fullPath = $revisionName . '/' . $item; // Adjust this line if necessary
+                $isFile = FacadesStorage::exists($fullPath) && !FacadesStorage::directories($fullPath);
+
+                $mimeType = FacadesStorage::mimeType($fullPath);
+                array_push($allFiles, [
+                    'name' => $filename,
+                    'hasChild' => !$isFile,
+                    'isFile' => $isFile,
+                    'type' => $mimeType,
+                    'fullPath' => $fullPath,
+                    'dateModified' => date('Y/m/d h:i:s', FacadesStorage::lastModified($fullPath)),
+                ]);
+            }
+        }
+
+        return $allFiles;
     }
 }

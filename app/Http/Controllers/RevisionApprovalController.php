@@ -8,15 +8,9 @@ use Illuminate\Http\Request;
 
 class RevisionApprovalController extends Controller
 {
-    public function index(Request $request)
+    public function store(Request $request)
     {
-        $revisionId = $request->input('revision_id');
-        $revisionApproval = RevisionApproval::where('revision_id', $revisionId)->firstOrFail();
-        return response()->json($revisionApproval);
-    }
-
-    public function store($id, Request $request)
-    {
+        $id = $request['revision_id'];
         $existingApproval = RevisionApproval::where('revision_id', $id)->first();
 
         if ($existingApproval) {

@@ -119,11 +119,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::put('/attach-programs', [GoalController::class, 'syncProgramsToGoal']);
 
-    Route::get('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'index']);
-    Route::post('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'store']);
-    Route::get('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'show']);
-    Route::put('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'update']);
-    Route::delete('revision-approvals/{revision_id}', [RevisionApprovalController::class, 'destroy']);
+    Route::post('/revision-approvals', [RevisionApprovalController::class, 'store']);
+    Route::get('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'show']);
+    Route::put('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'update']);
+    Route::delete('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'destroy']);
 });
 
 Route::any('/files/{id}', [FileManagerController::class, 'actions']);
