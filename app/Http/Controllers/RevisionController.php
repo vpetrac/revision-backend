@@ -169,8 +169,8 @@ class RevisionController extends Controller
      */
     public function getLatestRevisionPlans($revisionId)
     {
-        // First, find out if the provided ID is for the latest revision
-        $latestRevision = Revision::latest('id')->first();
+        // Fetch the latest revision based on planned_start_of_internal_revision date
+        $latestRevision = Revision::orderBy('planned_start_of_internal_revision', 'desc')->first();
 
         if (!$latestRevision) {
             // If there are no revisions, return a response indicating there's no data
@@ -178,8 +178,11 @@ class RevisionController extends Controller
         }
 
         if ($latestRevision->id == $revisionId) {
-            // If the provided ID is for the latest revision, get the one before it
-            $revision = Revision::where('id', '<', $revisionId)->latest('id')->first();
+            // If the provided ID is for the latest revision based on date, get the one before it
+            $revision = Revision::where('id', '<', $revisionId)
+                ->where('planned_start_of_internal_revision', '<', $latestRevision->planned_start_of_internal_revision)
+                ->orderBy('planned_start_of_internal_revision', 'desc')
+                ->first();
         } else {
             // If it's not the latest, simply use the provided ID to get the revision
             $revision = Revision::find($revisionId);
