@@ -169,30 +169,24 @@ class RevisionController extends Controller
      */
     public function getLatestRevisionPlans($revisionId)
     {
-        // Fetch the latest revision based on planned_start_of_internal_revision date
-        $latestRevision = Revision::orderBy('planned_start_of_internal_revision', 'desc')->first();
+        // First, get the current revision to find its planned start date
+        $currentRevision = Revision::find($revisionId);
 
-        if (!$latestRevision) {
-            // If there are no revisions, return a response indicating there's no data
-            return response()->json(['message' => 'No revisions found.'], 404);
+        if (!$currentRevision) {
+            // If the provided revision ID does not exist
+            return response()->json(['message' => 'The provided revision does not exist.'], 404);
         }
 
-        if ($latestRevision->id == $revisionId) {
-            // If the provided ID is for the latest revision based on date, get the one before it
-            $revision = Revision::where('id', '<', $revisionId)
-                ->where('planned_start_of_internal_revision', '<', $latestRevision->planned_start_of_internal_revision)
-                ->orderBy('planned_start_of_internal_revision', 'desc')
-                ->first();
-        } else {
-            // If it's not the latest, simply use the provided ID to get the revision
-            $revision = Revision::find($revisionId);
-        }
+        // Fetch the latest revision that started before the current one
+        $previousRevision = Revision::where('planned_start_of_internal_revision', '<', $currentRevision->planned_start_of_internal_revision)
+            ->orderBy('planned_start_of_internal_revision', 'desc')
+            ->first();
 
-        // Check if we found a suitable revision and return its plans
-        if ($revision) {
-            return response()->json(['revision_plans' => $revision->revision_plans]);
+        if ($previousRevision) {
+            // If there's a previous revision, return its plans
+            return response()->json(['revision_plans' => $previousRevision->revision_plans]);
         } else {
-            // In case no suitable revision was found (including when there's only one revision and it's the latest)
+            // If no previous revision is found
             return response()->json(['message' => 'No previous revision found to fetch plans from.'], 404);
         }
     }
