@@ -51,7 +51,7 @@ class RevisionController extends Controller
 
         // Creating three subdirectories for the revision
 
-        Storage::makeDirectory("{$baseDir}/4. Praćenje provedbe preporuka");
+        Storage::makeDirectory("{$baseDir}/4. Faza praćenje provedbe preporuka");
         Storage::makeDirectory("{$baseDir}/3. Faza izvještavanja");
         Storage::makeDirectory("{$baseDir}/2. Faza testiranja");
         Storage::makeDirectory("{$baseDir}/1. Faza planiranja");
@@ -136,7 +136,7 @@ class RevisionController extends Controller
         }
 
         // Regardless of the name change, ensure the three subdirectories exist
-        $subDir = "{$newDir}/4. Praćenje provedbe preporuka";
+        $subDir = "{$newDir}/4. Faza praćenje provedbe preporuka";
         if (!Storage::exists($subDir)) {
             Storage::makeDirectory($subDir);
         }
