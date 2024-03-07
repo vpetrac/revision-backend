@@ -11,7 +11,7 @@ class StoreOrganizationalUnitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreOrganizationalUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'head_id' => 'nullable|exists:users,id', // Assuming a head_id column exists
+            'organization_id' => 'nullable|exists:organizations,id',
         ];
     }
 }

@@ -22,7 +22,9 @@ class UpdateOrganizationalUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'sometimes|required|string|max:255',
+            'head_id' => 'nullable|exists:users,id',
+            'organization_id' => 'nullable|exists:organizations,id',
         ];
     }
 }

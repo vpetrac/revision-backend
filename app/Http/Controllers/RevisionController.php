@@ -51,9 +51,16 @@ class RevisionController extends Controller
 
         // Creating three subdirectories for the revision
 
-        Storage::makeDirectory("{$baseDir}/Faza planiranja");
-        Storage::makeDirectory("{$baseDir}/Faza testiranja");
-        Storage::makeDirectory("{$baseDir}/Faza izvještavanja");
+        Storage::makeDirectory("{$baseDir}/4. Praćenje provedbe preporuka");
+        Storage::makeDirectory("{$baseDir}/3. Faza izvještavanja");
+        Storage::makeDirectory("{$baseDir}/2. Faza testiranja");
+        Storage::makeDirectory("{$baseDir}/1. Faza planiranja");
+
+
+
+        $this->createRevisionFolders($baseDir, '1. Faza planiranja');
+        $this->createRevisionFolders($baseDir, '2. Faza testiranja');
+        $this->createRevisionFolders($baseDir, '3. Faza izvještavanja');
 
 
         return response()->json($revision, 201); // HTTP 201 Created
@@ -129,20 +136,26 @@ class RevisionController extends Controller
         }
 
         // Regardless of the name change, ensure the three subdirectories exist
+        $subDir = "{$newDir}/4. Praćenje provedbe preporuka";
+        if (!Storage::exists($subDir)) {
+            Storage::makeDirectory($subDir);
+        }
+        $subDir = "{$newDir}/3. Faza izvještavanja";
+        if (!Storage::exists($subDir)) {
+            Storage::makeDirectory($subDir);
+        }
+        $subDir = "{$newDir}/2. Faza testiranja";
+        if (!Storage::exists($subDir)) {
+            Storage::makeDirectory($subDir);
+        }
+        $subDir = "{$newDir}/1. Faza planiranja";
+        if (!Storage::exists($subDir)) {
+            Storage::makeDirectory($subDir);
+        }
 
-        $subDir = "{$newDir}/Faza planiranja";
-        if (!Storage::exists($subDir)) {
-            Storage::makeDirectory($subDir);
-        }
-        $subDir = "{$newDir}/Faza testiranja";
-        if (!Storage::exists($subDir)) {
-            Storage::makeDirectory($subDir);
-        }
-        $subDir = "{$newDir}/Faza izvještavanja";
-        if (!Storage::exists($subDir)) {
-            Storage::makeDirectory($subDir);
-        }
-
+        $this->createRevisionFolders($newDir, '1. Faza planiranja');
+        $this->createRevisionFolders($newDir, '2. Faza testiranja');
+        $this->createRevisionFolders($newDir, '3. Faza izvještavanja');
 
         return response()->json(new RevisionResource($revision));
     }
@@ -188,6 +201,51 @@ class RevisionController extends Controller
         } else {
             // If no previous revision is found
             return response()->json(['message' => 'No previous revision found to fetch plans from.'], 404);
+        }
+    }
+
+    private function createRevisionFolders($baseDir, $phase)
+    {
+        // Array of subfolders to create for each phase
+        $folders = [
+            '1. Faza planiranja' => [
+                '1. Prikupljanje i analiziranje info',
+                '2. Opis procesa',
+                '3. Preliminarna procjena rizika',
+                '4. Plan i program revizije',
+                '5. Regulativa',
+            ],
+            '2. Faza testiranja' => [
+                '1. Dostavljeno',
+                '2. Formiranje nalaza i preporuka',
+                '3. Planirani testovi',
+                '4. Potvrđivanje činjenica utvrđ. testiranjem',
+                '5. Testovi',
+                '6. Upitnici',
+                '7. Uzorak',
+            ],
+            '3. Faza izvještavanja' => [
+                '1. Izrada Nacrta',
+                '2. Dostava nacrta RS',
+                '3. Usuglašavanje nacrta s RS',
+                '4. Izrada konačnog izvješća',
+                '5. Obrasci',
+                '6. Upitnik',
+            ],
+        ];
+
+        // Create the phase directory if it doesn't exist
+        $phaseDir = "{$baseDir}/{$phase}";
+        if (!Storage::exists($phaseDir)) {
+            Storage::makeDirectory($phaseDir);
+        }
+
+        // Create subdirectories for the phase if they don't exist
+        foreach ($folders[$phase] as $subfolder) {
+            $subfolderPath = "{$phaseDir}/{$subfolder}";
+            if (!Storage::exists($subfolderPath)) {
+                Storage::makeDirectory($subfolderPath);
+            }
         }
     }
 }

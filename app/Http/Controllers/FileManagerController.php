@@ -178,8 +178,20 @@ class FileManagerController extends BaseController
             ]);
         }
 
+        // Sort all files and directories alphabetically, directories first
+        usort($allFiles, function ($a, $b) {
+            if ($a['isFile'] && !$b['isFile']) {
+                return 1;
+            } elseif (!$a['isFile'] && $b['isFile']) {
+                return -1;
+            } else {
+                return strcasecmp($a['name'], $b['name']);
+            }
+        });
+
         return $allFiles;
     }
+
 
     /**
      * @param $path

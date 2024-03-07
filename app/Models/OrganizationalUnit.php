@@ -5,26 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class OrganizationalUnit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'head_id', 'revision_id'];
 
     public function head(): HasOne
     {
         return $this->hasOne(User::class);
     }
 
-    public function organization(): HasOne
+    public function organization(): BelongsTo
     {
-        return $this->hasOne(Organization::class);
+        return $this->belongsTo(Organization::class);
     }
 
-    public function revision(): BelongsTo
+    public function revisions(): HasMany
     {
-        return $this->belongsTo(Revision::class);
+        return $this->hasMany(Revision::class);
     }
 }

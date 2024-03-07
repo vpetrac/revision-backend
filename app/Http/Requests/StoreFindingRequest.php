@@ -28,7 +28,7 @@ class StoreFindingRequest extends FormRequest
             'status' => 'required|string|max:255',
             'activities' => 'nullable|string',
             'responsibility' => 'required|string|max:255',
-            'deadline' => 'nullable|date',
+            'deadline.*.date' => 'nullable|date',
             'real_deadline' => 'nullable|date',
             'finished_date' => 'nullable|date',
             'finished_date_concluded' => 'nullable|boolean',
