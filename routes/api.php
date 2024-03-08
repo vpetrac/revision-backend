@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\FileManagerController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FindingController;
 use App\Http\Controllers\ImplementationActivityController;
 use App\Http\Controllers\ProgramController;
@@ -126,6 +127,13 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::any('/files/{id}', [FileManagerController::class, 'actions']);
+
+Route::get('/uploads/{finding_id}', [FileUploadController::class, 'index']);
+Route::post('/upload/{finding_id}', [FileUploadController::class, 'store']);
+Route::delete('/upload/{finding_id}/{filename}', [FileUploadController::class, 'destroy']);
+
+Route::get('/files/download/{finding_id}/{filename}', [FileUploadController::class, 'download']);
+
 
 // Here's the route to retrieve the authenticated user, snugly inside Sanctum's embrace
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
