@@ -276,8 +276,8 @@ class FindingController extends Controller
         $pdf = PDF::loadView('findings', compact('findings'));
         $fileName = 'findings_report_' . time() . '.pdf';
         $pdf->setPaper('a4', 'landscape');
-
-        $pdf->save('/public/uploads/' . $fileName); // Save to storage
+        
+        $pdf->save(storage_path('/public/uploads' . $fileName)); // Save to storage
 
         $url = Storage::url($fileName); // Generate a URL to the file
 
