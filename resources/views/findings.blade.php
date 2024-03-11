@@ -11,8 +11,9 @@
             margin: 10mm;
         }
 
+        *{ font-family: DejaVu Sans;}
+
         body {
-            font-family: 'Helvetica', 'Arial', sans-serif;
 
             margin: 0;
         }
@@ -52,7 +53,6 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
             font-size: 14px;
             overflow: hidden;
             padding: 3px 10px;
@@ -63,7 +63,6 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
             font-size: 14px;
             font-weight: normal;
             overflow: hidden;
@@ -117,7 +116,7 @@
             border-color: #d3d3d3;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
+ 
             font-size: 14px;
             overflow: hidden;
             padding: 5px 5px;
@@ -128,7 +127,7 @@
             border-color: #d3d3d3;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
+
             font-size: 14px;
             font-weight: normal;
             overflow: hidden;
