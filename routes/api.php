@@ -98,6 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/findings/{id}', [FindingController::class, 'update']);
     Route::delete('/findings/{id}', [FindingController::class, 'destroy']);
 
+
     // List all implementation activities for a specific finding
     Route::get('/findings/{findingId}/activities', [ImplementationActivityController::class, 'index']);
 
@@ -124,6 +125,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'show']);
     Route::put('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'update']);
     Route::delete('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'destroy']);
+
+    Route::get('/pdf/finding', [FindingController::class, 'generateFindingsReport']);
+
+    Route::get('/findings', [FindingController::class, 'getFindings']);
 });
 
 Route::any('/files/{id}', [FileManagerController::class, 'actions']);
@@ -133,6 +138,7 @@ Route::post('/upload/{finding_id}', [FileUploadController::class, 'store']);
 Route::delete('/upload/{finding_id}/{filename}', [FileUploadController::class, 'destroy']);
 
 Route::get('/files/download/{finding_id}/{filename}', [FileUploadController::class, 'download']);
+
 
 
 // Here's the route to retrieve the authenticated user, snugly inside Sanctum's embrace
