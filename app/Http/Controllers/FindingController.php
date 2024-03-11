@@ -10,6 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class FindingController extends Controller
@@ -169,13 +170,13 @@ class FindingController extends Controller
             $aLastDeadlineDate = !empty($aDeadline) ? end($aDeadline)['date'] : null;
             $bLastDeadlineDate = !empty($bDeadline) ? end($bDeadline)['date'] : null;
 
-            if (is_null($aLastDeadlineDate)) return -1; // Consider findings with no deadlines as 'smaller'
-            if (is_null($bLastDeadlineDate)) return 1; // Consider findings with no deadlines as 'smaller'
+            if (is_null($aLastDeadlineDate)) return 1; // Consider findings with no deadlines as 'smaller'
+            if (is_null($bLastDeadlineDate)) return -1; // Consider findings with no deadlines as 'smaller'
 
             $aDate = Carbon::createFromFormat('Y-m-d H:i:s', $aLastDeadlineDate);
             $bDate = Carbon::createFromFormat('Y-m-d H:i:s', $bLastDeadlineDate);
 
-            return $aDate <=> $bDate; // Use spaceship operator for comparison
+            return $bDate <=> $aDate; // Use spaceship operator for comparison
         });
 
         // Load ImplementationActivity for each Finding
@@ -264,23 +265,47 @@ class FindingController extends Controller
             '62' => 'Služba općih poslova',
         ];
 
-        $findings = self::getFindingsRaw($request);
+        $findingsRaw = self::getFindingsRaw($request);
+        $findingsCollection = collect($findingsRaw);
+        $findingsGroupedByRevision = $findingsCollection->groupBy('revision_id');
 
-        foreach ($findings as &$finding) {
-            if (isset($finding->responsibility) && isset($responsibilitiesList[$finding->responsibility])) {
-                $finding->responsibility = $responsibilitiesList[$finding->responsibility];
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->setPaper('a4', 'landscape');
+
+        $htmlContent = '';
+
+        // Get the count of groups to manage page breaks correctly
+        $groupsCount = $findingsGroupedByRevision->count();
+        $currentIndex = 0;
+
+        foreach ($findingsGroupedByRevision as $revisionId => $findings) {
+            foreach ($findings as &$finding) {
+                if (isset($finding->responsibility) && isset($responsibilitiesList[$finding->responsibility])) {
+                    $finding->responsibility = $responsibilitiesList[$finding->responsibility];
+                }
+            }
+            unset($finding); // Unset the reference to the last element
+
+            $viewContent = view('findings', compact('findings'))->render();
+            $htmlContent .= $viewContent;
+
+            // Increment the current index after adding content
+            $currentIndex++;
+
+            // Add a page break after each group, except for the last one
+            if ($currentIndex < $groupsCount) {
+                $htmlContent .= '<div class="page-break"></div>';
             }
         }
-        unset($finding); // Unset the reference to the last element
 
-        $pdf = PDF::loadView('findings', compact('findings'));
+        $css = "<style>.page-break { page-break-after: always; }</style>";
+        $pdf->loadHTML($css . $htmlContent);
+
         $fileName = 'findings_report_' . time() . '.pdf';
-        $pdf->setPaper('a4', 'landscape');
-        
-        $pdf->save(storage_path('app/public/' . $fileName)); // Save to storage
+        $pdf->save(storage_path('app/public/' . $fileName));
 
-        $url = Storage::url($fileName); // Generate a URL to the file
+        $url = Storage::url($fileName);
 
-        return response()->json(['url' => $url]); // Return the URL in the response
+        return response()->json(['url' => $url]);
     }
 }

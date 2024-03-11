@@ -3,7 +3,7 @@
 
 <head>
     <title>Findings Report</title>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <style>
         @page {
@@ -73,13 +73,19 @@
 
         .tg .tg-cly1 {
             text-align: left;
-            vertical-align: middle
+            vertical-align: middle;
+            width: 150px;
+        }
+        .tg .tg-cly2 {
+            text-align: left;
+            vertical-align: middle;
+            
         }
 
         .tg .tg-0lax {
             text-align: left;
             vertical-align: top;
-            width: 150px;
+            width: 120px;
         }
 
         @media screen and (max-width: 767px) {
@@ -168,7 +174,7 @@
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
                 <colgroup>
-                    <col style="width: 100px">
+                    <col style="width: 50px">
                     <col style="width: 800px">
                     <col style="width: 40px">
                     <col style="width: 40px">
@@ -176,7 +182,7 @@
                 <tbody>
                     <tr>
                         <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
-                        <td class="tg-cly1" rowspan="4"><strong>BAZA PREPORUKA</strong></td>
+                        <td class="tg-cly2" rowspan="4"><strong>BAZA PREPORUKA</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
                     </tr>
@@ -186,7 +192,7 @@
                     </tr>
                     <tr>
                         <td class="tg-0lax">Revizija</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">1-05/2022</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">{{$findings[0]->revision->code}}</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Stranica</td>
@@ -202,7 +208,7 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <td class="tg-mjdq" colspan="8">Revizija:</td>
+                        <td class="tg-mjdq" colspan="8">Revizija: {{$findings[0]->revision->name}}; revizija br. {{$findings[0]->revision->code}}</td>
                     </tr>
                     <tr>
                         <td class="tg-sj1f" rowspan="2">Broj</td>
