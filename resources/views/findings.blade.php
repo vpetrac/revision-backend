@@ -192,7 +192,7 @@
                     </tr>
                     <tr>
                         <td class="tg-0lax">Revizija</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">{{$findings[0]->revision->code}}</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">1-05/2022</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Stranica</td>
@@ -208,7 +208,7 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <td class="tg-mjdq" colspan="8">Revizija: {{$findings[0]->revision->name}}; revizija br. {{$findings[0]->revision->code}}</td>
+                        <td class="tg-mjdq" colspan="8">Revizija: {{$findings[0]->revision->code}} - {{$findings[0]->revision->name}}</td>
                     </tr>
                     <tr>
                         <td class="tg-sj1f" rowspan="2">Broj</td>
