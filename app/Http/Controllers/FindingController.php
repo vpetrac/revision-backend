@@ -277,11 +277,11 @@ class FindingController extends Controller
         $fileName = 'findings_report_' . time() . '.pdf';
         $pdf->setPaper('a4', 'landscape');
 
-        $publicPath = public_path('storage/' . $fileName);
-        $pdf->save($publicPath); // Save the PDF to the public storage folder
+        $filePath = 'public/uploads/' . $fileName;
+        $pdf->save($filePath); // Save the PDF to the public storage folder
 
         // Generate a publicly accessible URL
-        $url = asset('storage/' . $fileName);
+        $url = asset('public/uploads/' . $fileName);
 
         return response()->json(['url' => $url]); // Return the URL in the response
     }
