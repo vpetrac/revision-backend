@@ -279,7 +279,7 @@ class FindingController extends Controller
         
         $pdf->save(storage_path('app/public/uploads/' . $fileName)); // Save to storage
 
-        $url = Storage::url($fileName); // Generate a URL to the file
+        $url = public_path('storage/uploads/' . $fileName);
 
         return response()->json(['url' => $url]); // Return the URL in the response
     }
