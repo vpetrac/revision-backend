@@ -26,7 +26,8 @@ class StoreRecommendationRequest extends FormRequest
             'importance' => 'nullable|integer|min:1|max:5', // Assuming importance is a scale from 1 to 5
             'status' => 'required|string|max:255',
             'activities' => 'nullable|string',
-            'responsibility' => 'required|string|max:255',
+            'responsibility' => 'nullable|json',
+            'partner' => 'nullable|json',
             'deadline.*.date' => 'nullable|date',
             'real_deadline' => 'nullable|date',
             'finished_date' => 'nullable|date',

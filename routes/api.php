@@ -6,6 +6,7 @@ use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FindingController;
 use App\Http\Controllers\ImplementationActivityController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RevisionApprovalController;
 use App\Http\Controllers\RevisionController;
@@ -129,6 +130,32 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/pdf/finding', [FindingController::class, 'generateFindingsReport']);
 
     Route::get('/findings', [FindingController::class, 'getFindings']);
+
+    Route::prefix('recommendations')->group(function () {
+        Route::get('/{findingId}', [RecommendationController::class, 'index'])
+            ->name('recommendations.index'); // Lists all recommendations for a specific finding
+
+        Route::post('/', [RecommendationController::class, 'store'])
+            ->name('recommendations.store'); // Stores a new recommendation
+
+        Route::get('/show/{id}', [RecommendationController::class, 'show'])
+            ->name('recommendations.show'); // Displays a specific recommendation
+
+        Route::put('/{id}', [RecommendationController::class, 'update'])
+            ->name('recommendations.update'); // Updates a specific recommendation
+
+        Route::delete('/{id}', [RecommendationController::class, 'destroy'])
+            ->name('recommendations.destroy'); // Deletes a specific recommendation
+
+        Route::get('/get-recommendations-raw', [RecommendationController::class, 'getRecommendationsRaw'])
+            ->name('recommendations.getRecommendationsRaw'); // Retrieves raw recommendations data based on filters
+
+        Route::get('/get-recommendations', [RecommendationController::class, 'getRecommendations'])
+            ->name('recommendations.getRecommendations'); // Retrieves filtered recommendations
+
+        Route::get('/generate-recommendations-report', [RecommendationController::class, 'generateRecommendationsReport'])
+            ->name('recommendations.generateRecommendationsReport'); // Generates a PDF report of recommendations
+    });
 });
 
 Route::any('/files/{id}', [FileManagerController::class, 'actions']);

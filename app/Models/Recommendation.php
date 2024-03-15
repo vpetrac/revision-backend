@@ -15,6 +15,7 @@ class Recommendation extends Model
         'status', // Current status
         'activities', // Associated activities
         'responsibility', // Assigned responsibility
+        'partner', // Assigned responsibility
         'deadline', // Expected deadlines as an array
         'real_deadline', // Actual deadline date
         'finished_date', // Date when finished
