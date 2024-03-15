@@ -10,14 +10,14 @@ use Illuminate\Http\Response;
 class ImplementationActivityController extends Controller
 {
     /**
-     * Display a listing of the resource related to a specific finding.
+     * Display a listing of the resource related to a specific recommendation.
      *
-     * @param  int  $findingId
+     * @param  int  $recommendationId
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index($findingId)
+    public function index($recommendationId)
     {
-        $activities = ImplementationActivity::where('finding_id', $findingId)->get();
+        $activities = ImplementationActivity::where('recommendation_id', $recommendationId)->get();
         return response()->json($activities);
     }
 

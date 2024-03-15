@@ -22,19 +22,7 @@ class StoreFindingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'recommendations' => 'nullable|string',
-            'importance' => 'nullable|integer|min:1|max:5', // Assuming importance is a scale from 1 to 5
-            'status' => 'required|string|max:255',
-            'activities' => 'nullable|string',
-            'responsibility' => 'required|string|max:255',
-            'deadline.*.date' => 'nullable|date',
-            'real_deadline' => 'nullable|date',
-            'finished_date' => 'nullable|date',
-            'finished_date_concluded' => 'nullable|boolean',
-            'finished_date_confirmed' => 'nullable|date',
-            'finished_date_confirmed_concluded' => 'nullable|boolean',
-
+            'name' => 'required|string',
             'revision_id' => 'required|exists:revisions,id', // Make sure revision exists
         ];
     }

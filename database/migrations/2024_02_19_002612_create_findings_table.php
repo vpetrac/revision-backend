@@ -14,17 +14,6 @@ return new class extends Migration
         Schema::create('findings', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('recommendations')->nullable();
-            $table->unsignedInteger('importance')->nullable();
-            $table->string('status');
-            $table->text('activities')->nullable();
-            $table->string('responsibility');
-            $table->array('deadline')->nullable();
-            $table->date('real_deadline')->nullable();
-            $table->date('finished_date')->nullable();
-            $table->boolean('finished_date_concluded')->default(false);
-            $table->date('finished_date_confirmed')->nullable();
-            $table->boolean('finished_date_confirmed_concluded')->default(false);
             $table->unsignedBigInteger('revision_id'); // Foreign key to revisions table
             $table->timestamps();
 

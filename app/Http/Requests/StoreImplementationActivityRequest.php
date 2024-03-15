@@ -24,7 +24,7 @@ class StoreImplementationActivityRequest extends FormRequest
             'title' => 'required|string|max:255',
             'content' => 'nullable|string',
             'user_id' => 'required|exists:users,id',
-            'finding_id' => 'required|exists:findings,id',
+            'recommendation_id' => 'required|exists:recommendations,id',
         ];
     }
 }

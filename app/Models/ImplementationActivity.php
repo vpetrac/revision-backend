@@ -27,8 +27,8 @@ class ImplementationActivity extends Model
     /**
      * Get the finding that the activity is associated with.
      */
-    public function finding()
+    public function recommendation()
     {
-        return $this->belongsTo(Finding::class);
+        return $this->belongsTo(Recommendation::class);
     }
 }
