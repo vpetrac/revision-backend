@@ -139,6 +139,7 @@
             page-break-inside: avoid;
             page-break-after: auto;
             word-wrap: break-word;
+            vertical-align: top;
         }
 
         thead {
