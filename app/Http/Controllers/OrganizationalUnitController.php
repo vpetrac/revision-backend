@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreOrganizationalUnitRequest;
-use App\Http\Requests\UpdateOrganizationalUnitRequest;
-use App\Models\OrganizationalUnit;
+use Illuminate\Http\Request;
 
 class OrganizationalUnitController extends Controller
 {
@@ -17,17 +15,9 @@ class OrganizationalUnitController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrganizationalUnitRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -35,15 +25,7 @@ class OrganizationalUnitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OrganizationalUnit $organizationalUnit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(OrganizationalUnit $organizationalUnit)
+    public function show(string $id)
     {
         //
     }
@@ -51,7 +33,7 @@ class OrganizationalUnitController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrganizationalUnitRequest $request, OrganizationalUnit $organizationalUnit)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +41,7 @@ class OrganizationalUnitController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrganizationalUnit $organizationalUnit)
+    public function destroy(string $id)
     {
         //
     }

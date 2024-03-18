@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\FileUploadController;
@@ -18,157 +19,109 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
 */
 
-// Protect all revision routes with Sanctum authentication
-Route::middleware('auth:sanctum')->group(function () {
-    // List all revisions
-    Route::get('/revisions', [RevisionController::class, 'index']);
+// Group routes related to user authentication and actions
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 
-    // Create a new revision
-    Route::post('/revisions', [RevisionController::class, 'store']);
+    // Revision-related routes
+    Route::prefix('revisions')->group(function () {
+        Route::get('/', [RevisionController::class, 'index']);
+        Route::post('/', [RevisionController::class, 'store']);
+        Route::get('/{id}', [RevisionController::class, 'show']);
+        Route::put('/{id}', [RevisionController::class, 'update']);
+        Route::delete('/{id}', [RevisionController::class, 'destroy']);
+        Route::get('/{revisionId}/plans', [RevisionController::class, 'getLatestRevisionPlans']);
+    });
 
-    // Get a specific revision by ID
-    Route::get('/revisions/{id}', [RevisionController::class, 'show']);
+    // Program-related routes
+    Route::prefix('programs')->group(function () {
+        Route::get('/{revisionId?}', [ProgramController::class, 'index']);
+        Route::post('/', [ProgramController::class, 'store']);
+        Route::get('/show/{id}', [ProgramController::class, 'show']);
+        Route::put('/{id}', [ProgramController::class, 'update']);
+        Route::delete('/{id}', [ProgramController::class, 'destroy']);
+    });
 
-    // Update a specific revision by ID
-    Route::put('/revisions/{id}', [RevisionController::class, 'update']);
-    // or use Route::patch if you prefer partial updates
+    // Sample-related routes
+    Route::prefix('samples')->group(function () {
+        Route::get('/{revisionId?}', [SampleController::class, 'index']);
+        Route::post('/', [SampleController::class, 'store']);
+        Route::get('/show/{id}', [SampleController::class, 'show']);
+        Route::put('/{id}', [SampleController::class, 'update']);
+        Route::delete('/{id}', [SampleController::class, 'destroy']);
+    });
 
-    // Delete a specific revision by ID
-    Route::delete('/revisions/{id}', [RevisionController::class, 'destroy']);
+    // Report-related routes
+    Route::prefix('reports')->group(function () {
+        Route::get('/{revisionId}', [ReportController::class, 'index']);
+        Route::post('/', [ReportController::class, 'store']);
+        Route::get('/{id}', [ReportController::class, 'show']);
+        Route::put('/{id}', [ReportController::class, 'update']);
+        Route::delete('/{id}', [ReportController::class, 'destroy']);
+    });
 
-    Route::get('/revisions/{revisionId}/plans', [RevisionController::class, 'getLatestRevisionPlans']);
+    // Finding-related routes
+    Route::prefix('findings')->group(function () {
+        Route::get('/{revisionId}', [FindingController::class, 'index']);
+        Route::post('/', [FindingController::class, 'store']);
+        Route::get('/{id}', [FindingController::class, 'show']);
+        Route::put('/{id}', [FindingController::class, 'update']);
+        Route::delete('/{id}', [FindingController::class, 'destroy']);
+        Route::get('/', [FindingController::class, 'getFindings']);
+        Route::get('/pdf/finding', [FindingController::class, 'generateFindingsReport']);
+    });
 
-    // List all programs or programs for a specific revision
-    Route::get('/programs/{revisionId?}', [ProgramController::class, 'index']);
+    // Implementation activity-related routes
+    Route::prefix('activities')->group(function () {
+        Route::get('/{id}', [ImplementationActivityController::class, 'index']);
+        Route::post('/', [ImplementationActivityController::class, 'store']);
+        Route::put('/{id}', [ImplementationActivityController::class, 'update']);
+        Route::delete('/{id}', [ImplementationActivityController::class, 'destroy']);
+    });
 
-    // Create a new program
-    Route::post('/programs', [ProgramController::class, 'store']);
+    // Goal-related routes
 
-    // Get a specific program by ID
-    Route::get('/programs/show/{id}', [ProgramController::class, 'show']);
-
-    // Update a specific program by ID
-    Route::put('/programs/{id}', [ProgramController::class, 'update']);
-    // or use Route::patch if you prefer partial updates
-
-    // Delete a specific program by ID
-    Route::delete('/programs/{id}', [ProgramController::class, 'destroy']);
-
-    // List all samples or samples for a specific revision
-    Route::get('/samples/{revisionId?}', [SampleController::class, 'index']);
-
-    // Create a new sample
-    Route::post('/samples', [SampleController::class, 'store']);
-
-    // Get a specific sample by ID
-    Route::get('/samples/show/{id}', [SampleController::class, 'show']);
-
-    // Update a specific sample by ID
-    Route::put('/samples/{id}', [SampleController::class, 'update']);
-    // Alternatively, use Route::patch for partial updates
-
-    // Delete a specific sample by ID
-    Route::delete('/samples/{id}', [SampleController::class, 'destroy']);
-
-    // List all reports or reports for a specific revision
-    Route::get('/reports/{revisionId}', [ReportController::class, 'index']);
-
-    // Create a new report
-    Route::post('/reports', [ReportController::class, 'store']);
-
-    // Get a specific report by ID
-    Route::get('/reports/{id}', [ReportController::class, 'show']);
-
-    // Update a specific report by ID
-    Route::put('/reports/{id}', [ReportController::class, 'update']);
-    // Alternatively, use Route::patch for partial updates
-
-    // Delete a specific report by ID
-    Route::delete('/reports/{id}', [ReportController::class, 'destroy']);
-
-    Route::get('/findings/{revisionId}', [FindingController::class, 'index']);
-    Route::post('/findings', [FindingController::class, 'store']);
-    Route::get('/findings/{id}', [FindingController::class, 'show']);
-    Route::put('/findings/{id}', [FindingController::class, 'update']);
-    Route::delete('/findings/{id}', [FindingController::class, 'destroy']);
-
-
-    // List all implementation activities for a specific finding
-    Route::get('/findings/{findingId}/activities', [ImplementationActivityController::class, 'index']);
-
-    // Create a new implementation activity
-    Route::post('/activities', [ImplementationActivityController::class, 'store']);
-
-    // Get a specific implementation activity by ID
-    Route::get('/activities/{id}', [ImplementationActivityController::class, 'show']);
-
-    // Update a specific implementation activity by ID
-    Route::put('/activities/{id}', [ImplementationActivityController::class, 'update']);
-
-    // Delete a specific implementation activity by ID
-    Route::delete('/activities/{id}', [ImplementationActivityController::class, 'destroy']);
-
-    // List all implementation activities for a specific finding
     Route::post('/attach-programs', [GoalController::class, 'attachProgramsToGoal']);
-
     Route::get('/attach-programs/{revisionId}', [GoalController::class, 'getGoalsWithPrograms']);
-
     Route::put('/attach-programs', [GoalController::class, 'syncProgramsToGoal']);
 
-    Route::post('/revision-approvals', [RevisionApprovalController::class, 'store']);
-    Route::get('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'show']);
-    Route::put('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'update']);
-    Route::delete('/revision-approvals/{revision_id}', [RevisionApprovalController::class, 'destroy']);
 
-    Route::get('/pdf/finding', [FindingController::class, 'generateFindingsReport']);
-
-    Route::get('/findings', [FindingController::class, 'getFindings']);
-
-    Route::prefix('recommendations')->group(function () {
-        Route::get('/{findingId}', [RecommendationController::class, 'index'])
-            ->name('recommendations.index'); // Lists all recommendations for a specific finding
-
-        Route::post('/', [RecommendationController::class, 'store'])
-            ->name('recommendations.store'); // Stores a new recommendation
-
-        Route::get('/show/{id}', [RecommendationController::class, 'show'])
-            ->name('recommendations.show'); // Displays a specific recommendation
-
-        Route::put('/{id}', [RecommendationController::class, 'update'])
-            ->name('recommendations.update'); // Updates a specific recommendation
-
-        Route::delete('/{id}', [RecommendationController::class, 'destroy'])
-            ->name('recommendations.destroy'); // Deletes a specific recommendation
-
-        Route::get('/get-recommendations-raw', [RecommendationController::class, 'getRecommendationsRaw'])
-            ->name('recommendations.getRecommendationsRaw'); // Retrieves raw recommendations data based on filters
-
-        Route::get('/get-recommendations', [RecommendationController::class, 'getRecommendations'])
-            ->name('recommendations.getRecommendations'); // Retrieves filtered recommendations
-
-        Route::get('/generate-recommendations-report', [RecommendationController::class, 'generateRecommendationsReport'])
-            ->name('recommendations.generateRecommendationsReport'); // Generates a PDF report of recommendations
+    // Revision approval-related routes
+    Route::prefix('revision-approvals')->group(function () {
+        Route::post('/', [RevisionApprovalController::class, 'store']);
+        Route::get('/{revision_id}', [RevisionApprovalController::class, 'show']);
+        Route::put('/{revision_id}', [RevisionApprovalController::class, 'update']);
+        Route::delete('/{revision_id}', [RevisionApprovalController::class, 'destroy']);
     });
+
+    // Recommendation-related routes
+    Route::prefix('recommendations')->group(function () {
+        Route::get('/{findingId}', [RecommendationController::class, 'index']);
+        Route::post('/', [RecommendationController::class, 'store']);
+        Route::get('/show/{id}', [RecommendationController::class, 'show']);
+        Route::put('/{id}', [RecommendationController::class, 'update']);
+        Route::delete('/{id}', [RecommendationController::class, 'destroy']);
+    });
+
+    Route::get('/get-recommendations', [RecommendationController::class, 'getRecommendations']);
+    Route::get('/generate-recommendations-report', [RecommendationController::class, 'generateRecommendationsReport']);
+
+    Route::post('/download-document', [DocumentController::class, 'generateDocument']);
 });
 
-Route::any('/files/{id}', [FileManagerController::class, 'actions']);
+// File management routes
+Route::prefix('files')->group(function () {
+    Route::any('/{id}', [FileManagerController::class, 'actions']);
+    Route::get('/download/{finding_id}/{filename}', [FileUploadController::class, 'download']);
+});
 
-Route::get('/uploads/{finding_id}', [FileUploadController::class, 'index']);
-Route::post('/upload/{finding_id}', [FileUploadController::class, 'store']);
-Route::delete('/upload/{finding_id}/{filename}', [FileUploadController::class, 'destroy']);
-
-Route::get('/files/download/{finding_id}/{filename}', [FileUploadController::class, 'download']);
-
-
-
-// Here's the route to retrieve the authenticated user, snugly inside Sanctum's embrace
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return $request->user();
+// File upload routes
+Route::prefix('uploads')->group(function () {
+    Route::get('/{recommendation_id}', [FileUploadController::class, 'index']);
+    Route::post('/{recommendation_id}', [FileUploadController::class, 'store']);
+    Route::delete('/{recommendation_id}/{filename}', [FileUploadController::class, 'destroy']);
 });

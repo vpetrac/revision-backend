@@ -13,7 +13,7 @@ class ImplementationActivity extends Model
         'title',
         'content',
         'user_id', // Foreign key to the users table
-        'finding_id', // Foreign key to the findings table
+        'recommendation_id', // Foreign key to the findings table
     ];
 
     /**

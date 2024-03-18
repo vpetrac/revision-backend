@@ -94,7 +94,7 @@ class RecommendationController extends Controller
     {
         $revisionIds = $request->query('revisionId', []);
         $statuses = $request->query('status', []);
-        $responsibilities = $request->query('responsibility', []);
+        $responsibilitiesQuery = $request->query('responsibility', []);
         $startDate = $request->query('startDate');
         $endDate = $request->query('endDate');
 
@@ -110,9 +110,11 @@ class RecommendationController extends Controller
             $query->whereIn('status', $statuses);
         }
 
-        // Apply filtering based on provided responsibilities
+        // Adjusting for the new responsibility format
         if (!empty($responsibilities)) {
-            $query->whereIn('responsibility', $responsibilities);
+            foreach ($responsibilities as $responsibility) {
+                $query->whereJsonContains('responsibility->$.value', $responsibility);
+            }
         }
 
         $recommendations = $query->get();
@@ -178,6 +180,22 @@ class RecommendationController extends Controller
 
             return $bDate <=> $aDate; // Use spaceship operator for comparison
         });
+
+        // Manually filter recommendations by responsibilities
+        if (!empty($responsibilitiesQuery)) {
+            $responsibilitiesQuery = array_map('strval', $responsibilitiesQuery); // Ensure all values are strings for comparison
+            $recommendations = $recommendations->filter(function ($recommendation) use ($responsibilitiesQuery) {
+                $responsibilities = json_decode($recommendation->responsibility, true);
+                if (!is_array($responsibilities)) return false;
+
+                foreach ($responsibilities as $responsibility) {
+                    if (in_array($responsibility['value'], $responsibilitiesQuery)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
 
         // Load ImplementationActivity for each Recommendation
         foreach ($filteredRecommendations as $recommendation) {

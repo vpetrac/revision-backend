@@ -12,7 +12,7 @@ class OrganizationalUnit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'head_id', 'revision_id'];
+    protected $fillable = ['name', 'slug', 'heads', 'organization_id'];
 
     public function head(): HasOne
     {

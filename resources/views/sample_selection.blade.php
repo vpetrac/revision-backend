@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Findings Report</title>
+    <title>Plan i program revizije</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>
@@ -81,28 +81,13 @@
         .tg .tg-cly2 {
             text-align: left;
             vertical-align: middle;
-
+            width: 340px;
         }
 
         .tg .tg-0lax {
             text-align: left;
             vertical-align: top;
             width: 120px;
-        }
-
-        @media screen and (max-width: 767px) {
-            .tg {
-                width: auto !important;
-            }
-
-            .tg col {
-                width: auto !important;
-            }
-
-            .tg-wrap {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
         }
 
         .strikethrough {
@@ -113,6 +98,7 @@
         .report .tg {
             border-collapse: collapse;
             border-spacing: 0;
+            margin-bottom: 30px;
         }
 
         .report .tg td {
@@ -121,7 +107,6 @@
             border-width: 1px;
 
             font-size: 14px;
-            overflow: hidden;
             padding: 5px 5px;
             word-break: normal;
         }
@@ -133,40 +118,16 @@
 
             font-size: 14px;
             font-weight: normal;
-            overflow: hidden;
             padding: 5px 5px;
             word-break: normal;
         }
 
-        .report .tg .tg-mjdq {
+        .report .tg .upper-header {
             background-color: #ffce93;
             border-color: #d3d3d3;
             font-weight: bold;
-            text-align: left;
+            text-align: center;
             vertical-align: top
-        }
-
-        .report .tg .tg-sj1f {
-            background-color: #f5ffe7;
-            border-color: #d3d3d3;
-            font-weight: bold;
-            text-align: left;
-            vertical-align: top
-        }
-
-        @media screen and (max-width: 767px) {
-            .report .tg {
-                width: auto !important;
-            }
-
-            .report .tg col {
-                width: auto !important;
-            }
-
-            .report .tg-wrap {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
         }
     </style>
 </head>
@@ -184,7 +145,7 @@
                 <tbody>
                     <tr>
                         <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
-                        <td class="tg-cly2" rowspan="4"><strong>BAZA PREPORUKA</strong></td>
+                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Odabir uzorka</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
                     </tr>
@@ -205,77 +166,56 @@
         </div>
     </div>
     <div class="report">
-        <h1>BAZA PREPORUKA</h1>
+        <h1>ODABIR UZORKA</h1>
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <td class="tg-mjdq" colspan="8">Revizija: {{$recommendations[0]->revision->code}} - {{$recommendations[0]->revision->name}}</td>
-                    </tr>
-                    <tr>
-                        <td class="tg-sj1f" rowspan="2">Broj</td>
-                        <td class="tg-sj1f" rowspan="2">Preporuka</td>
-                        <td class="tg-sj1f" rowspan="2">Mjere i aktivnosti</td>
-                        <td class="tg-sj1f" colspan="2">Odgovornost za provedbu mjera i aktivnosti</td>
-                        <td class="tg-sj1f" rowspan="2">Status preporuke</td>
-                        <td class="tg-sj1f" rowspan="2">Rok provedbe</td>
-                        <td class="tg-sj1f" rowspan="2">Napomena</td>
-                    </tr>
-                    <tr>
-                        <td class="tg-sj1f">Nositelj</td>
-                        <td class="tg-sj1f">U suradnji sa</td>
+                        <th class="upper-header" colspan="2">OPĆI PODACI O REVIZIJI</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($recommendations as $recommendation)
                     <tr>
-                        <td class="tg-0pky">
-                        {{ $loop->index + 1 }}
-                        </td>
-                        <td class="tg-0pky">{!! $recommendation->content !!}</td>
-                        <td class="tg-0pky">{{ $recommendation->activities }}</td>
-                        <td class="tg-0pky">
-                            @php
-                            $responsibilities = json_decode($recommendation->responsibility, true);
-                            $lastIndex = count($responsibilities) - 1;
-                            @endphp
-                            @foreach($responsibilities as $index => $responsibility)
-                            {{ $responsibility['label'] ?? '' }}{{ $index !== $lastIndex ? ',' : '' }}
-                            @endforeach
-                        </td>
-                        <td class="tg-0pky">
-                            @php
-                            $responsibilities = json_decode($recommendation->partner, true);
-                            $lastIndex = count($responsibilities) - 1;
-                            @endphp
-                            @foreach($responsibilities as $index => $responsibility)
-                            {{ $responsibility['label'] ?? '' }}{{ $index !== $lastIndex ? ',' : '' }}
-                            @endforeach
-                        </td>
-                        <td class="tg-0pky">
-                            {{ $recommendation->status }}
-                        </td>
-                        <td class="tg-0pky">
-                            @if(is_array($recommendation->deadline) && count($recommendation->deadline))
-                            @foreach($recommendation->deadline as $index => $deadline)
-                            <span class="{{ $index < count($recommendation->deadline) - 1 ? 'strikethrough' : '' }}">
-                                {{ \Carbon\Carbon::parse($deadline['date'])->format('d.m.Y') }}
-                            </span><br>
-                            @endforeach
-                            @endif
-                        </td>
-                        <td class="tg-0pky">
-                            @foreach($recommendation->implementationActivities as $activity)
-                            <div>{!! $activity->content !!}</div>
-                            <br>
-                            @endforeach
-                        </td>
+                        <td style="font-weight: bold;">Naziv revizije</td>
+                        <td>{{$revision->name}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Oznaka iz Godišnjeg plana / šifra revizije</td>
+                        <td>{{$revision->code}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold;">Period uzorkovania</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="tg" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="font-weight: bold;">r.<br>br.</th>
+                        <th style="font-weight: bold;">Naziv</th>
+                        <th style="font-weight: bold;">Populacija</th>
+                        <th style="font-weight: bold;">Vrsta uzorkovanja</th>
+                        <th style="font-weight: bold;">Veličina uzorka</th>
+                        <th style="font-weight: bold;">Metoda odabira revizijskog uzorka</th>
+                        <th style="font-weight: bold;">Objašnjenje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($revision->samples as $sample)
+                    <tr>
+                        <td>{{$loop->index + 1}}.</td>
+                        <td>{{$sample->sample_name}}</td>
+                        <td>{{$sample->population_size}}</td>
+                        <td>{{$sample->sampling_method}}</td>
+                        <td>{{$sample->sample_size}}</td>
+                        <td>{{$sample->collection_method}}</td>
+                        <td>{{$sample->method_explanation}}</td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
 
 </body>
 

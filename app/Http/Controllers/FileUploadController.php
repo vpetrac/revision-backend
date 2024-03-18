@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Storage;
 class FileUploadController extends Controller
 {
     // List files
-    public function index($finding_id)
+    public function index($recommendation_id)
     {
-        $folderPath = 'public/uploads/' . $finding_id;
+        $folderPath = 'public/uploads/' . $recommendation_id;
 
         // List files from the specified directory
         $files = Storage::files($folderPath);
@@ -25,7 +25,7 @@ class FileUploadController extends Controller
     }
 
     // Store new files
-    public function store(Request $request, $finding_id)
+    public function store(Request $request, $recommendation_id)
     {
         if (!$request->has('files')) {
             return response()->json(['error' => 'No files provided'], 400);
@@ -35,7 +35,7 @@ class FileUploadController extends Controller
         foreach ($request->file('files') as $file) {
             $originalFilename = $file->getClientOriginalName();
             $filename = $originalFilename;
-            $folderPath = 'public/uploads/' . $finding_id;
+            $folderPath = 'public/uploads/' . $recommendation_id;
             $filePath = $folderPath . '/' . $filename;
 
             // Check if file exists and adjust filename
@@ -58,9 +58,9 @@ class FileUploadController extends Controller
     }
 
     // Remove a file
-    public function destroy($finding_id, $filename)
+    public function destroy($recommendation_id, $filename)
     {
-        $filePath = 'public/uploads/' . $finding_id . '/' . $filename;
+        $filePath = 'public/uploads/' . $recommendation_id . '/' . $filename;
 
         if (Storage::exists($filePath)) {
             Storage::delete($filePath);
@@ -70,10 +70,10 @@ class FileUploadController extends Controller
         return response()->json(['error' => 'File not found'], 404);
     }
 
-    public function download($finding_id, $filename)
+    public function download($recommendation_id, $filename)
     {
         // Adjust the path to include the finding_id
-        $filePath = public_path('storage/uploads/' . $finding_id . '/' . $filename);
+        $filePath = public_path('storage/uploads/' . $recommendation_id . '/' . $filename);
 
         if (!file_exists($filePath)) {
             return response()->json(['error' => 'File not found.'], 404);
