@@ -58,7 +58,6 @@
             font-size: 14px;
             overflow: hidden;
             padding: 3px 10px;
-            word-break: normal;
         }
 
         .tg th {
@@ -69,7 +68,6 @@
             font-weight: normal;
             overflow: hidden;
             padding: 3px 10px;
-            word-break: normal;
         }
 
         .tg .tg-cly1 {
@@ -123,7 +121,7 @@
             font-size: 14px;
             overflow: hidden;
             padding: 5px 5px;
-            word-break: normal;
+
         }
 
         .report .tg th {
@@ -135,7 +133,7 @@
             font-weight: normal;
             overflow: hidden;
             padding: 5px 5px;
-            word-break: normal;
+
         }
 
         .report .tg .tg-mjdq {
