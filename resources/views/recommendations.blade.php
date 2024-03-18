@@ -154,19 +154,27 @@
             vertical-align: top
         }
 
-        @media screen and (max-width: 767px) {
-            .report .tg {
-                width: auto !important;
-            }
+        table {
+            page-break-after: auto;
+        }
 
-            .report .tg col {
-                width: auto !important;
-            }
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
 
-            .report .tg-wrap {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
+        td {
+            page-break-inside: avoid;
+            page-break-after: auto;
+            word-wrap: break-word;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tfoot {
+            display: table-footer-group;
         }
     </style>
 </head>
@@ -230,7 +238,7 @@
                     @foreach($recommendations as $recommendation)
                     <tr>
                         <td class="tg-0pky">
-                        {{ $loop->index + 1 }}
+                            {{ $loop->index + 1 }}
                         </td>
                         <td class="tg-0pky">{!! $recommendation->content !!}</td>
                         <td class="tg-0pky">{{ $recommendation->activities }}</td>

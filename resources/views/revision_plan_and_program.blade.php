@@ -129,6 +129,29 @@
             text-align: center;
             vertical-align: top
         }
+
+        table {
+            page-break-after: auto;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        td {
+            page-break-inside: avoid;
+            page-break-after: auto;
+            word-wrap: break-word;
+        }
+
+        thead {
+            display: table-header-group;
+        }
+
+        tfoot {
+            display: table-footer-group;
+        }
     </style>
 </head>
 
@@ -406,7 +429,7 @@
                 </tr>
             </tbody>
         </table>
-        
+
     </div>
 
 </body>
