@@ -74,7 +74,7 @@ class RevisionController extends Controller
      */
     public function show($id)
     {
-        $revision = Revision::with('goals')->findOrFail($id);
+        $revision = Revision::with(['goals', 'approval'])->findOrFail($id);
         return response()->json((new RevisionResource($revision))->resolve());
     }
 

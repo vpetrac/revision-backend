@@ -35,6 +35,7 @@ class RevisionResource extends JsonResource
             'auditTeamHead' => $this->auditTeamHead,
             'auditTeamMembers' => $this->auditTeamMembers,
             'revision_goals' => GoalResource::collection($this->whenLoaded('goals')),
+            'approval' => $this->whenLoaded('approval'),
         ];
     }
 }

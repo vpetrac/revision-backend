@@ -21,7 +21,7 @@
         }
 
         h1 {
-            font-size: 18px;
+            font-size: 16px;
             padding-top: 6px;
             padding-bottom: 6px;
         }
@@ -55,7 +55,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             overflow: hidden;
             padding: 3px 10px;
             
@@ -65,7 +65,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             overflow: hidden;
             padding: 3px 10px;
@@ -105,7 +105,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             padding: 5px 5px;
         }
 
@@ -114,7 +114,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             padding: 5px 5px;
         }

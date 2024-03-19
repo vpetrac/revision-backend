@@ -21,7 +21,7 @@
         }
 
         h1 {
-            font-size: 18px;
+            font-size: 16px;
             padding-top: 6px;
             padding-bottom: 6px;
         }
@@ -55,7 +55,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             overflow: hidden;
             padding: 3px 10px;
         }
@@ -64,7 +64,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             overflow: hidden;
             padding: 3px 10px;
@@ -104,7 +104,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             padding: 5px 5px;
         }
 
@@ -113,7 +113,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             padding: 5px 5px;
 
@@ -156,7 +156,7 @@
 <body>
     <div class="header">
         <div class="tg-wrap">
-            <table class="tg" style="width: 100%;">
+        <table class="tg" style="width: 100%; max-width:100;">
                 <colgroup>
                     <col style="width: 50px">
                     <col style="width: 800px">
@@ -189,7 +189,7 @@
     <div class="report">
         <h1>PLAN I PROGRAM REVIZIJE</h1>
         <div class="tg-wrap">
-            <table class="tg" style="width: 100%;">
+            <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
                     <tr>
                         <th class="upper-header" colspan="2">PRELIMINARNA PROCJENA GLAVNIH RIZIKA</th>
@@ -206,7 +206,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table class="tg" style="width: 100%;">
+            <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
                     <tr>
                         <th style="font-weight: bold;">r.<br>br.</th>
@@ -232,7 +232,7 @@
                     @endforeach
                 </tbody>
             </table>
-            <table class="tg" style="width: 100%;">
+            <table class="tg" style="width: 100%; max-width:100;">
                 <colgroup>
                     <col style="width: 80px">
                     <col style="width: 95px">
