@@ -16,6 +16,7 @@ class Recommendation extends Model
         'activities', // Associated activities
         'responsibility', // Assigned responsibility
         'partner', // Assigned responsibility
+        'responsible_users', // Assigned responsibility
         'deadline', // Expected deadlines as an array
         'real_deadline', // Actual deadline date
         'finished_date', // Date when finished

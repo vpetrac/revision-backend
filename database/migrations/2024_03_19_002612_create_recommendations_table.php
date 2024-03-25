@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('activities')->nullable();
             $table->text('responsibility')->nullable();
             $table->text('partner')->nullable();
+            $table->text('responsible_users')->nullable();
             $table->text('deadline')->nullable();
             $table->date('real_deadline')->nullable();
             $table->date('finished_date')->nullable();

@@ -12,7 +12,7 @@
         }
 
         * {
-            font-family: DejaVu Sans;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
         }
 
         body {
@@ -206,7 +206,7 @@
                         <td>{{$revision->code}}</td>
                     </tr>
                     <tr>
-                        <td>Revizor / ica/td>
+                        <td>Revizor/ica</td>
                         <td></td>
                     </tr>
                     <tr>
@@ -258,9 +258,10 @@
                     </tr>
                 </tbody>
             </table>
-            <div style="display: block; width: 100%; ">
-                Potvrdujem da cu, ako se za vrijeme obavljanja revizije pojavi bilo kakav osobni, vanjski ili organizacijski sukob interesa koji moze utjecati na moju neovisnost rada i nepristranog izvjestavanja o nalazima, odmah pisanim putem obavijestiti voditelia Samostalne Slu¿be unutarnje revizije.
-            </div>
+            <table class="tg" style="width: 100%;">
+            
+            <tr><td>Potvrdujem da cu, ako se za vrijeme obavljanja revizije pojavi bilo kakav osobni, vanjski ili organizacijski sukob interesa koji moze utjecati na moju neovisnost rada i nepristranog izvjestavanja o nalazima, odmah pisanim putem obavijestiti voditelia Samostalne Slu¿be unutarnje revizije.</td></tr>
+            </table>
 
             <table class="tg" style="width: 100%;">
                 <colgroup>

@@ -12,11 +12,11 @@ class OrganizationalUnit extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'heads', 'organization_id'];
+    protected $fillable = ['name', 'head_id', 'organization_id'];
 
-    public function head(): HasOne
+    public function head(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'head_id');
     }
 
     public function organization(): BelongsTo

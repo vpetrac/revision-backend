@@ -7,7 +7,7 @@
 
     <style>
         @page {
-            size: A4 landscape;
+            size: A4 portrait;
             margin: 10mm;
         }
 
@@ -79,7 +79,7 @@
         .tg .tg-cly2 {
             text-align: left;
             vertical-align: middle;
-            width: 340px;
+            width: 240px;
         }
 
         .tg .tg-0lax {
@@ -165,17 +165,17 @@
                 <tbody>
                     <tr>
                         <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
-                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Plan djelovanja</strong></td>
+                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Plan i program revizije</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax" style="max-width: 20px;">Oznaka</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-12</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-09</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Revizija</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">1-05/2022</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">1-06/2022</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Stranica</td>
@@ -186,7 +186,7 @@
         </div>
     </div>
     <div class="report">
-        <h1>PLAN DJELOVANJA</h1>
+        <h1>PLAN I PROGRAM REVIZIJE</h1>
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
                 <thead>
@@ -196,52 +196,48 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="font-weight: bold;">Naziv revizije</td>
-                        <td>{{$revision->name}}</td>
+                        <td>Tema</td>
+                        <td>{{$report->theme}}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Oznaka iz Godišnjeg plana / šifra revizije</td>
-                        <td>{{$revision->code}}</td>
+                        <td>Datum i vrijeme</td>
+                        <td>{{$report->datetime}}</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: bold;">Period uzorkovania</td>
-                        <td></td>
+                        <td>Mjesto</td>
+                        <td>{{$report->location}}</td>
+                    </tr>
+                    <tr>
+                        <td>Prisutni</td>
+                        <td>{{$report->attendees}}</td>
+                    </tr>
+                    <tr>
+                        <td>Odsutni</td>
+                        <td>{{$report->absentees}}</td>
+                    </tr>
+                    <tr>
+                        <td>Zapisničar</td>
+                        <td>{{$report->compiled_by}}</td>
                     </tr>
                 </tbody>
             </table>
+
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th style="font-weight: bold;">R.<br>br.</th>
-                        <th style="font-weight: bold;">PREPORUKA</th>
-                        <th style="font-weight: bold;">Važnosti</th>
-                        <th style="font-weight: bold;">Aktivnosti za provedbu preporuke</th>
-                        <th style="font-weight: bold;">Osobe zadužene za provedbu</th>
-                        <th style="font-weight: bold;">Rok za provedbu</th>
+                        <th class="upper-header" colspan="5">Matrica zadataka</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($revision->recommendations as $recommendation)
                     <tr>
-                        <td>{{$loop->index + 1}}.</td>
-                        <td>{!! $recommendation->content !!}</td>
-                        <td style="background-color: #ffce93">{{$recommendation->importance}}</td>
-                        <td>{{$recommendation->activities}}</td>
-                        <td>{{$recommendation->activities}}</td>
-                        <td>
-                            @if(is_array($recommendation->deadline) && count($recommendation->deadline))
-                            @foreach($recommendation->deadline as $index => $deadline)
-                            <span class="{{ $index < count($recommendation->deadline) - 1 ? 'strikethrough' : '' }}">
-                                {{ \Carbon\Carbon::parse($deadline['date'])->format('d.m.Y') }}
-                            </span><br>
-                            @endforeach
-                            @endif
-                        </td>
+                        <td>{!! $report->content !!}</td>
                     </tr>
-                    @endforeach
                 </tbody>
             </table>
+
         </div>
+
+    </div>
 
 </body>
 

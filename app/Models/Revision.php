@@ -93,4 +93,9 @@ class Revision extends Model
     {
         return $this->hasOne(RevisionApproval::class);
     }
+
+    public function recommendations()
+    {
+        return $this->hasMany(Recommendation::class);
+    }
 }

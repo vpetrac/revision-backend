@@ -14,13 +14,9 @@ return new class extends Migration
         Schema::create('organizational_units', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug');
-            $table->string('description');
 
             $table->unsignedBigInteger('head_id')->nullable();
             $table->unsignedBigInteger('organization_id')->nullable();
-
-            //$table->foreign('head_id')->references('id')->on('users')->onDelete('set null');
 
             $table->timestamps();
         });

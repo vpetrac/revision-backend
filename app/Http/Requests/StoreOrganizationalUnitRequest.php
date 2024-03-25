@@ -11,7 +11,8 @@ class StoreOrganizationalUnitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        // Adjust this based on your application's authorization requirements.
+        return auth()->check();
     }
 
     /**
@@ -23,7 +24,7 @@ class StoreOrganizationalUnitRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'head_id' => 'nullable|exists:users,id', // Assuming a head_id column exists
+            'head_id' => 'nullable|exists:users,id',
             'organization_id' => 'nullable|exists:organizations,id',
         ];
     }

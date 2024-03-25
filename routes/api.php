@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FindingController;
 use App\Http\Controllers\ImplementationActivityController;
+use App\Http\Controllers\OrganizationalUnitController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\ReportController;
@@ -23,9 +25,16 @@ use Illuminate\Support\Facades\Route;
 
 // Group routes related to user authentication and actions
 Route::middleware(['auth:sanctum'])->group(function () {
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    Route::get('/roles', [RegisteredUserController::class, 'getRoles']);
+    Route::post('/users', [RegisteredUserController::class, 'storeOnly']);
+    Route::get('/users', [RegisteredUserController::class, 'index']);
+    Route::put('/users/{id}', [RegisteredUserController::class, 'update'])->where('id', '[0-9]+');
+    Route::delete('/users/{id}', [RegisteredUserController::class, 'destroy'])->where('id', '[0-9]+');
 
     // Revision-related routes
     Route::prefix('revisions')->group(function () {
@@ -111,6 +120,15 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/generate-recommendations-report', [RecommendationController::class, 'generateRecommendationsReport']);
 
     Route::post('/download-document', [DocumentController::class, 'generateDocument']);
+
+    Route::prefix('organizational-units')->group(function () {
+        Route::get('/', [OrganizationalUnitController::class, 'index']);
+        Route::post('/', [OrganizationalUnitController::class, 'store']);
+        Route::get('/{id}', [OrganizationalUnitController::class, 'show'])->where('id', '[0-9]+');
+        Route::put('/{id}', [OrganizationalUnitController::class, 'update'])->where('id', '[0-9]+');
+        Route::patch('/{id}', [OrganizationalUnitController::class, 'update'])->where('id', '[0-9]+');
+        Route::delete('/{id}', [OrganizationalUnitController::class, 'destroy'])->where('id', '[0-9]+');
+    });
 });
 
 // File management routes

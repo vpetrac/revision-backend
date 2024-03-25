@@ -3,65 +3,96 @@
 namespace App\Http\Controllers;
 
 use App\Models\Goal;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Models\Revision;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
+use Spatie\Browsershot\Browsershot;
+use Illuminate\Support\Facades\File; // Add this at the top for file operations
 
 class DocumentController extends Controller
 {
     public function generateDocument(Request $request)
     {
         $documentType = $request->input('document_type');
-        $revisionId = $request->input('revision_id');
+        $revisionId = $request->input('revision_id') || -1;
+        $reportId = $request->input('report_id') || -1;
+        $revision = null;
+        $report = null;
 
-        // Fetch the Revision model
-        $revision = Revision::find($revisionId);
+        if ($revisionId !== -1) {
+            $revision = Revision::find($revisionId);
 
-
-        if (!$revision) {
-            return response()->json(['error' => 'Revision not found'], 404);
+            if (!$revision) {
+                return response()->json(['error' => 'Revision not found'], 404);
+            }
         }
 
-        // Prepare the PDF
-        $pdf = App::make('dompdf.wrapper');
+        if ($reportId !== -1) {
+            $report = Report::find($reportId);
 
+            if (!$report) {
+                return response()->json(['error' => 'Report not found'], 404);
+            }
+        }
 
         $htmlContent = '';
 
         switch ($documentType) {
             case 'revision_plan_and_program':
-                $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateRevisionPlanAndProgram($revision);
                 break;
             case 'sample_selection':
-                $pdf->setPaper('a4', 'landscape'); // Customize as needed
                 $htmlContent = $this->generateSampleSelection($revision);
                 break;
             case 'preliminary_risk_assessment':
-                $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generatePreliminaryRiskAssessment($revision);
                 break;
             case 'testing_program_and_results':
-                $pdf->setPaper('a4', 'landscape'); // Customize as needed
                 $htmlContent = $this->generateTestingProgramsAndResults($revision);
+                break;
+            case 'infidelity_declaration':
+                $htmlContent = $this->generateInfidelityDeclaration($revision);
+                break;
+            case 'recommendations_plan':
+                $htmlContent = $this->generateRecommendationsPlan($revision);
+                break;
+            case 'meeting_report':
+                $htmlContent = $this->generateMeetingReport($report);
                 break;
             default:
                 return response()->json(['error' => 'Invalid document type provided'], 400);
         }
 
-        // Load the HTML content
-        $css = "<style>.page-break { page-break-after: always; }</style>";
-        $pdf->loadHTML($css . $htmlContent);
+        // Temporarily save the file to a unique temporary path
+        $tempPath = storage_path('app/public/temp/' . uniqid() . '.pdf');
 
-        // Output the PDF as a string
-        $output = $pdf->output();
+        // Ensure the temporary directory exists
+        if (!File::exists(dirname($tempPath))) {
+            File::makeDirectory(dirname($tempPath), 0755, true);
+        }
 
-        // Return the PDF as a response
-        return response()->make($output, 200, [
+        // Generate PDF and save to the temporary path
+        Browsershot::html($htmlContent)
+            ->format('A4')
+            ->showBackground()
+            ->save($tempPath);
+
+        // Read the file's content
+        $pdfContent = File::get($tempPath);
+
+        // Prepare headers for the response to display PDF inline
+        $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $documentType . '_' . time() . '.pdf"',
-        ]);
+            'Content-Disposition' => 'inline; filename="' . $request->input('document_type') . '_' . time() . '.pdf"',
+        ];
+
+        // Clean up: Delete the temporary file
+        File::delete($tempPath);
+
+        // Return the PDF content as a response
+        return response()->make($pdfContent, 200, $headers);
     }
 
     protected function generateRevisionPlanAndProgram($revision)
@@ -95,6 +126,23 @@ class DocumentController extends Controller
     {
         $revision->load('programs');
         return view('testing_program_and_results', compact('revision'))->render();
+    }
+
+    protected function generateInfidelityDeclaration($revision)
+    {
+        return view('infidelity_declaration', compact('revision'))->render();
+    }
+
+    protected function generateRecommendationsPlan($revision)
+    {
+        $revision->load('recommendations');
+
+        return view('recommendations_plan', compact('revision'))->render();
+    }
+
+    protected function generateMeetingReport($report)
+    {
+        return view('meeting_report', compact('report'))->render();
     }
 
     // Add additional methods to generate other document types...

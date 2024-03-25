@@ -4,14 +4,16 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -22,7 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'organizational_unit_id'
     ];
 
     /**
@@ -45,13 +47,19 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function organization(): HasOne
+    public function organization(): BelongsTo
     {
-        return $this->hasOne(Organization::class);
+        return $this->belongsTo(Organization::class);
     }
 
-    public function organizationalUnit(): HasOne
+    public function organizationalUnit(): BelongsTo
     {
-        return $this->hasOne(OrganizationalUnit::class);
+        // Assuming the foreign key is 'organizational_unit_id' in the users table
+        return $this->belongsTo(OrganizationalUnit::class, 'organizational_unit_id');
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateOrganizationalUnitRequest extends FormRequest
 {
@@ -11,7 +12,9 @@ class UpdateOrganizationalUnitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        // Adjust this based on your application's authorization requirements.
+        // For now, let's assume any authenticated user can update.
+        return auth()->check();
     }
 
     /**
@@ -21,10 +24,12 @@ class UpdateOrganizationalUnitRequest extends FormRequest
      */
     public function rules(): array
     {
+        $organizationalUnitId = $this->route('organizationalUnit');
+
         return [
             'name' => 'sometimes|required|string|max:255',
-            'head_id' => 'nullable|exists:users,id',
-            'organization_id' => 'nullable|exists:organizations,id',
+            'head_id' => 'sometimes|nullable|integer|exists:users,id',
+            'organization_id' => 'sometimes|required|integer|exists:organizations,id',
         ];
     }
 }

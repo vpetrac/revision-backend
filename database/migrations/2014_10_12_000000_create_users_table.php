@@ -20,10 +20,9 @@ return new class extends Migration
             $table->rememberToken();
 
             $table->unsignedBigInteger('organization_id')->nullable();
-            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null');
+        
 
             $table->unsignedBigInteger('organizational_unit_id')->nullable();
-            $table->foreign('organizational_unit_id')->references('id')->on('organizational_units')->onDelete('set null');
 
             $table->timestamps();
         });
