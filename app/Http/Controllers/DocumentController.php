@@ -20,7 +20,7 @@ class DocumentController extends Controller
         $revision = null;
         $report = null;
 
-        if ($revisionId !== -1) {
+        if ($revisionId) {
             $revision = Revision::find($revisionId);
 
             if (!$revision) {
@@ -28,7 +28,7 @@ class DocumentController extends Controller
             }
         }
 
-        if ($reportId !== -1) {
+        if ($reportId) {
             $report = Report::find($reportId);
 
             if (!$report) {
