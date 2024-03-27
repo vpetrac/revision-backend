@@ -27,6 +27,7 @@ class StoreRecommendationRequest extends FormRequest
             'status' => 'required|string|max:255',
             'activities' => 'nullable|string',
             'responsibility' => 'nullable|json',
+            'responsible_users' => 'nullable|string',
             'partner' => 'nullable|json',
             'deadline.*.date' => 'nullable|date',
             'real_deadline' => 'nullable|date',

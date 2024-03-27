@@ -26,6 +26,7 @@ class UpdateRecommendationRequest extends FormRequest
             'importance' => 'nullable|integer|min:1|max:5', // Assuming importance is a scale from 1 to 5
             'status' => 'sometimes|required|string|max:255',
             'activities' => 'nullable|string',
+            'responsible_users' => 'nullable|string',
             'responsibility' => 'nullable|json',
             'partner' => 'nullable|json',
             'deadline.*.date' => 'nullable|date',
