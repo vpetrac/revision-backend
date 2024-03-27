@@ -225,7 +225,7 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th class="upper-header" colspan="5">Matrica zadataka</th>
+                        <th class="upper-header">Matrica zadataka</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -238,7 +238,6 @@
         </div>
 
     </div>
-
 </body>
 
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -22,19 +23,11 @@ class RegisteredUserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['organizationalUnit'])->get();
+        // Fetch all users with their organizationalUnit and roles eagerly loaded
+        $users = User::with(['organizationalUnit', 'roles'])->get();
 
-        $users->transform(function ($user) {
-            // Check if the user has roles; if not, set a default role
-            if ($user->roles->isEmpty()) {
-                $user->roleNames = collect(['Subjekt']); // Setting a default role as 'subject'
-            } else {
-                $user->roleNames = $user->getRoleNames(); // This will add a roleNames attribute to your user object.
-            }
-            return $user;
-        });
-
-        return response()->json($users);
+        // Wrap the users collection with the UserResource, which formats each user
+        return UserResource::collection($users)->response();
     }
 
     /**
@@ -69,16 +62,20 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'exists:roles,name'], // Ensure the role exists
+            'organizational_unit_id' => ['nullable', 'exists:organizational_units,id'],
+            'role_id' => ['nullable', 'exists:roles,id'], // Validate the role_id exists
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'organizational_unit_id' => $request->organizational_unit_id,
         ]);
 
-        $user->assignRole($request->role); // Assign the role to the user
+        // Find the role by ID and assign it to the user
+        $role = Role::findById($request->role_id);
+        $user->assignRole($role);
 
         event(new Registered($user));
 
@@ -95,18 +92,19 @@ class RegisteredUserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Authorization check remains the same
-
         $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
             'email' => ['sometimes', 'required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-            'role' => ['sometimes', 'string', 'exists:roles,name'], // Validate role if provided
+            'organizational_unit_id' => ['sometimes', 'required', 'exists:organizational_units,id'],
+            'role_id' => ['sometimes', 'required', 'exists:roles,id'], // Validate role_id if provided
         ]);
 
         $user->update($request->only('name', 'email', 'organizational_unit_id'));
 
-        if ($request->has('role')) {
-            $user->syncRoles($request->role); // Sync roles in case a new role is provided
+        if ($request->has('role_id')) {
+            // Find the role by ID and sync it to the user
+            $role = Role::findById($request->role_id);
+            $user->syncRoles($role);
         }
 
         return response()->json($user);

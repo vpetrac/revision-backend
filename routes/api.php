@@ -30,9 +30,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         return $request->user();
     });
 
-    Route::get('/roles', [RegisteredUserController::class, 'getRoles']);
-    Route::post('/users', [RegisteredUserController::class, 'storeOnly']);
+    Route::get('/roles', [RegisteredUserController::class, 'roles']);
+    
     Route::get('/users', [RegisteredUserController::class, 'index']);
+    Route::post('/users', [RegisteredUserController::class, 'storeOnly']);
     Route::put('/users/{id}', [RegisteredUserController::class, 'update'])->where('id', '[0-9]+');
     Route::delete('/users/{id}', [RegisteredUserController::class, 'destroy'])->where('id', '[0-9]+');
 
