@@ -61,7 +61,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', Rules\Password::defaults()],
             'organizational_unit_id' => ['nullable', 'exists:organizational_units,id'],
             'role_id' => ['nullable', 'exists:roles,id'], // Validate the role_id exists
         ]);
@@ -74,7 +74,8 @@ class RegisteredUserController extends Controller
         ]);
 
         // Find the role by ID and assign it to the user
-        $role = Role::findById($request->role_id);
+        $role = Role::findById($request->role_id, 'web');
+
         $user->assignRole($role);
 
         event(new Registered($user));
@@ -103,7 +104,7 @@ class RegisteredUserController extends Controller
 
         if ($request->has('role_id')) {
             // Find the role by ID and sync it to the user
-            $role = Role::findById($request->role_id);
+            $role = Role::findById($request->role_id, 'web');
             $user->syncRoles($role);
         }
 

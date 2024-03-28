@@ -111,9 +111,9 @@ class RecommendationController extends Controller
         }
 
         // Adjusting for the new responsibility format
-        if (!empty($responsibilities)) {
-            foreach ($responsibilities as $responsibility) {
-                $query->whereJsonContains('responsibility->$.value', $responsibility);
+        if (!empty($responsibilitiesQuery)) {
+            foreach ($responsibilitiesQuery as $responsibility) {
+                $query->whereJsonContains('responsibility', ['value' => $responsibility]);
             }
         }
 
