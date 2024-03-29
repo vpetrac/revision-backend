@@ -15,20 +15,20 @@ class DocumentController extends Controller
     public function generateDocument(Request $request)
     {
         $documentType = $request->input('document_type');
-        $revisionId = $request->input('revision_id') || -1;
-        $reportId = $request->input('report_id') || -1;
+		$revisionId = intval($request->input('revision_id')) ?: -1;
+		$reportId = intval($request->input('report_id')) ?: -1;
         $revision = null;
         $report = null;
-
-        if ($revisionId) {
+		
+        if ($revisionId !== -1) {
             $revision = Revision::find($revisionId);
 
             if (!$revision) {
-                return response()->json(['error' => 'Revision not found'], 404);
+                return response()->json(['error' => "Revision not found $revisionId"], 404);
             }
         }
 
-        if ($reportId) {
+        if ($reportId !== -1) {
             $report = Report::find($reportId);
 
             if (!$report) {

@@ -63,7 +63,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', Rules\Password::defaults()],
             'organizational_unit_id' => ['nullable', 'exists:organizational_units,id'],
-            'role_id' => ['nullable', 'exists:roles,id'], // Validate the role_id exists
+            'role' => ['nullable', 'exists:roles,name'], // Validate the role_id exists
         ]);
 
         $user = User::create([
@@ -74,7 +74,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // Find the role by ID and assign it to the user
-        $role = Role::findById($request->role_id, 'web');
+        $role = Role::findByName($request->role, 'web');
 
         $user->assignRole($role);
 
@@ -97,14 +97,14 @@ class RegisteredUserController extends Controller
             'name' => ['sometimes', 'required', 'string', 'max:255'],
             'email' => ['sometimes', 'required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'organizational_unit_id' => ['sometimes', 'required', 'exists:organizational_units,id'],
-            'role_id' => ['sometimes', 'required', 'exists:roles,id'], // Validate role_id if provided
+            'role' => ['sometimes', 'required', 'exists:roles,name'], // Validate role_id if provided
         ]);
 
         $user->update($request->only('name', 'email', 'organizational_unit_id'));
 
-        if ($request->has('role_id')) {
+        if ($request->has('role')) {
             // Find the role by ID and sync it to the user
-            $role = Role::findById($request->role_id, 'web');
+            $role = Role::findByName($request->role, 'web');
             $user->syncRoles($role);
         }
 
