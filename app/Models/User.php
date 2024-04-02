@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function surveyResponses()
+    {
+        return $this->hasMany(SurveyResponse::class);
+    }
 }

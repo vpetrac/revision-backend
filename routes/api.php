@@ -14,6 +14,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RevisionApprovalController;
 use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\SurveyTokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,11 +28,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/user', function (Request $request) {
-        return $request->user();
+        $user = $request->user()->load('roles');
+        return $user;
     });
 
     Route::get('/roles', [RegisteredUserController::class, 'roles']);
-    
+
     Route::get('/users', [RegisteredUserController::class, 'index']);
     Route::post('/users', [RegisteredUserController::class, 'storeOnly']);
     Route::put('/users/{id}', [RegisteredUserController::class, 'update'])->where('id', '[0-9]+');
@@ -119,6 +121,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/get-recommendations', [RecommendationController::class, 'getRecommendations']);
     Route::get('/generate-recommendations-report', [RecommendationController::class, 'generateRecommendationsReport']);
+    Route::get('/get-revision-book', [RevisionController::class, 'getFilteredRevisions']);
 
     Route::post('/download-document', [DocumentController::class, 'generateDocument']);
 
@@ -130,6 +133,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::patch('/{id}', [OrganizationalUnitController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('/{id}', [OrganizationalUnitController::class, 'destroy'])->where('id', '[0-9]+');
     });
+
+    Route::post('/survey/generate-token', [SurveyTokenController::class, 'generateSurveyToken']);
+    Route::get('/survey/check-token/{token}', [SurveyTokenController::class, 'checkSurveyToken']);
+    Route::post('/survey/submit', [SurveyTokenController::class, 'submitSurvey']);
 });
 
 // File management routes

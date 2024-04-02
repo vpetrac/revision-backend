@@ -98,4 +98,9 @@ class Revision extends Model
     {
         return $this->hasMany(Recommendation::class);
     }
+
+    public function surveyResponses()
+    {
+        return $this->hasMany(SurveyResponse::class);
+    }
 }

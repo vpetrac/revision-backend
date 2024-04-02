@@ -248,4 +248,33 @@ class RevisionController extends Controller
             }
         }
     }
+
+    /**
+     * Get revisions based on input parameters.
+     *
+     * @param Illuminate\Http\Request $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public static function getFilteredRevisions(Request $request)
+    {
+        $query = Revision::query(); // Start building your query
+
+        // Filtering by revision IDs
+        if ($revisionIds = $request->query('revisionId', [])) {
+            $query->whereIn('id', $revisionIds);
+        }
+
+        // Filtering by start date (actual_start_of_internal_revision)
+        if ($startDate = $request->query('startDate')) {
+            $query->whereDate('planned_start_of_internal_revision', '>=', $startDate);
+        }
+
+        if ($endDate = $request->query('endDate')) {
+            $query->whereDate('planned_start_of_internal_revision', '<=', $endDate);
+        }
+
+        // Feel free to add more filtering conditions here
+
+        return $query->get(); // Execute the query and return the results
+    }
 }
