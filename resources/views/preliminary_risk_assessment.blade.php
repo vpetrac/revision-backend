@@ -172,7 +172,7 @@
                     </tr>
                     <tr>
                         <td class="tg-0lax" style="max-width: 20px;">Oznaka</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-12</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-11</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Revizija</td>
@@ -187,12 +187,12 @@
         </div>
     </div>
     <div class="report">
-        <h1>PLAN I PROGRAM REVIZIJE</h1>
+        <h1>PRELIMINARNA PROCJENA GLAVNIH RIZIKA</h1>
         <div class="tg-wrap">
             <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
                     <tr>
-                        <th class="upper-header" colspan="2">PRELIMINARNA PROCJENA GLAVNIH RIZIKA</th>
+                        <th class="upper-header" colspan="2">OPĆI PODACI O REVIZIJI</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -209,7 +209,7 @@
             <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
                     <tr>
-                        <th style="font-weight: bold;">r.<br>br.</th>
+                        <th style="font-weight: bold;">R.<br>br.</th>
                         <th style="font-weight: bold;">Glavni rizici</th>
                         <th style="font-weight: bold;">Mogući uzroci rizika</th>
                         <th style="font-weight: bold;">Moguće posljedice rizika</th>

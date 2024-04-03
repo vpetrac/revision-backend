@@ -15,11 +15,11 @@ class DocumentController extends Controller
     public function generateDocument(Request $request)
     {
         $documentType = $request->input('document_type');
-		$revisionId = intval($request->input('revision_id')) ?: -1;
-		$reportId = intval($request->input('report_id')) ?: -1;
+        $revisionId = intval($request->input('revision_id')) ?: -1;
+        $reportId = intval($request->input('report_id')) ?: -1;
         $revision = null;
         $report = null;
-		
+
         if ($revisionId !== -1) {
             $revision = Revision::find($revisionId);
 
@@ -69,6 +69,10 @@ class DocumentController extends Controller
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateMeetingReport($report);
                 break;
+            case 'control_list':
+                $pdf->setPaper('a4', 'portrait'); // Customize as needed
+                $htmlContent = $this->generateControlList($report);
+                break;
             default:
                 return response()->json(['error' => 'Invalid document type provided'], 400);
         }
@@ -100,6 +104,7 @@ class DocumentController extends Controller
         })->with(['programs' => function ($query) use ($revisionId) {
             $query->where('revision_id', $revisionId);
         }])->get();
+
 
         return view('revision_plan_and_program', compact('revision', 'goalProgram'))->render();
     }
@@ -139,5 +144,10 @@ class DocumentController extends Controller
         return view('meeting_report', compact('report'))->render();
     }
 
+
+    protected function generateControlList($report)
+    {
+        return view('control_list', compact('report'))->render();
+    }
     // Add additional methods to generate other document types...
 }

@@ -220,17 +220,14 @@
                         <td class="tg-mjdq" colspan="8">Revizija: {{$recommendations[0]->revision->code}} - {{$recommendations[0]->revision->name}}</td>
                     </tr>
                     <tr>
-                        <td class="tg-sj1f" rowspan="2">Broj</td>
-                        <td class="tg-sj1f" rowspan="2">Preporuka</td>
-                        <td class="tg-sj1f" rowspan="2">Mjere i aktivnosti</td>
-                        <td class="tg-sj1f" colspan="2">Odgovornost za provedbu mjera i aktivnosti</td>
-                        <td class="tg-sj1f" rowspan="2">Status preporuke</td>
-                        <td class="tg-sj1f" rowspan="2">Rok provedbe</td>
-                        <td class="tg-sj1f" rowspan="2">Napomena</td>
-                    </tr>
-                    <tr>
-                        <td class="tg-sj1f">Nositelj</td>
-                        <td class="tg-sj1f">U suradnji sa</td>
+                        <td class="tg-sj1f">Broj</td>
+                        <td class="tg-sj1f">Preporuka</td>
+                        <td class="tg-sj1f">Mjere i aktivnosti</td>
+                        <td class="tg-sj1f">Odgovornost za provedbu mjera i aktivnosti</td>
+                        <td class="tg-sj1f">Odgovorne osobe</td>
+                        <td class="tg-sj1f">Status preporuke</td>
+                        <td class="tg-sj1f">Rok provedbe</td>
+                        <td class="tg-sj1f">Napomena</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -243,21 +240,25 @@
                         <td class="tg-0pky">{{ $recommendation->activities }}</td>
                         <td class="tg-0pky">
                             @php
-                            $responsibilities = json_decode($recommendation->responsibility, true);
-                            $lastIndex = count($responsibilities) - 1;
+                            $responsibilityData = json_decode($recommendation->responsibility, true);
+                            $partnerData = json_decode($recommendation->partner, true);
+
+                            $lastResponsibilityIndex = count($responsibilityData) - 1;
+                            $lastPartnerIndex = count($partnerData) - 1;
                             @endphp
-                            @foreach($responsibilities as $index => $responsibility)
-                            {{ $responsibility['label'] ?? '' }}{{ $index !== $lastIndex ? ',' : '' }}
+
+                            @foreach($responsibilityData as $index => $responsibility)
+                            {{ $responsibility['label'] ?? 'Nije uneseno' }}{{ $index !== $lastResponsibilityIndex ? ',' : '' }}
+                            @endforeach
+
+                            <br><br> {{-- Here's that little bit of personal space --}}
+
+                            @foreach($partnerData as $index => $partner)
+                            {{ $partner['label'] ?? 'Nije uneseno' }}{{ $index !== $lastPartnerIndex ? ',' : '' }}
                             @endforeach
                         </td>
                         <td class="tg-0pky">
-                            @php
-                            $responsibilities = json_decode($recommendation->partner, true);
-                            $lastIndex = count($responsibilities) - 1;
-                            @endphp
-                            @foreach($responsibilities as $index => $responsibility)
-                            {{ $responsibility['label'] ?? '' }}{{ $index !== $lastIndex ? ',' : '' }}
-                            @endforeach
+                            {{ $recommendation->responsible_users }}
                         </td>
                         <td class="tg-0pky">
                             {{ $recommendation->status }}

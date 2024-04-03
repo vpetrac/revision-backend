@@ -204,7 +204,7 @@
                         <td>{{$revision->code}}</td>
                     </tr>
                     <tr>
-                        <td>Ustrojene jedinice uključene u revidirani proces</td>
+                        <td>Ustrojstvene jedinice uključene u revidirani proces</td>
                         <td>
                             @php
                             $auditTeamMembers = json_decode($revision->auditTeamMembers, true);
@@ -278,18 +278,18 @@
                     </tr>
                     <tr>
                         <td>Početak obavljanja pojedinačne unutarnje revizije</td>
-                        <td>{{ \Carbon\Carbon::parse($revision->planned_start_of_internal_revision)->format('d.m.Y') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($revision->actual_start_of_internal_revision)->format('d.m.Y') }}</td>
+                        <td>{{ !empty($revision->planned_start_of_internal_revision) ? \Carbon\Carbon::parse($revision->planned_start_of_internal_revision)->format('d.m.Y') : '' }}</td>
+                        <td>{{ !empty($revision->actual_start_of_internal_revision) ? \Carbon\Carbon::parse($revision->actual_start_of_internal_revision)->format('d.m.Y') : '' }}</td>
                     </tr>
                     <tr>
-                        <td>Nacrt reviziskog izviesca</td>
-                        <td>{{ \Carbon\Carbon::parse($revision->planned_draft_of_revision_report)->format('d.m.Y') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($revision->actual_draft_of_revision_report)->format('d.m.Y') }}</td>
+                        <td>Nacrt revizijskog izvješća</td>
+                        <td>{{ !empty($revision->planned_draft_of_revision_report) ? \Carbon\Carbon::parse($revision->planned_draft_of_revision_report)->format('d.m.Y') : '' }}</td>
+                        <td>{{ !empty($revision->actual_draft_of_revision_report) ? \Carbon\Carbon::parse($revision->actual_draft_of_revision_report)->format('d.m.Y') : '' }}</td>
                     </tr>
                     <tr>
                         <td>Konačno revizijsko izvješće</td>
-                        <td>{{ \Carbon\Carbon::parse($revision->planned_final_revision_report)->format('d.m.Y') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($revision->actual_final_revision_report)->format('d.m.Y') }}</td>
+                        <td>{{ !empty($revision->planned_final_revision_report) ? \Carbon\Carbon::parse($revision->planned_final_revision_report)->format('d.m.Y') : '' }}</td>
+                        <td>{{ !empty($revision->actual_final_revision_report) ? \Carbon\Carbon::parse($revision->actual_final_revision_report)->format('d.m.Y') : '' }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -318,7 +318,7 @@
                         <td colspan="2"></td>
                         <td>Učinak<br>(1-5)</td>
                         <td>Vjerojatnost<br>(1-5)</td>
-                        <td>Ukupno (Učinak x Vjerojatnost)<br>(1-5)</td>
+                        <td>Ukupno (Učinak x Vjerojatnost)</td>
                     </tr>
                     @foreach($revision->programs as $program)
                     <tr>

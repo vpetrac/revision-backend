@@ -172,7 +172,7 @@
                     </tr>
                     <tr>
                         <td class="tg-0lax" style="max-width: 20px;">Oznaka</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-12</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-08</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Revizija</td>
