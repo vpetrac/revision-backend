@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Plan i program revizije</title>
+    <title>Preliminarna procjena glavnih rizika</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>

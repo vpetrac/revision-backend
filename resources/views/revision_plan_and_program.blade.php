@@ -205,7 +205,13 @@
                     </tr>
                     <tr>
                         <td>Ustrojene jedinice uključene u revidirani proces</td>
-                        <td></td>
+                        <td>
+                            @php
+                            $auditTeamMembers = json_decode($revision->auditTeamMembers, true);
+                            $teamMemberNames = array_column($auditTeamMembers, 'label');
+                            @endphp
+                            {{ implode(', ', $teamMemberNames) }}
+                        </td>
                     </tr>
                     <tr>
                         <td>Voditelj revizijskog tima</td>
@@ -213,7 +219,13 @@
                     </tr>
                     <tr>
                         <td>Članovi revizijskog tima</td>
-                        <td></td>
+                        <td>
+                            @php
+                            $subjects = json_decode($revision->subjects, true);
+                            $subjectNames = array_column($subjects, 'label');
+                            @endphp
+                            {{ implode(', ', $subjectNames) }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -338,10 +350,24 @@
                         <td>Rizik</td>
                     </tr>
 
+                    @foreach ($goalProgram as $goal)
+                    {{-- For each goal, check if it has associated programs --}}
+                    @if(isset($goal->programs) && !empty($goal->programs))
+                    {{-- Loop through each program associated with the goal --}}
+                    @foreach ($goal->programs as $program)
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $goal->name }}</td> {{-- Display the goal's name --}}
+                        <td>{{ $program->risk_description }}</td> {{-- Display the program's name --}}
                     </tr>
+                    @endforeach
+                    @else
+                    {{-- In case there are no associated programs, just show the goal --}}
+                    <tr>
+                        <td>{{ $goal->name }}</td>
+                        <td>N/A</td>
+                    </tr>
+                    @endif
+                    @endforeach
 
                 </tbody>
             </table>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Plan i program revizije</title>
+    <title>Zapisnik sa sastanka</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>
@@ -165,7 +165,7 @@
                 <tbody>
                     <tr>
                         <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
-                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Plan i program revizije</strong></td>
+                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Zapisnik sa sastanka</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
                     </tr>
@@ -191,7 +191,7 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th class="upper-header" colspan="2">OPĆI PODACI O REVIZIJI</th>
+                        <th class="upper-header" colspan="2">ZAPISNIK SA SASTANKA</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -234,8 +234,31 @@
                     </tr>
                 </tbody>
             </table>
+            <table class="tg" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="font-weight: bold;">R.<br>br.</th>
+                        <th style="font-weight: bold;">Zadatak</th>
+                        <th style="font-weight: bold;">Odgovorna osoba</th>
+                        <th style="font-weight: bold;">Status</th>
+                        <th style="font-weight: bold;">Rok</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    @foreach ($report->tasks as $task)
+                    <tr>
+                        <td>{{$loop->index + 1}}</td>
+                        <td>{{$task['title']}}</td>
+                        <td>{{$task['person']}}</td>
+                        <td>{{$task['status']}}</td>
+                        <td>{{ \Carbon\Carbon::parse($task['deadline'])->format('d.m.Y') }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+    </div>
 
     </div>
 </body>

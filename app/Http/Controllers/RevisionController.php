@@ -259,11 +259,7 @@ class RevisionController extends Controller
     {
         $query = Revision::query(); // Start building your query
 
-        // Filtering by revision IDs
-        if ($revisionIds = $request->query('revisionId', [])) {
-            $query->whereIn('id', $revisionIds);
-        }
-
+        
         // Filtering by start date (actual_start_of_internal_revision)
         if ($startDate = $request->query('startDate')) {
             $query->whereDate('planned_start_of_internal_revision', '>=', $startDate);

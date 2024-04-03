@@ -1,8 +1,15 @@
+@php
+$subjects = json_decode($revision->subjects, true);
+array_unshift($subjects, ['label' => $revision->auditTeamHead]); // Adding auditTeamHead as the first subject
+@endphp
+
+@foreach ($subjects as $subject)
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>Plan i program revizije</title>
+    <title>Izjave o neovisnosti</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>
@@ -207,11 +214,11 @@
                     </tr>
                     <tr>
                         <td>Revizor/ica</td>
-                        <td></td>
+                        <td>{{ $subject['label'] }}</td>
                     </tr>
                     <tr>
                         <td>Datum</td>
-                        <td>{{$revision->auditTeamHead}}</td>
+                        <td>{{ now()->format('d.m.Y') }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -233,34 +240,35 @@
                 <tbody>
                     <tr>
                         <td>1.</td>
-                        <td>Imate il poslovni, financiski ili obiteliski interes koji moze utjecati na reviziju na bilo koji nacin?</td>
+                        <td>Imate li poslovni, financijski ili obiteljski interes koji može utjecati na reviziju na bilo koji način?</td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>2.</td>
-                        <td>Imate il izravne izvrsene zadace vezane uz revidirani proces il ustroistvenu jedinicu koja je ukljucena u taj proces?</td>
+                        <td>Imate li izravne izvršene zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?</td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>3.</td>
-                        <td>Imate li izravne ili neizravne rukovodne i upravliacke zadace vezane uz revidirani proces ili ustrostvenu jedinicu koja je ukljucena u taj proces?</td>
+                        <td>Imate li izravne ili neizravne rukovodne i upravljačke zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?</td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>4.</td>
                         <td>
-                            Jeste il donosili odluke, odobrili nalog za sluzbeni put, racune, naloge za placanje za revidiranog subjekta u posljednjih godinu dana?</td>
+                            Jeste li donosili odluke, odobrili nalog za službeni put, račune, naloge za plaćanje za revidirani subjekt u posljednjih godinu dana?</td>
                         <td></td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
             <table class="tg" style="width: 100%;">
-            
-            <tr><td>Potvrdujem da cu, ako se za vrijeme obavljanja revizije pojavi bilo kakav osobni, vanjski ili organizacijski sukob interesa koji moze utjecati na moju neovisnost rada i nepristranog izvjestavanja o nalazima, odmah pisanim putem obavijestiti voditelia Samostalne Slu¿be unutarnje revizije.</td></tr>
+                <tr>
+                    <td>Potvrđujem da ću, ako se za vrijeme obavljanja revizije pojavi bilo kakav osobni, vanjski ili organizacijski sukob interesa koji može utjecati na moju neovisnost rada i nepristrano izvještavanje o nalazima, odmah pisanim putem obavijestiti voditelja Samostalne Službe unutarnje revizije.</td>
+                </tr>
             </table>
 
             <table class="tg" style="width: 100%;">
@@ -303,3 +311,9 @@
 </body>
 
 </html>
+
+@if (!$loop->last)
+<div style="page-break-after: always;"></div>
+@endif
+
+@endforeach

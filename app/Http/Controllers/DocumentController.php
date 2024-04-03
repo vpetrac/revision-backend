@@ -94,11 +94,13 @@ class DocumentController extends Controller
         $revision->load('programs');
         // Generate HTML for the final report
         // Note: Replace 'your_view_here' with the actual view path
+
         $goalProgram = Goal::whereHas('programs', function ($query) use ($revisionId) {
             $query->where('revision_id', $revisionId);
         })->with(['programs' => function ($query) use ($revisionId) {
             $query->where('revision_id', $revisionId);
         }])->get();
+
         return view('revision_plan_and_program', compact('revision', 'goalProgram'))->render();
     }
 
