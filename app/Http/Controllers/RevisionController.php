@@ -19,27 +19,33 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class RevisionController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return JsonResponse
+     */
     public function index(): JsonResponse
     {
         $user = Auth::user();
-        $userId = $user->id;
-        $userOrganizationalUnitId = $user->organizational_unit_id;
 
-        $revisions = Revision::all()->filter(function ($revision) use ($userId, $userOrganizationalUnitId) {
-            // Decode the auditTeamMembers JSON to an array
-            $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
+        // Check if the user has the 'Subjekt' role
+        if ($user->hasRole('Subjekt')) {
+            $user_id = $user->id; // Get the current user's ID
 
-            // Check if the user is in the audit team
-            $isInAuditTeam = collect($auditTeamMembers)->contains(function ($member) use ($userId) {
-                return $member['value'] == $userId;
+            // Filter revisions based on the user being a subject
+            $revisions = Revision::all()->filter(function ($revision) use ($user_id) {
+                $subjects = json_decode($revision->auditTeamMembers, true);
+                foreach ($auditTeamMembers as $auditTeamMember) {
+                    if ($subject['value'] == $user_id) {
+                        return true;
+                    }
+                }
+                return false;
             });
-
-            // Alternatively, check if the user's organizational unit matches the revision's unit
-            // This assumes there's a direct relationship or attribute on the revision that can be compared
-            $isInOrganizationalUnit = $revision->organizational_unit_id == $userOrganizationalUnitId;
-
-            return $isInAuditTeam || $isInOrganizationalUnit;
-        });
+        } else {
+            // If the user does not have the 'Subjekt' role, return all revisions
+            $revisions = Revision::with(['approval'])->get();
+        }
 
         return response()->json($revisions);
     }
