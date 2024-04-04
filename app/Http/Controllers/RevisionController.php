@@ -35,7 +35,7 @@ class RevisionController extends Controller
             // Filter revisions based on the user being a subject
             $revisions = Revision::all()->filter(function ($revision) use ($user_id) {
                 $subjects = json_decode($revision->auditTeamMembers, true);
-                foreach ($auditTeamMembers as $auditTeamMember) {
+                foreach ($subjects as $subject) {
                     if ($subject['value'] == $user_id) {
                         return true;
                     }
