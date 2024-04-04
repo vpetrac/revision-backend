@@ -137,6 +137,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/survey/generate-token', [SurveyTokenController::class, 'generateSurveyToken']);
     Route::get('/survey/check-token/{token}', [SurveyTokenController::class, 'checkSurveyToken']);
     Route::post('/survey/submit', [SurveyTokenController::class, 'submitSurvey']);
+
+    Route::get('/generate-revisions-book', [RevisionController::class, 'generateFilteredRevisionsDocument']);
+    Route::get('/generate-revision-book-excel', [RevisionController::class, 'generateRevisionBookExcel']);
+
+
 });
 
 // File management routes

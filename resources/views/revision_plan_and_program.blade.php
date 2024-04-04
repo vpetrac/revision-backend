@@ -175,7 +175,7 @@
                     </tr>
                     <tr>
                         <td class="tg-0lax">Revizija</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">1-05/2022</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">1-06/2022</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Stranica</td>

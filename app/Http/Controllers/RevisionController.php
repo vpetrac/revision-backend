@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RevisionsBookExport;
 use App\Http\Requests\StoreRevisionRequest;
 use App\Http\Requests\UpdateRevisionRequest;
 use App\Http\Resources\RevisionResource;
@@ -10,8 +11,11 @@ use App\Models\Revision;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class RevisionController extends Controller
 {
@@ -22,7 +26,27 @@ class RevisionController extends Controller
      */
     public function index(): JsonResponse
     {
-        $revisions = Revision::all();
+        $user = Auth::user();
+
+        // Check if the user has the 'Subjekt' role
+        if ($user->hasRole('Subjekt')) {
+            $user_id = $user->id; // Get the current user's ID
+
+            // Filter revisions based on the user being a subject
+            $revisions = Revision::all()->filter(function ($revision) use ($user_id) {
+                $subjects = json_decode($revision->subjects, true);
+                foreach ($subjects as $subject) {
+                    if ($subject['value'] == $user_id) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        } else {
+            // If the user does not have the 'Subjekt' role, return all revisions
+            $revisions = Revision::with(['approval'])->get();
+        }
+
         return response()->json($revisions);
     }
 
@@ -259,7 +283,7 @@ class RevisionController extends Controller
     {
         $query = Revision::query(); // Start building your query
 
-        
+
         // Filtering by start date (actual_start_of_internal_revision)
         if ($startDate = $request->query('startDate')) {
             $query->whereDate('planned_start_of_internal_revision', '>=', $startDate);
@@ -272,5 +296,103 @@ class RevisionController extends Controller
         // Feel free to add more filtering conditions here
 
         return $query->get(); // Execute the query and return the results
+    }
+
+    public function generateFilteredRevisionsDocument(Request $request)
+    {
+        // Filter revisions based on request parameters
+        $filteredRevisions = self::getFilteredRevisions($request);
+
+        if ($filteredRevisions->isEmpty()) {
+            return response()->json(['error' => 'No revisions found for the specified date range'], 404);
+        }
+
+        // Prepare the PDF
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->setPaper('a2', 'landscape'); // Customize as needed
+
+        // Generate the HTML content for the filtered revisions
+        $htmlContent = $this->generateRevisionBookForMultiple($filteredRevisions);
+
+        // Load the HTML content
+        $css = "<style>.page-break { page-break-after: always; }</style>";
+        $pdf->loadHTML($css . $htmlContent);
+
+        // Output the PDF as a string
+        $output = $pdf->output();
+
+        // Return the PDF as a response
+        return response()->make($output, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="knjiga_revizija_' . time() . '.pdf"',
+        ]);
+    }
+
+    public function generateRevisionBookExcel(Request $request)
+    {
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+
+        return Excel::download(new RevisionsBookExport($startDate, $endDate), 'revision_book.xlsx');
+    }
+
+    protected function generateRevisionBookForMultiple($revisions)
+    {
+        // Assuming you have a view that can iterate over multiple revisions
+        return view('revision_book', compact('revisions'))->render();
+    }
+
+    public function exportRevisionsCsv()
+    {
+        $filename = "revisions.csv";
+        $handle = fopen('php://temp', 'w');
+
+        // Headers part 1
+        fputcsv($handle, [
+            'R.B', 'OZNAKA REVIZIJE', 'NAZIV REVIZIJE', 'UR. BROJ (konačno izvješće)', 'REVIZOR / REVIZORSKI TIM', 'SUPERVIZIJA', 'RAZDOBLJE TRAJANJA REVIZIJE', '', // These two cells merge into "RAZDOBLJE TRAJANJA REVIZIJE"
+            'DATUM REALIZACIJE NACRTA REVIZIJSKOG IZVJEŠĆA', '', // Merge into "DATUM REALIZACIJE NACRTA REVIZIJSKOG IZVJEŠĆA"
+            'DATUM IZDAVANJA KONAČNOG REVIZIJSKOG IZVJEŠĆA (datum sa Odluke-odobrenje Uprave)', 'UKUPNO PREPORUKA',
+            'BROJ DANIH PREPORUKA', '', '', '', '', '', '', // These cells merge into "BROJ DANIH PREPORUKA"
+            'ROKOVI PROVEDBE PREPORUKE (datumi iz Plana djelovanja)',
+            'PRAĆENJE PREPORUKE', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', // These merge into "PRAĆENJE PREPORUKE"
+        ]);
+
+        // Headers part 2
+        fputcsv($handle, [
+            '', '', '', '', '', '', 'Početak', 'Završetak', 'Planirani', 'Ostvareni', '', '',
+            'Visoki važnost (V)', '', 'Srednja važnost (S)', '', 'Niska važnost (N)', '',
+            'Početak praćenja', 'Završetak praćenja', 'DATUMI PROVEDBE PREPORUKE',
+            'Broj praćenih preporuka', '', '',
+            'Broj provedenih preporuka', '', '',
+            'Broj djelomično provedenih preporuka', '', '',
+            'Broj neprovedenih preporuka', '', '',
+            'Broj preporuka koje više nisu relevantne', '', '',
+            'Broj preporuka koje je potrebno dalje pratiti', '', '',
+        ]);
+
+        // Headers part 3
+        fputcsv($handle, [
+            '', '', '', '', '', '', 'Početak (datum slanja obavijesti o početku revizije)', 'Završetak (datum izrade Odluke-Konačno izvješće)', '', '', '', '',
+            'Ukupno V', 'Prihvaćeno', 'Ukupno S', 'Prihvaćeno', 'Ukupno N', 'Prihvaćeno',
+            '', '', '', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N'
+        ]);
+
+        // Example data row
+        $dataRow = array_fill(0, 48, 'xxx');
+        // Customize $dataRow as per your actual data here
+
+        fputcsv($handle, $dataRow);
+
+        fclose($handle);
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename={$filename}",
+        ];
+
+        return Response::stream(function () use ($handle) {
+            fseek($handle, 0);
+            fpassthru($handle);
+        }, 200, $headers);
     }
 }

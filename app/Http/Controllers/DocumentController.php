@@ -73,6 +73,14 @@ class DocumentController extends Controller
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateControlList($report);
                 break;
+            case 'subject_survey':
+                $pdf->setPaper('a4', 'portrait'); // Customize as needed
+                $htmlContent = $this->generateSurvey($revision);
+                break;
+            case 'revision_book':
+                $pdf->setPaper('a2', 'landscape'); // Customize as needed
+                $htmlContent = $this->generateRevisionBook($revision);
+                break;
             default:
                 return response()->json(['error' => 'Invalid document type provided'], 400);
         }
@@ -148,6 +156,16 @@ class DocumentController extends Controller
     protected function generateControlList($report)
     {
         return view('control_list', compact('report'))->render();
+    }
+
+    protected function generateSurvey($revision)
+    {
+        return view('survey', compact('revision'))->render();
+    }
+
+    protected function generateRevisionBook($revision)
+    {
+        return view('revision_book', compact('revision'))->render();
     }
     // Add additional methods to generate other document types...
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SurveyLinkMail;
+use App\Models\Revision;
 use App\Models\SurveyResponse;
 use App\Models\SurveyToken;
 use App\Models\User;
@@ -14,19 +15,25 @@ class SurveyTokenController extends Controller
 {
     public function generateSurveyToken(Request $request)
     {
-        $userId = $request->input('user_id');
         $revisionId = $request->input('revision_id');
+        $revision = Revision::findOrFail($revisionId);
+        $subjects = json_decode($revision->subjects, true);
 
-        $token = SurveyToken::generateToken($userId, $revisionId);
+        foreach ($subjects as $subject) {
+            $userId = $subject['value']; // Where 'value' is the userId
+            $user = User::findOrFail($userId); // Ensure the user exists
 
-        $user = User::findOrFail($userId); // Ensure the user exists
+            // Generate a unique token for the survey
+            $token = SurveyToken::generateToken($userId, $revisionId);
 
-        $url = env('FRONTEND_URL', 'http://localhost:3000');
+            // Define the survey URL, including the generated token
+            $url = env('FRONTEND_URL', 'http://localhost:3000') . "/survey/{$token->token}";
 
-        // Send the email
-        Mail::to($user->email)->send(new SurveyLinkMail($user, $token->token, $url));
+            // Send the email with the survey link
+            Mail::to($user->email)->send(new SurveyLinkMail($user, $token->token, $url));
+        }
 
-        return response()->json(['message' => 'Survey link has been sent.']);
+        return response()->json(['message' => 'Survey links have been sent to all subjects.']);
     }
 
     public function submitSurvey(Request $request)

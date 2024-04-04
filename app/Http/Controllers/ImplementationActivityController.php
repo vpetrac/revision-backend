@@ -17,7 +17,11 @@ class ImplementationActivityController extends Controller
      */
     public function index($recommendationId)
     {
-        $activities = ImplementationActivity::where('recommendation_id', $recommendationId)->get();
+        // Use with('user') to eagerly load the user relationship
+        $activities = ImplementationActivity::with('user')
+            ->where('recommendation_id', $recommendationId)
+            ->get();
+
         return response()->json($activities);
     }
 

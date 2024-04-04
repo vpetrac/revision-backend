@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Preliminarna procjena glavnih rizika</title>
+    <title>Upitnik za revidirani subjekt</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>
@@ -156,7 +156,7 @@
 <body>
     <div class="header">
         <div class="tg-wrap">
-        <table class="tg" style="width: 100%; max-width:100;">
+            <table class="tg" style="width: 100%; max-width:100;">
                 <colgroup>
                     <col style="width: 50px">
                     <col style="width: 800px">
@@ -166,13 +166,13 @@
                 <tbody>
                     <tr>
                         <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
-                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Preliminarna procjena glavnih rizika</strong></td>
+                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Upitnik za revidirani subjekt</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax" style="max-width: 20px;">Oznaka</td>
-                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-04</span></td>
+                        <td class="tg-0lax"><span style="font-weight:bold">OBR-UNR-13</span></td>
                     </tr>
                     <tr>
                         <td class="tg-0lax">Revizija</td>
@@ -187,7 +187,9 @@
         </div>
     </div>
     <div class="report">
-        <h1>PRELIMINARNA PROCJENA GLAVNIH RIZIKA</h1>
+        <h1>UPITNIK ZA REVIDIRANI SUBJEKT<br>PROGRAM OSIGURANJA KVALITETE I UNAPRJEĐENJA</h1>
+        <p>Molimo ocijenite Samostalnu Službu unutarnje revizije u sljedećim područjima te zaokružite / označite samo jedan broj (ocjenu) po odgovoru.
+        </p>
         <div class="tg-wrap">
             <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
@@ -206,59 +208,138 @@
                     </tr>
                 </tbody>
             </table>
+
             <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
                     <tr>
-                        <th style="font-weight: bold;">R.<br>br.</th>
-                        <th style="font-weight: bold;">Glavni rizici</th>
-                        <th style="font-weight: bold;">Mogući uzroci rizika</th>
-                        <th style="font-weight: bold;">Moguće posljedice rizika</th>
-                        <th style="font-weight: bold;">Očekivane kontrole</th>
-                        <th style="font-weight: bold;">Postojeće kontrole</th>
-                        <th style="font-weight: bold;">Preliminarna procjena izloženosti rizicima</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($revision->programs as $program)
-                    <tr>
-                        <td>{{$loop->index + 1}}.</td>
-                        <td>{{$program->risk_description}}</td>
-                        <td>{{$program->possible_risk_causes}}</td>
-                        <td>{{$program->possible_risk_consequences}}</td>
-                        <td>{{$program->expected_controls}}</td>
-                        <td>{{$program->existing_controls}}</td>
-                        <td>{{$program->effect_value * $program->probability_value}}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <table class="tg" style="width: 100%; max-width:100;">
-                <colgroup>
-                    <col style="width: 80px">
-                    <col style="width: 95px">
-                    <col style="width: 104px">
-                    <col style="width: 122px">
-                    <col style="width: 134px">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Datum:</th>
-                        <th>Ime i prezime:</th>
-                        <th>Funkcija:</th>
-                        <th>Potpis:</th>
+                        <th colspan="6">UPITNIK</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Izradio:</td>
+                        <td></td>
+                        <td>VD</td>
+                        <td>D</td>
+                        <td>Z</td>
+                        <td>L</td>
+                        <td>N/P</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">ODNOS S REVIDIRANIM SUBJEKTOM</td>
+                    </tr>
+                    <tr>
+                        <td>1. Ocijenite suradnju unutarnje revizije s revidiranim subjektom</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td>Odobrio:</td>
+                        <td>2. Tijekom obavljanja revizije unutarnjim revizorima smo omogućili neograničeno pravo pristupa cjelokupnoj dokumentaciji, podacima i informacijama (na svim nositeljima podataka) te rukovoditeljima revidiranog subjekta, zaposlenicima i materijalnoj imovini</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3. Unutarnja revizija prilikom obavljanja revizije je stručno, savjesno obavila revizijski rad</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">UNUTARNJI REVIZORI</td>
+                    </tr>
+                    <tr>
+                        <td>4. Objektivnost unutarnjih revizora</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5. Profesionalizam unutarnjih revizora</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>6. Revizorski tim razumije moje procese i ima dostatno znanje o istima za provođenje revizije</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>7. Revizorski tim je fleksibilan za vrijeme obavljanja revizije i revizori imaju izražene interpersonalne vještine</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>8. Revizorski tim je pokazao profesionalnost, ljubaznost i konstruktivan i pozitivan pristup te je bio u mogućnosti uspostaviti učinkovite odnose s osobljem</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">REVIZIJSKI PROCES I IZVJEŠĆE</td>
+                    </tr>
+                    <tr>
+                        <td>9. Ciljevi, opseg, trajanje te metode obavljanja revizije su jasno priopćeni</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>10. Tijekom provođenja revizije komunikacija je bila dobra i nalazi i preporuke su jasno priopćeni i dostatno raspravljeni </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>11. Trajanje revizije</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>12. Pravovremenost revizijskog izvješća</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>13. Jasnoća revizijskog izvješća</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>14. Korisnost revizije u poboljšanju poslovnih procesa i kontrola </td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
