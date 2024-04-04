@@ -28,24 +28,30 @@ class RevisionController extends Controller
     {
         $user = Auth::user();
 
-        // Check if the user has the 'Subjekt' role
-        if ($user->hasRole('Subjekt')) {
-            $user_id = $user->id; // Get the current user's ID
-
-            // Filter revisions based on the user being a subject
-            $revisions = Revision::all()->filter(function ($revision) use ($user_id) {
-                $subjects = json_decode($revision->auditTeamMembers, true);
-                foreach ($subjects as $subject) {
-                    if ($subject['value'] == $user_id) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-        } else {
-            // If the user does not have the 'Subjekt' role, return all revisions
+        // If the user does not have the 'Subjekt' role, return all revisions
+        if (!$user->hasRole('Subjekt')) {
             $revisions = Revision::with(['approval'])->get();
+            return response()->json($revisions);
         }
+
+        // The user has the 'Subjekt' role; proceed with filtering
+        $userId = $user->id;
+        $userOrganizationalUnitId = $user->organizational_unit_id;
+
+        $revisions = Revision::all()->filter(function ($revision) use ($userId, $userOrganizationalUnitId) {
+            // Decode the auditTeamMembers JSON to an array
+            $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
+
+            // Check if the user is in the audit team
+            $isInAuditTeam = collect($auditTeamMembers)->contains(function ($member) use ($userId) {
+                return $member['value'] == $userId;
+            });
+
+            // Check if the user's organizational unit matches the revision's unit
+            $isInOrganizationalUnit = $revision->organizational_unit_id == $userOrganizationalUnitId;
+
+            return $isInAuditTeam || $isInOrganizationalUnit;
+        });
 
         return response()->json($revisions);
     }
