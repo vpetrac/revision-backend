@@ -55,7 +55,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             overflow: hidden;
             padding: 3px 10px;
         }
@@ -64,7 +64,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             overflow: hidden;
             padding: 3px 10px;
@@ -104,7 +104,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             padding: 5px 5px;
         }
 
@@ -113,7 +113,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             padding: 5px 5px;
         }
@@ -196,7 +196,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="font-weight: bold;">Naziv revizije</td>
+                        <td style="font-weight: bold; width: 380px;">Naziv revizije</td>
                         <td>{{$revision->name}}</td>
                     </tr>
                     <tr>
@@ -212,7 +212,16 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th style="font-weight: bold;">r.<br>br.</th>
+                        <td style="font-size: 8px; text-align: center;">1</td>
+                        <th style="font-size: 8px; text-align: center;">2</th>
+                        <th style="font-size: 8px; text-align: center;">3</th>
+                        <th style="font-size: 8px; text-align: center;">4</th>
+                        <th style="font-size: 8px; text-align: center;">5</th>
+                        <th style="font-size: 8px; text-align: center;">6</th>
+                        <th style="font-size: 8px; text-align: center;">7</th>
+                    </tr>
+                    <tr>
+                        <th style="font-weight: bold;">R.<br>br.</th>
                         <th style="font-weight: bold;">Naziv</th>
                         <th style="font-weight: bold;">Populacija</th>
                         <th style="font-weight: bold;">Vrsta uzorkovanja</th>
@@ -224,7 +233,7 @@
                 <tbody>
                     @foreach ($revision->samples as $sample)
                     <tr>
-                        <td>{{$loop->index + 1}}.</td>
+                        <td style="text-align: center;">{{$loop->index + 1}}.</td>
                         <td>{{$sample->sample_name}}</td>
                         <td>{{$sample->population_size}}</td>
                         <td>{{$sample->sampling_method}}</td>

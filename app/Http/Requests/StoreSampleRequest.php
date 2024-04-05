@@ -15,11 +15,11 @@ class StoreSampleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sample_name' => 'nullable|string|max:255',
+            'sample_name' => 'nullable|string',
             'population_size' => 'nullable|string',
-            'sampling_method' => 'nullable|string|max:255',
+            'sampling_method' => 'nullable|string',
             'sample_size' => 'nullable|string',
-            'collection_method' => 'nullable|string|max:255',
+            'collection_method' => 'nullable|string',
             'method_explanation' => 'nullable|string',
             'revision_id' => 'required|exists:revisions,id', // Make sure the revision exists
             // Add any other fields you need to validate

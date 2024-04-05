@@ -55,7 +55,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             overflow: hidden;
             padding: 3px 10px;
         }
@@ -64,7 +64,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             overflow: hidden;
             padding: 3px 10px;
@@ -104,7 +104,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             padding: 5px 5px;
         }
 
@@ -113,7 +113,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             padding: 5px 5px;
         }
@@ -312,7 +312,7 @@
                 <tbody>
                     <tr>
                         <td colspan="2">Rizik i kratak opis rizika</td>
-                        <td colspan="3">Procjen inherentne</td>
+                        <td colspan="3">Procjena inherentne razine rizika</td>
                     </tr>
                     <tr>
                         <td colspan="2"></td>

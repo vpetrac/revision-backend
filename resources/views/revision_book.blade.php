@@ -271,17 +271,23 @@
                             {{ implode(', ', $subjectNames) }}
                         </td>
                         <td class="s3">{{$revision->supervisor}}</td>
-                        <td class="s3"></td>
-                        <td class="s3"></td>
+                        <td class="s3">{{ !empty($revision->actual_start_of_internal_revision) ? \Carbon\Carbon::parse($revision->actual_start_of_internal_revision)->format('d.m.Y') : '' }}</td>
+                        <td class="s3">{{ !empty($revision->actual_final_revision_report) ? \Carbon\Carbon::parse($revision->actual_final_revision_report)->format('d.m.Y') : '' }}</td>
                         <td class="s3">{{ !empty($revision->planned_draft_of_revision_report) ? \Carbon\Carbon::parse($revision->planned_draft_of_revision_report)->format('d.m.Y') : '' }}</td>
                         <td class="s3">{{ !empty($revision->actual_draft_of_revision_report) ? \Carbon\Carbon::parse($revision->actual_draft_of_revision_report)->format('d.m.Y') : '' }}</td>
                         <td class="s3">{{ !empty($revision->actual_final_revision_report) ? \Carbon\Carbon::parse($revision->actual_final_revision_report)->format('d.m.Y') : '' }}</td>
+                        <td class="s3">{{ $revision->recommendations->count() }}</td>
+                        <td class="s3">
+                            {{ $revision->recommendations->where('importance', '3')->count() }}
+                        </td>
                         <td class="s3"></td>
+                        <td class="s3">
+                            {{ $revision->recommendations->where('importance', '2')->count() }}
+                        </td>
                         <td class="s3"></td>
-                        <td class="s3"></td>
-                        <td class="s3"></td>
-                        <td class="s3"></td>
-                        <td class="s3"></td>
+                        <td class="s3">
+                            {{ $revision->recommendations->where('importance', '1')->count() }}
+                        </td>
                         <td class="s3"></td>
                         <td class="s3"></td>
                         <td class="s3"></td>

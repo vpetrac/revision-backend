@@ -15,12 +15,12 @@ class StoreProgramRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'possible_risk_causes' => 'nullable|string|max:255',
-            'possible_risk_consequences' => 'nullable|string|max:255',
-            'expected_controls' => 'nullable|string|max:255',
-            'existing_controls' => 'nullable|string|max:255',
-            'test_purpose' => 'nullable|string|max:255',
-            'testing_method' => 'nullable|string|max:255',
+            'possible_risk_causes' => 'nullable|string',
+            'possible_risk_consequences' => 'nullable|string',
+            'expected_controls' => 'nullable|string',
+            'existing_controls' => 'nullable|string',
+            'test_purpose' => 'nullable|string',
+            'testing_method' => 'nullable|string',
             'testing_questions' => 'nullable|string',
             'testing_results' => 'nullable|string',
             'conclusions_for_drafting_report' => 'nullable|string',

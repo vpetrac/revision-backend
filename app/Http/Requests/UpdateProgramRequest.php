@@ -16,12 +16,12 @@ class UpdateProgramRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'possible_risk_causes' => 'sometimes|nullable|string|max:255',
-            'possible_risk_consequences' => 'sometimes|nullable|string|max:255',
-            'expected_controls' => 'sometimes|nullable|string|max:255',
-            'existing_controls' => 'sometimes|nullable|string|max:255',
-            'test_purpose' => 'sometimes|nullable|string|max:255',
-            'testing_method' => 'sometimes|nullable|string|max:255',
+            'possible_risk_causes' => 'sometimes|nullable|string',
+            'possible_risk_consequences' => 'sometimes|nullable|string',
+            'expected_controls' => 'sometimes|nullable|string',
+            'existing_controls' => 'sometimes|nullable|string',
+            'test_purpose' => 'sometimes|nullable|string',
+            'testing_method' => 'sometimes|nullable|string',
             'testing_questions' => 'sometimes|nullable|string',
             'testing_results' => 'sometimes|nullable|string',
             'conclusions_for_drafting_report' => 'sometimes|nullable|string',

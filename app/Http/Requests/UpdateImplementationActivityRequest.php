@@ -21,7 +21,7 @@ class UpdateImplementationActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'sometimes|required|string|max:255',
+            'title' => 'sometimes|required|string',
             'content' => 'sometimes|nullable|string',
             'user_id' => 'sometimes|required|exists:users,id',
             'recommendation_id' => 'sometimes|required|exists:recommendations,id',

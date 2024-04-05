@@ -23,7 +23,7 @@ class StoreOrganizationalUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string',
             'head_id' => 'nullable|exists:users,id',
             'organization_id' => 'nullable|exists:organizations,id',
         ];

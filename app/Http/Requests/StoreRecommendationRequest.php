@@ -24,7 +24,7 @@ class StoreRecommendationRequest extends FormRequest
         return [
             'content' => 'nullable|string',
             'importance' => 'nullable|integer|min:1|max:5', // Assuming importance is a scale from 1 to 5
-            'status' => 'required|string|max:255',
+            'status' => 'required|string',
             'activities' => 'nullable|string',
             'responsibility' => 'nullable|json',
             'responsible_users' => 'nullable|string',

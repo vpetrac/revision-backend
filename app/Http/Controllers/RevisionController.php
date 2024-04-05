@@ -25,37 +25,30 @@ class RevisionController extends Controller
      * @return JsonResponse
      */
     public function index(): JsonResponse
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        // If the user does not have the 'Subjekt' role, return all revisions
-        if (!$user->hasRole('Subjekt')) {
-            $revisions = Revision::with(['approval'])->get();
-            return response()->json($revisions);
-        }
-
-        // The user has the 'Subjekt' role; proceed with filtering
-        $userId = $user->id;
-        $userOrganizationalUnitId = $user->organizational_unit_id;
-
-        $revisions = Revision::all()->filter(function ($revision) use ($userId, $userOrganizationalUnitId) {
-            // Decode the auditTeamMembers JSON to an array
-            $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
-
-            // Check if the user is in the audit team
-            $isInAuditTeam = collect($auditTeamMembers)->contains(function ($member) use ($userId) {
-                return $member['value'] == $userId;
-            });
-
-            // Check if the user's organizational unit matches the revision's unit
-            $isInOrganizationalUnit = $revision->organizational_unit_id == $userOrganizationalUnitId;
-
-            return $isInAuditTeam || $isInOrganizationalUnit;
-        });
-
+    // If the user does not have the 'Subjekt' role, return all revisions
+    if (!$user->hasRole('Subjekt')) {
+        $revisions = Revision::with(['approval'])->get();
         return response()->json($revisions);
     }
 
+    // The user has the 'Subjekt' role; apply filtering
+    $userOrganizationalUnitId = $user->organizational_unit_id;
+
+    $revisions = Revision::all()->filter(function ($revision) use ($userOrganizationalUnitId) {
+        // Decode the auditTeamMembers (as organizational units) to an array
+        $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
+        
+        // Check if the user's organizational unit is in the audit team
+        $isOrganizationalUnitInAuditTeam = collect($auditTeamMembers)->contains('value', $userOrganizationalUnitId);
+
+        return $isOrganizationalUnitInAuditTeam;
+    });
+
+    return response()->json($revisions);
+}
     /**
      * Store a newly created resource in storage.
      *
@@ -348,57 +341,4 @@ class RevisionController extends Controller
         return view('revision_book', compact('revisions'))->render();
     }
 
-    public function exportRevisionsCsv()
-    {
-        $filename = "revisions.csv";
-        $handle = fopen('php://temp', 'w');
-
-        // Headers part 1
-        fputcsv($handle, [
-            'R.B', 'OZNAKA REVIZIJE', 'NAZIV REVIZIJE', 'UR. BROJ (konačno izvješće)', 'REVIZOR / REVIZORSKI TIM', 'SUPERVIZIJA', 'RAZDOBLJE TRAJANJA REVIZIJE', '', // These two cells merge into "RAZDOBLJE TRAJANJA REVIZIJE"
-            'DATUM REALIZACIJE NACRTA REVIZIJSKOG IZVJEŠĆA', '', // Merge into "DATUM REALIZACIJE NACRTA REVIZIJSKOG IZVJEŠĆA"
-            'DATUM IZDAVANJA KONAČNOG REVIZIJSKOG IZVJEŠĆA (datum sa Odluke-odobrenje Uprave)', 'UKUPNO PREPORUKA',
-            'BROJ DANIH PREPORUKA', '', '', '', '', '', '', // These cells merge into "BROJ DANIH PREPORUKA"
-            'ROKOVI PROVEDBE PREPORUKE (datumi iz Plana djelovanja)',
-            'PRAĆENJE PREPORUKE', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', // These merge into "PRAĆENJE PREPORUKE"
-        ]);
-
-        // Headers part 2
-        fputcsv($handle, [
-            '', '', '', '', '', '', 'Početak', 'Završetak', 'Planirani', 'Ostvareni', '', '',
-            'Visoki važnost (V)', '', 'Srednja važnost (S)', '', 'Niska važnost (N)', '',
-            'Početak praćenja', 'Završetak praćenja', 'DATUMI PROVEDBE PREPORUKE',
-            'Broj praćenih preporuka', '', '',
-            'Broj provedenih preporuka', '', '',
-            'Broj djelomično provedenih preporuka', '', '',
-            'Broj neprovedenih preporuka', '', '',
-            'Broj preporuka koje više nisu relevantne', '', '',
-            'Broj preporuka koje je potrebno dalje pratiti', '', '',
-        ]);
-
-        // Headers part 3
-        fputcsv($handle, [
-            '', '', '', '', '', '', 'Početak (datum slanja obavijesti o početku revizije)', 'Završetak (datum izrade Odluke-Konačno izvješće)', '', '', '', '',
-            'Ukupno V', 'Prihvaćeno', 'Ukupno S', 'Prihvaćeno', 'Ukupno N', 'Prihvaćeno',
-            '', '', '', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N', 'V', 'S', 'N'
-        ]);
-
-        // Example data row
-        $dataRow = array_fill(0, 48, 'xxx');
-        // Customize $dataRow as per your actual data here
-
-        fputcsv($handle, $dataRow);
-
-        fclose($handle);
-
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename={$filename}",
-        ];
-
-        return Response::stream(function () use ($handle) {
-            fseek($handle, 0);
-            fpassthru($handle);
-        }, 200, $headers);
-    }
 }

@@ -155,6 +155,14 @@
         tfoot {
             display: table-footer-group;
         }
+
+        .orange {
+            background-color: #ffce93;
+        }
+
+        .gray {
+            background-color: #CDCDCD;
+        }
     </style>
 </head>
 
@@ -205,15 +213,15 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th colspan="2">POKRETANJE UNUTARNJE REVIZIJE</th>
-                        <th>DA</th>
-                        <th>NE</th>
-                        <th>N/P</th>
+                        <th class="orange" colspan="2">POKRETANJE UNUTARNJE REVIZIJE</th>
+                        <th class="orange">DA</th>
+                        <th class="orange">NE</th>
+                        <th class="orange">N/P</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th colspan="5">B1.1 Otvaranje revizijskog predmeta</th>
+                        <th class="gray" colspan="5">B1.1 Otvaranje revizijskog predmeta</th>
                     </tr>
                     <tr>
                         <td>1.</td>
@@ -248,7 +256,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B1.2 Potpisivanje Izjava o neovisnosti</th>
+                        <th class="gray" colspan="5">B1.2 Potpisivanje Izjava o neovisnosti</th>
                     </tr>
                     <tr>
                         <td>5.</td>
@@ -260,7 +268,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B1.3 Obavještavanje revidiranog subjekta o početku revizije</th>
+                        <th class="gray" colspan="5">B1.3 Obavještavanje revidiranog subjekta o početku revizije</th>
                     </tr>
                     <tr>
                         <td>6.</td>
@@ -285,15 +293,15 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th colspan="2">FAZA PLANIRANJA</th>
-                        <th>DA</th>
-                        <th>NE</th>
-                        <th>N/P</th>
+                        <th class="orange" colspan="2">FAZA PLANIRANJA</th>
+                        <th class="orange">DA</th>
+                        <th class="orange">NE</th>
+                        <th class="orange">N/P</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th colspan="5">B2.2 Izrada Opisa procesa</th>
+                        <th class="gray" colspan="5">B2.2 Izrada Opisa procesa</th>
                     </tr>
                     <tr>
                         <td>7.</td>
@@ -303,7 +311,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B2.3 Izrada Preliminarne procjene glavnih rizika</th>
+                        <th class="gray" colspan="5">B2.3 Izrada Preliminarne procjene glavnih rizika</th>
                     </tr>
                     <tr>
                         <td>8.</td>
@@ -313,7 +321,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B2.4 Izrada Plana i programa revizije</th>
+                        <th class="gray" colspan="5">B2.4 Izrada Plana i programa revizije</th>
                     </tr>
                     <tr>
                         <td>9.</td>
@@ -358,7 +366,7 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th colspan="2">FAZA TESTIRANJA</th>
+                        <th class="orange" colspan="2">FAZA TESTIRANJA</th>
                         <th>DA</th>
                         <th>NE</th>
                         <th>N/P</th>
@@ -366,7 +374,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th colspan="5">B3.1 Izrada planiranih testova</th>
+                        <th class="gray" colspan="5">B3.1 Izrada planiranih testova</th>
                     </tr>
                     <tr>
                         <td>12.</td>
@@ -387,7 +395,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B3.2 Provedba testiranja</th>
+                        <th class="gray" colspan="5">B3.2 Provedba testiranja</th>
                     </tr>
                     <tr>
                         <td>14.</td>
@@ -421,7 +429,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B3.3 Potvrđivanje činjenica utvrđenih testiranjem</th>
+                        <th class="gray" colspan="5">B3.3 Potvrđivanje činjenica utvrđenih testiranjem</th>
                     </tr>
                     <tr>
                         <td>17.</td>
@@ -459,7 +467,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B3.4 Formuliranje nalaza, preporuka i revizorskog mišljenja</th>
+                        <th class="gray" colspan="5">B3.4 Formuliranje nalaza, preporuka i revizorskog mišljenja</th>
                     </tr>
                     <tr>
                         <td>20.</td>
@@ -485,15 +493,15 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th colspan="2">FAZA IZVJEŠTAVANJA</th>
-                        <th>DA</th>
-                        <th>NE</th>
-                        <th>N/P</th>
+                        <th class="orange" colspan="2">FAZA IZVJEŠTAVANJA</th>
+                        <th class="orange">DA</th>
+                        <th class="orange">NE</th>
+                        <th class="orange">N/P</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th colspan="5">B4.1 Izrada Nacrta revizijskog izvješća</th>
+                        <th class="gray" colspan="5">B4.1 Izrada Nacrta revizijskog izvješća</th>
                     </tr>
                     <tr>
                         <td>21.</td>
@@ -513,7 +521,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B4.2 Dostava Nacrta revizijskog izvješća</th>
+                        <th class="gray" colspan="5">B4.2 Dostava Nacrta revizijskog izvješća</th>
                     </tr>
                     <tr>
                         <td>23.</td>
@@ -544,7 +552,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B4.3 Usuglašavanje Nacrta revizijskog izvješća s revidiranim subjektom</th>
+                        <th class="gray" colspan="5">B4.3 Usuglašavanje Nacrta revizijskog izvješća s revidiranim subjektom</th>
                     </tr>
                     <tr>
                         <td>26.</td>
@@ -579,7 +587,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B4.4 Izrada Konačnog revizijskog izvješća</th>
+                        <th class="gray" colspan="5">B4.4 Izrada Konačnog revizijskog izvješća</th>
                     </tr>
                     <tr>
                         <td>29.</td>
@@ -603,7 +611,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B4.5 Izdavanje Konačnog revizijskog izvješća</th>
+                        <th class="gray" colspan="5">B4.5 Izdavanje Konačnog revizijskog izvješća</th>
                     </tr>
                     <tr>
                         <td>31.</td>
@@ -652,15 +660,15 @@
                 </colgroup>
                 <thead>
                     <tr>
-                        <th colspan="2">FAZA PLANIRANJA</th>
-                        <th>DA</th>
-                        <th>NE</th>
-                        <th>N/P</th>
+                        <th class="orange" colspan="2">FAZA PLANIRANJA</th>
+                        <th class="orange">DA</th>
+                        <th class="orange">NE</th>
+                        <th class="orange">N/P</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th colspan="5">B5.1 Obavljanje praćenja provedbe preporuka</th>
+                        <th class="gray" colspan="5">B5.1 Obavljanje praćenja provedbe preporuka</th>
                     </tr>
                     <tr>
                         <td>34.</td>
@@ -682,7 +690,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <th colspan="5">B5.2 Izvještavanje o praćenju provedbe preporuka</th>
+                        <th class="gray" colspan="5">B5.2 Izvještavanje o praćenju provedbe preporuka</th>
                     </tr>
                     <tr>
                         <td>36.</td>

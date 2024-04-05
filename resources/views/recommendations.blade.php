@@ -55,7 +55,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             overflow: hidden;
             padding: 3px 10px;
         }
@@ -64,7 +64,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             overflow: hidden;
             padding: 3px 10px;
@@ -118,7 +118,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             overflow: hidden;
             padding: 5px 5px;
 
@@ -129,7 +129,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             overflow: hidden;
             padding: 5px 5px;

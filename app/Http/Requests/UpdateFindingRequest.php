@@ -22,12 +22,12 @@ class UpdateFindingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|required|string|max:255',
+            'name' => 'sometimes|required|string',
             'recommendations' => 'nullable|string',
             'importance' => 'nullable|integer|min:1|max:5', // Assuming importance is a scale from 1 to 5
-            'status' => 'sometimes|required|string|max:255',
+            'status' => 'sometimes|required|string',
             'activities' => 'nullable|string',
-            'responsibility' => 'sometimes|required|string|max:255',
+            'responsibility' => 'sometimes|required|string',
             'deadline.*.date' => 'nullable|date',
             'real_deadline' => 'nullable|date',
             'finished_date' => 'nullable|date',

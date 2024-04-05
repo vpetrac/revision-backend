@@ -21,7 +21,7 @@ class StoreImplementationActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string',
             'content' => 'nullable|string',
             'user_id' => 'required|exists:users,id',
             'recommendation_id' => 'required|exists:recommendations,id',

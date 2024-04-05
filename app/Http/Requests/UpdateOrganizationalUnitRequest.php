@@ -27,7 +27,7 @@ class UpdateOrganizationalUnitRequest extends FormRequest
         $organizationalUnitId = $this->route('organizationalUnit');
 
         return [
-            'name' => 'sometimes|required|string|max:255',
+            'name' => 'sometimes|required|string',
             'head_id' => 'sometimes|nullable|integer|exists:users,id',
             'organization_id' => 'sometimes|required|integer|exists:organizations,id',
         ];

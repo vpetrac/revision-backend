@@ -55,7 +55,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             overflow: hidden;
             padding: 3px 10px;
         }
@@ -64,7 +64,7 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             overflow: hidden;
             padding: 3px 10px;
@@ -104,7 +104,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             padding: 5px 5px;
         }
 
@@ -113,7 +113,7 @@
             border-style: solid;
             border-width: 1px;
 
-            font-size: 14px;
+            font-size: 11px;
             font-weight: normal;
             padding: 5px 5px;
         }
@@ -196,7 +196,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="font-weight: bold;">Naziv revizije</td>
+                        <td style="font-weight: bold; width: 300px;">Naziv revizije</td>
                         <td>{{$revision->name}}</td>
                     </tr>
                     <tr>
@@ -212,9 +212,17 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
+                        <td style="font-size: 8px; text-align: center;">1</td>
+                        <th style="font-size: 8px; text-align: center;">2</th>
+                        <th style="font-size: 8px; text-align: center;">3</th>
+                        <th style="font-size: 8px; text-align: center;">4</th>
+                        <th style="font-size: 8px; text-align: center;">5</th>
+                        <th style="font-size: 8px; text-align: center;">6</th>
+                    </tr>
+                    <tr>
                         <th style="font-weight: bold;">R.<br>br.</th>
                         <th style="font-weight: bold;">PREPORUKA</th>
-                        <th style="font-weight: bold;">Važnosti</th>
+                        <th style="font-weight: bold;">Važnost</th>
                         <th style="font-weight: bold;">Aktivnosti za provedbu preporuke</th>
                         <th style="font-weight: bold;">Osobe zadužene za provedbu</th>
                         <th style="font-weight: bold;">Rok za provedbu</th>

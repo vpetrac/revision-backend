@@ -156,7 +156,7 @@
 <body>
     <div class="header">
         <div class="tg-wrap">
-        <table class="tg" style="width: 100%; max-width:100;">
+            <table class="tg" style="width: 100%; max-width:100;">
                 <colgroup>
                     <col style="width: 50px">
                     <col style="width: 800px">
@@ -197,7 +197,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Naziv revizije</td>
+                        <td style="width: 200px;">Naziv revizije</td>
                         <td>{{$revision->name}}</td>
                     </tr>
                     <tr>
@@ -209,7 +209,16 @@
             <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
                     <tr>
-                        <th style="font-weight: bold;">R.<br>br.</th>
+                        <td></td>
+                        <th style="font-size: 8px; text-align: center;">1</th>
+                        <th style="font-size: 8px; text-align: center;">2</th>
+                        <th style="font-size: 8px; text-align: center;">3</th>
+                        <th style="font-size: 8px; text-align: center;">4</th>
+                        <th style="font-size: 8px; text-align: center;">5</th>
+                        <th style="font-size: 8px; text-align: center;">6</th>
+                    </tr>
+                    <tr>
+                        <th></th>
                         <th style="font-weight: bold;">Glavni rizici</th>
                         <th style="font-weight: bold;">Mogući uzroci rizika</th>
                         <th style="font-weight: bold;">Moguće posljedice rizika</th>
@@ -221,7 +230,7 @@
                 <tbody>
                     @foreach ($revision->programs as $program)
                     <tr>
-                        <td>{{$loop->index + 1}}.</td>
+                        <td>{{$loop->index + 1}}</td>
                         <td>{{$program->risk_description}}</td>
                         <td>{{$program->possible_risk_causes}}</td>
                         <td>{{$program->possible_risk_consequences}}</td>

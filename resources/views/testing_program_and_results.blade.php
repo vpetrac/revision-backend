@@ -58,7 +58,7 @@
             font-size: 11px;
             overflow: hidden;
             padding: 3px 10px;
-            
+
         }
 
         .tg th {
@@ -197,7 +197,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="font-weight: bold;">Naziv revizije</td>
+                        <td style="font-weight: bold; width: 300px;">Naziv revizije</td>
                         <td>{{$revision->name}}</td>
                     </tr>
                     <tr>
@@ -208,6 +208,19 @@
             </table>
             <table class="tg" style="width: 100%;">
                 <thead>
+                    <tr>
+                        <td style="font-size: 8px; text-align: center;">1</td>
+                        <th style="font-size: 8px; text-align: center;">2</th>
+                        <th style="font-size: 8px; text-align: center;">3</th>
+                        <th style="font-size: 8px; text-align: center;">4</th>
+                        <th style="font-size: 8px; text-align: center;">5</th>
+                        <th style="font-size: 8px; text-align: center;">6</th>
+                        <th style="font-size: 8px; text-align: center;">7</th>
+                        <th style="font-size: 8px; text-align: center;">8</th>
+                        <th style="font-size: 8px; text-align: center;">9</th>
+                        <th style="font-size: 8px; text-align: center;">10</th>
+                        <th style="font-size: 8px; text-align: center;">11</th>
+                    </tr>
                     <tr>
                         <th style="font-weight: bold;">Glavni rizici</th>
                         <th style="font-weight: bold;">Mogući uzroci rizika</th>

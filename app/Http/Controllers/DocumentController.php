@@ -39,6 +39,19 @@ class DocumentController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $htmlContent = '';
 
+        // Handling direct download for 'final_revision_report_temp'
+        if ($documentType === 'final_revision_report') {
+            $filePath = public_path('/final_revision_report_temp.pdf');
+            if (File::exists($filePath)) {
+                return response()->download($filePath, 'final_revision_report_temp_' . time() . '.pdf', [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'inline; filename="' . $documentType . '_' . time() . '.pdf"',
+                ]);
+            } else {
+                return response()->json(['error' => 'File not found'], 404);
+            }
+        }
+
         switch ($documentType) {
             case 'revision_plan_and_program':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
@@ -166,6 +179,19 @@ class DocumentController extends Controller
     protected function generateRevisionBook($revision)
     {
         return view('revision_book', compact('revision'))->render();
+    }
+
+    protected function generateFinalRevisionReport($revision)
+    {
+        $filePath = public_path('path/to/your/pdf/final_revision_report_temp.pdf');
+        if (File::exists($filePath)) {
+            return response()->download($filePath, 'final_revision_report_temp_' . time() . '.pdf', [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . 'final_revision_report_temp' . '_' . time() . '.pdf"',
+            ]);
+        } else {
+            return response()->json(['error' => 'File not found'], 404);
+        }
     }
     // Add additional methods to generate other document types...
 }

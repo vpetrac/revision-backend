@@ -290,14 +290,7 @@ array_unshift($subjects, ['label' => $revision->auditTeamHead]); // Adding audit
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Izradio:</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Odobrio:</td>
+                        <td>Izradio / la:</td>
                         <td></td>
                         <td></td>
                         <td></td>

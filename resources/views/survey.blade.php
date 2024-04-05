@@ -150,6 +150,14 @@
         tfoot {
             display: table-footer-group;
         }
+
+        .orange {
+            background-color: #ffce93;
+        }
+
+        .gray {
+            background-color: #CDCDCD;
+        }
     </style>
 </head>
 
@@ -188,7 +196,7 @@
     </div>
     <div class="report">
         <h1>UPITNIK ZA REVIDIRANI SUBJEKT<br>PROGRAM OSIGURANJA KVALITETE I UNAPRJEĐENJA</h1>
-        <p>Molimo ocijenite Samostalnu Službu unutarnje revizije u sljedećim područjima te zaokružite / označite samo jedan broj (ocjenu) po odgovoru.
+        <p style="font-size: 14px;">Molimo ocijenite Samostalnu Službu unutarnje revizije u sljedećim područjima te zaokružite / označite samo jedan broj (ocjenu) po odgovoru.
         </p>
         <div class="tg-wrap">
             <table class="tg" style="width: 100%; max-width:100;">
@@ -212,7 +220,7 @@
             <table class="tg" style="width: 100%; max-width:100;">
                 <thead>
                     <tr>
-                        <th colspan="6">UPITNIK</th>
+                        <th class="orange" colspan="6">UPITNIK</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -225,7 +233,7 @@
                         <td>N/P</td>
                     </tr>
                     <tr>
-                        <td colspan="6">ODNOS S REVIDIRANIM SUBJEKTOM</td>
+                        <td class="gray" colspan="6">ODNOS S REVIDIRANIM SUBJEKTOM</td>
                     </tr>
                     <tr>
                         <td>1. Ocijenite suradnju unutarnje revizije s revidiranim subjektom</td>
@@ -252,7 +260,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td colspan="6">UNUTARNJI REVIZORI</td>
+                        <td class="gray" colspan="6">UNUTARNJI REVIZORI</td>
                     </tr>
                     <tr>
                         <td>4. Objektivnost unutarnjih revizora</td>
@@ -295,7 +303,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td colspan="6">REVIZIJSKI PROCES I IZVJEŠĆE</td>
+                        <td class="gray" colspan="6">REVIZIJSKI PROCES I IZVJEŠĆE</td>
                     </tr>
                     <tr>
                         <td>9. Ciljevi, opseg, trajanje te metode obavljanja revizije su jasno priopćeni</td>
