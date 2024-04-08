@@ -103,4 +103,14 @@ class Revision extends Model
     {
         return $this->hasMany(SurveyResponse::class);
     }
+
+    public function draftAuditReport()
+    {
+        return $this->hasOne(DraftAuditReport::class);
+    }
+
+    public function finalAuditReport()
+    {
+        return $this->hasOne(FinalAuditReport::class);
+    }
 }

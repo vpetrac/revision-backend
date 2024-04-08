@@ -127,17 +127,14 @@
         }
 
         table {
-            page-break-after: auto;
+
         }
 
         tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
+
         }
 
         td {
-            page-break-inside: avoid;
-            page-break-after: auto;
             word-wrap: break-word;
             vertical-align: top;
         }

@@ -244,6 +244,40 @@
                     @endforeach
                 </tbody>
             </table>
+            <table class="tg" style="width: 100%;">
+                <colgroup>
+                    <col style="width: 80px">
+                    <col style="width: 95px">
+                    <col style="width: 104px">
+                    <col style="width: 122px">
+                    <col style="width: 134px">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Datum:</th>
+                        <th>Ime i prezime:</th>
+                        <th>Funkcija:</th>
+                        <th>Potpis:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Izradio:</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Odobrio:</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
 </body>

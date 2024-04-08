@@ -17,10 +17,18 @@ class ImplementationActivityController extends Controller
      */
     public function index($recommendationId)
     {
-        // Use with('user') to eagerly load the user relationship
-        $activities = ImplementationActivity::with('user')
-            ->where('recommendation_id', $recommendationId)
-            ->get();
+        // Start with all activities related to the given recommendation
+        $query = ImplementationActivity::with('user')
+            ->where('recommendation_id', $recommendationId);
+
+        // Now, let's add our secret handshake for 'Subjekt' users
+        if (auth()->user()->hasRole('Subjekt')) {
+            // If the user is a 'Subjekt', only show their activities
+            $query->where('user_id', auth()->id());
+        }
+
+        // Perform the query and get the results
+        $activities = $query->get();
 
         return response()->json($activities);
     }

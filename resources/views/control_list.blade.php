@@ -167,7 +167,7 @@
 </head>
 
 <body>
-    <div class="header">
+    <header class="header">
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
                 <colgroup>
@@ -198,7 +198,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </header>
     <div class="report">
         <h1>KONTROLNA LISTA</h1>
         <h2>1. POKRETANJE UNUTARNJE REVIZIJE I FAZA PLANIRANJA</h2>
@@ -725,6 +725,41 @@
                     </tr>
                 </tbody>
             </table>
+            <table class="tg" style="width: 100%; max-width:100;">
+                <colgroup>
+                    <col style="width: 80px">
+                    <col style="width: 95px">
+                    <col style="width: 104px">
+                    <col style="width: 122px">
+                    <col style="width: 134px">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Datum:</th>
+                        <th>Ime i prezime:</th>
+                        <th>Funkcija:</th>
+                        <th>Potpis:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Voditelj revizijskog tima:</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Supervizor revizijskog tima:</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
         </div>
 
 </body>

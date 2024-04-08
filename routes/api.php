@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DraftAuditReportController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\FinalAuditReportController;
 use App\Http\Controllers\FindingController;
 use App\Http\Controllers\ImplementationActivityController;
+use App\Http\Controllers\LogoController;
 use App\Http\Controllers\OrganizationalUnitController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RecommendationController;
@@ -15,6 +18,7 @@ use App\Http\Controllers\RevisionApprovalController;
 use App\Http\Controllers\RevisionController;
 use App\Http\Controllers\SampleController;
 use App\Http\Controllers\SurveyTokenController;
+use App\Models\DraftAuditReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -141,8 +145,28 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/generate-revisions-book', [RevisionController::class, 'generateFilteredRevisionsDocument']);
     Route::get('/generate-revision-book-excel', [RevisionController::class, 'generateRevisionBookExcel']);
 
+    // Routes for DraftAuditReport
+    Route::prefix('draft-audit-reports')->group(function () {
+        Route::get('/{revisionId}', [DraftAuditReportController::class, 'index']);
+        Route::post('/', [DraftAuditReportController::class, 'store']);
+        Route::put('/{id}', [DraftAuditReportController::class, 'update']);
+        Route::delete('/{id}', [DraftAuditReportController::class, 'destroy']);
+    });
 
+    // Routes for FinalAuditReport
+    Route::prefix('final-audit-reports')->group(function () {
+        Route::get('/{revisionId}', [FinalAuditReportController::class, 'index']);
+        Route::post('/', [FinalAuditReportController::class, 'store']);
+        Route::put('/{id}', [FinalAuditReportController::class, 'update']);
+        Route::delete('/{id}', [FinalAuditReportController::class, 'destroy']);
+    });
+
+    
+    Route::post('/logo', [LogoController::class, 'setLogo']);
+    Route::delete('/logo', [LogoController::class, 'deleteLogo']);
 });
+
+Route::get('/logo', [LogoController::class, 'getLogo']);
 
 // File management routes
 Route::prefix('files')->group(function () {
