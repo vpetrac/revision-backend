@@ -751,7 +751,7 @@
                         <td></td>
                     </tr>
                     <tr>
-                        <td>Supervizor revizijskog tima:</td>
+                        <td>Supervizor:</td>
                         <td></td>
                         <td></td>
                         <td></td>
