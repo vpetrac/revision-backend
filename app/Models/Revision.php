@@ -54,11 +54,6 @@ class Revision extends Model
         return $this->hasOne(User::class);
     }
 
-    public function auditTeamMembers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class);
-    }
-
     public function goals(): HasMany
     {
         return $this->hasMany(Goal::class);

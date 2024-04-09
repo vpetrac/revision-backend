@@ -5,9 +5,8 @@
     <title>Survey Link</title>
 </head>
 <body>
-    <p>Dear {{ $user->name }},</p>
-    <p>We invite you to participate in our survey. Please click on the link below to start the survey:</p>
-    <a href="{{ url($url . '/survey/' . $token) }}">Start Survey</a>
-    <p>Thank you for your participation!</p>
+    <p>Poštovani/a {{ $user->name }},</p>
+    <p>molimo ispuniti uputnik za revidirani subjekt za potrebe revizije: {{ $revision->name }}.</p>
+    <a href="{{ url($url . '/survey/' . $token) }}">Link na upitnik</a>
 </body>
 </html>

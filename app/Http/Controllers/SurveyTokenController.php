@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Mail\SurveyLinkMail;
+use App\Models\OrganizationalUnit;
 use App\Models\Revision;
 use App\Models\SurveyResponse;
 use App\Models\SurveyToken;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,21 +18,24 @@ class SurveyTokenController extends Controller
     public function generateSurveyToken(Request $request)
     {
         $revisionId = $request->input('revision_id');
+        $revisionId = $revisionId['revisionId'];
         $revision = Revision::findOrFail($revisionId);
-        $subjects = json_decode($revision->subjects, true);
 
-        foreach ($subjects as $subject) {
-            $userId = $subject['value']; // Where 'value' is the userId
-            $user = User::findOrFail($userId); // Ensure the user exists
+        $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
 
+        foreach ($auditTeamMembers as $orgUnit) {
+            $orgUnitId = $orgUnit['value']; // Where 'value' is the userId
+            $orgUnitModel = OrganizationalUnit::findOrFail($orgUnitId); // Ensure the user exists
+            $userId = $orgUnitModel->head_id;
+            $user = User::findOrFail($userId);
             // Generate a unique token for the survey
             $token = SurveyToken::generateToken($userId, $revisionId);
 
             // Define the survey URL, including the generated token
             $url = env('FRONTEND_URL', 'http://localhost:3000') . "/survey/{$token->token}";
-
+            Log::debug($user);
             // Send the email with the survey link
-            Mail::to($user->email)->send(new SurveyLinkMail($user, $token->token, $url));
+            Mail::to($user->email)->send(new SurveyLinkMail($revision, $user, $token->token, $url));
         }
 
         return response()->json(['message' => 'Survey links have been sent to all subjects.']);

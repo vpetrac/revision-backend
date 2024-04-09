@@ -7,32 +7,26 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SurveyLinkMail extends Mailable
+class RecommendationDeadlineEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $token;
     public $user;
     public $revision;
-    public $url;
 
-    public function __construct($revision, $user, $token, $url)
+    public function __construct($user, $revision)
     {
-        $this->user = $user;
         $this->revision = $revision;
-        $this->token = $token;
-        $this->url = $url;
+        $this->user = $user;
     }
 
     public function build()
     {
         return $this->from('info@revizija.test')
-                    ->view('emails.surveyLink')
+                    ->view('emails.recommendationDeadline')
                     ->with([
-                        'token' => $this->token,
                         'user' => $this->user,
                         'revision' => $this->revision,
-                        'url' => $this->url,
                     ]);
     }
 }

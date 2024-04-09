@@ -25,30 +25,30 @@ class RevisionController extends Controller
      * @return JsonResponse
      */
     public function index(): JsonResponse
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
 
-    // If the user does not have the 'Subjekt' role, return all revisions
-    if (!$user->hasRole('Subjekt')) {
-        $revisions = Revision::with(['approval'])->get();
+        // If the user does not have the 'Subjekt' role, return all revisions
+        if (!$user->hasRole('Subjekt')) {
+            $revisions = Revision::with(['approval'])->get();
+            return response()->json($revisions);
+        }
+
+        // The user has the 'Subjekt' role; apply filtering
+        $userOrganizationalUnitId = $user->organizational_unit_id;
+
+        $revisions = Revision::all()->filter(function ($revision) use ($userOrganizationalUnitId) {
+            // Decode the auditTeamMembers (as organizational units) to an array
+            $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
+
+            // Check if the user's organizational unit is in the audit team
+            $isOrganizationalUnitInAuditTeam = collect($auditTeamMembers)->contains('value', $userOrganizationalUnitId);
+
+            return $isOrganizationalUnitInAuditTeam;
+        });
+
         return response()->json($revisions);
     }
-
-    // The user has the 'Subjekt' role; apply filtering
-    $userOrganizationalUnitId = $user->organizational_unit_id;
-
-    $revisions = Revision::all()->filter(function ($revision) use ($userOrganizationalUnitId) {
-        // Decode the auditTeamMembers (as organizational units) to an array
-        $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
-        
-        // Check if the user's organizational unit is in the audit team
-        $isOrganizationalUnitInAuditTeam = collect($auditTeamMembers)->contains('value', $userOrganizationalUnitId);
-
-        return $isOrganizationalUnitInAuditTeam;
-    });
-
-    return response()->json($revisions);
-}
     /**
      * Store a newly created resource in storage.
      *
@@ -340,5 +340,4 @@ class RevisionController extends Controller
         // Assuming you have a view that can iterate over multiple revisions
         return view('revision_book', compact('revisions'))->render();
     }
-
 }
