@@ -14,6 +14,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -31,7 +32,7 @@ class RevisionController extends Controller
         // If the user does not have the 'Subjekt' role, return all revisions
         if (!$user->hasRole('Subjekt')) {
             $revisions = Revision::with(['approval'])->get();
-            return response()->json($revisions);
+            return response()->json($revisions->values()); // Ensure a sequential array
         }
 
         // The user has the 'Subjekt' role; apply filtering
@@ -47,7 +48,7 @@ class RevisionController extends Controller
             return $isOrganizationalUnitInAuditTeam;
         });
 
-        return response()->json($revisions);
+        return response()->json($revisions->values());
     }
     /**
      * Store a newly created resource in storage.

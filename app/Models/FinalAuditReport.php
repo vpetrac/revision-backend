@@ -15,12 +15,10 @@ class FinalAuditReport extends Model
         'draft_date', // Datum nacrta
         'management_summary', // UPRAVLJAČKI SAŽETAK
         'audit_opinion', // REVIZORSKO MIŠLJENJE
-        'positive_findings', // pozitivni nalazi
-        'management_comments', // komentar rukovodstva
-        'findings_and_recommendations_summary', // Sažetak nalaza i preporuka
         'basis_for_implementation_and_audit_period', // Temelj za provedbu i razdoblje provedbe revizije
         'summary_of_significant_findings_and_recommendations', // SAŽETAK NAJZNAČAJNIJIH NALAZA I PREPORUKA
         'reference_number', // Urbroj
+        'conclusion',
         'revision_id'
     ];
 

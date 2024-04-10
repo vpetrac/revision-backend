@@ -21,12 +21,6 @@ class ImplementationActivityController extends Controller
         $query = ImplementationActivity::with('user')
             ->where('recommendation_id', $recommendationId);
 
-        // Now, let's add our secret handshake for 'Subjekt' users
-        if (auth()->user()->hasRole('Subjekt')) {
-            // If the user is a 'Subjekt', only show their activities
-            $query->where('user_id', auth()->id());
-        }
-
         // Perform the query and get the results
         $activities = $query->get();
 

@@ -17,13 +17,11 @@ class StoreFinalAuditReportRequest extends FormRequest
             'draft_date' => 'nullable|date',
             'management_summary' => 'nullable|string',
             'audit_opinion' => 'nullable|string',
-            'positive_findings' => 'nullable|string',
-            'management_comments' => 'nullable|string',
-            'findings_and_recommendations_summary' => 'nullable|string',
             'basis_for_implementation_and_audit_period' => 'nullable|string',
             'summary_of_significant_findings_and_recommendations' => 'nullable|string',
-            'reference_number' => 'nullable|string|unique:final_audit_reports,reference_number',
+            'conclusion' => 'nullable|string',
             'revision_id' => 'required|integer|exists:revisions,id',
+            'reference_number' => 'nullable|string|unique:final_audit_reports,reference_number',
         ];
     }
 }

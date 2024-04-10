@@ -6,6 +6,7 @@ use App\Http\Requests\StoreDraftAuditReportRequest;
 use App\Http\Requests\UpdateDraftAuditReportRequest;
 use App\Models\DraftAuditReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DraftAuditReportController extends Controller
 {
@@ -15,7 +16,7 @@ class DraftAuditReportController extends Controller
     public function index(Request $request, $revisionId)
     {
         $draftAuditReport = DraftAuditReport::where('revision_id', $revisionId)->first();
-
+        Log::info($draftAuditReport);
         if (!$draftAuditReport) {
             return response()->json(['message' => 'Draft audit report not found for the provided revision ID.'], 404);
         }

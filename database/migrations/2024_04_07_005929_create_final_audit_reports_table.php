@@ -23,6 +23,7 @@ class CreateFinalAuditReportsTable extends Migration
             $table->text('findings_and_recommendations_summary')->nullable(); // Sažetak nalaza i preporuka
             $table->text('basis_for_implementation_and_audit_period')->nullable(); // Temelj za provedbu i razdoblje provedbe revizije
             $table->text('summary_of_significant_findings_and_recommendations')->nullable(); // SAŽETAK NAJZNAČAJNIJIH NALAZA I PREPORUKA
+            $table->text('conclusion')->nullable();
             $table->string('reference_number')->nullable(); // Urbroj
             $table->unsignedBigInteger('revision_id')->unique();
             $table->foreign('revision_id')->references('id')->on('revisions')->onDelete('cascade');

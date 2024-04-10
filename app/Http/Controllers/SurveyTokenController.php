@@ -18,12 +18,10 @@ class SurveyTokenController extends Controller
     public function generateSurveyToken(Request $request)
     {
         $revisionId = $request->input('revision_id');
-        $revisionId = $revisionId['revisionId'];
+        $subjects = $request->input('subjects');
         $revision = Revision::findOrFail($revisionId);
 
-        $auditTeamMembers = json_decode($revision->auditTeamMembers, true) ?? [];
-
-        foreach ($auditTeamMembers as $orgUnit) {
+        foreach ($subjects as $orgUnit) {
             $orgUnitId = $orgUnit['value']; // Where 'value' is the userId
             $orgUnitModel = OrganizationalUnit::findOrFail($orgUnitId); // Ensure the user exists
             $userId = $orgUnitModel->head_id;

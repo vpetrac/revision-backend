@@ -173,12 +173,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/notifications/recommendation-deadline', [RevisionNotificationsController::class, 'recommendationtDeadlineNotification']);
 
     // InfidelityList routes
-    Route::get('/infidelity-lists', [InfedilityListController::class, 'index']);
+    Route::get('/infidelity-lists/{revisionId}', [InfedilityListController::class, 'index']);
     Route::post('/infidelity-lists', [InfedilityListController::class, 'store']);
     Route::put('/infidelity-lists/{id}', [InfedilityListController::class, 'update']);
     Route::delete('/infidelity-lists/{id}', [InfedilityListController::class, 'destroy']);
 
-    Route::get('/control-lists', [ControlListController::class, 'index']);
+    Route::get('/control-lists/{revisionId}', [ControlListController::class, 'index']);
     Route::post('/control-lists', [ControlListController::class, 'store']);
     Route::put('/control-lists/{id}', [ControlListController::class, 'update']);
     Route::delete('/control-lists/{id}', [ControlListController::class, 'destroy']);

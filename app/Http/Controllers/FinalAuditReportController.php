@@ -6,6 +6,7 @@ use App\Http\Requests\StoreFinalAuditReportRequest;
 use App\Http\Requests\UpdateFinalAuditReportRequest;
 use App\Models\FinalAuditReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FinalAuditReportController extends Controller
 {
@@ -15,6 +16,7 @@ class FinalAuditReportController extends Controller
     public function index(Request $request, $revisionId)
     {
         $finalAuditReport = FinalAuditReport::where('revision_id', $revisionId)->first();
+        Log::info($finalAuditReport);
 
         if (!$finalAuditReport) {
             return response()->json(['message' => 'Final audit report not found for the provided revision ID.'], 404);

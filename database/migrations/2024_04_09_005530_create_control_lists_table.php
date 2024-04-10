@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('control_lists', function (Blueprint $table) {
             $table->id();
             $table->json('content'); // This will store your questions and answers.
-            $table->foreignId('user_id')->constrained(); // Assuming you have a users table.
             $table->foreignId('revision_id')->constrained(); // Assuming you have a revisions table.
             $table->timestamps();
         });

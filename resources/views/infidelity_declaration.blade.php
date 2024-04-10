@@ -3,7 +3,7 @@ $subjects = json_decode($revision->subjects, true);
 array_unshift($subjects, ['label' => $revision->auditTeamHead]); // Adding auditTeamHead as the first subject
 @endphp
 
-@foreach ($subjects as $subject)
+@foreach ($infidelityLists as $list)
 
 <!DOCTYPE html>
 <html>
@@ -214,7 +214,7 @@ array_unshift($subjects, ['label' => $revision->auditTeamHead]); // Adding audit
                     </tr>
                     <tr>
                         <td>Revizor/ica</td>
-                        <td>{{ $subject['label'] }}</td>
+                        <td>{{ $list->user->name }}</td>
                     </tr>
                     <tr>
                         <td>Datum</td>
@@ -238,31 +238,14 @@ array_unshift($subjects, ['label' => $revision->auditTeamHead]); // Adding audit
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($list->content as $index => $item)
                     <tr>
-                        <td>1.</td>
-                        <td>Imate li poslovni, financijski ili obiteljski interes koji može utjecati na reviziju na bilo koji način?</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ $index + 1 }}.</td>
+                        <td>{{ $item['question'] }}</td>
+                        <td style="text-align: center;">@if ($item['answer'] === 1) X @else &nbsp; @endif</td>
+                        <td style="text-align: center;">@if ($item['answer'] === 0) X @else &nbsp; @endif</td>
                     </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>Imate li izravne izvršene zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3.</td>
-                        <td>Imate li izravne ili neizravne rukovodne i upravljačke zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>4.</td>
-                        <td>
-                            Jeste li donosili odluke, odobrili nalog za službeni put, račune, naloge za plaćanje za revidirani subjekt u posljednjih godinu dana?</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
             <table class="tg" style="width: 100%;">

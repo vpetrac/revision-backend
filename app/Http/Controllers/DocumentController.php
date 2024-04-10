@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ControlList;
 use App\Models\Goal;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Models\Revision;
+use App\Models\SurveyResponse;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File; // Add this at the top for file operations
+use Illuminate\Support\Facades\Log;
 
 class DocumentController extends Controller
 {
@@ -71,8 +75,11 @@ class DocumentController extends Controller
                 break;
             case 'infidelity_declaration':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
-
                 $htmlContent = $this->generateInfidelityDeclaration($revision);
+                break;
+            case 'infidelity_declaration_user':
+                $pdf->setPaper('a4', 'portrait'); // Customize as needed
+                $htmlContent = $this->generateInfidelityDeclarationForUser($revision);
                 break;
             case 'recommendations_plan':
                 $pdf->setPaper('a4', 'landscape'); // Customize as needed
@@ -84,7 +91,7 @@ class DocumentController extends Controller
                 break;
             case 'control_list':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
-                $htmlContent = $this->generateControlList($report);
+                $htmlContent = $this->generateControlList($revision);
                 break;
             case 'subject_survey':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
@@ -150,8 +157,25 @@ class DocumentController extends Controller
 
     protected function generateInfidelityDeclaration($revision)
     {
-        return view('infidelity_declaration', compact('revision'))->render();
+        $infidelityLists = \App\Models\InfedilityList::where('revision_id', $revision->id)->get();
+        $infidelityLists->load('user');
+        Log::debug($infidelityLists);
+        Log::debug($revision);
+        return view('infidelity_declaration', compact(['revision', 'infidelityLists']))->render();
     }
+
+    protected function generateInfidelityDeclarationForUser($revision)
+    {
+        $user = Auth::user();
+        $infidelityLists = \App\Models\InfedilityList::where('revision_id', $revision->id)
+            ->where('user_id', $user->id)
+            ->get();
+        $infidelityLists->load('user');
+        Log::debug($infidelityLists);
+        Log::debug($revision);
+        return view('infidelity_declaration', compact(['revision', 'infidelityLists']))->render();
+    }
+
 
     protected function generateRecommendationsPlan($revision)
     {
@@ -166,14 +190,20 @@ class DocumentController extends Controller
     }
 
 
-    protected function generateControlList($report)
+    protected function generateControlList($revision)
     {
-        return view('control_list', compact('report'))->render();
+        $controlLists = ControlList::where('revision_id', $revision->id)->get();
+        Log::debug($controlLists);
+        Log::debug($revision);
+        return view('control_list', compact(['revision', 'controlLists']))->render();
     }
 
     protected function generateSurvey($revision)
     {
-        return view('survey', compact('revision'))->render();
+        $surveys = SurveyResponse::where('revision_id', $revision->id)->get();
+        Log::debug($surveys);
+        Log::debug($revision);
+        return view('survey', compact(['revision', 'surveys']))->render();
     }
 
     protected function generateRevisionBook($revision)

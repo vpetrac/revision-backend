@@ -11,12 +11,10 @@ class ControlListController extends Controller
      * Display a listing of the resource.
      * Accepts an optional revision_id to filter the control lists.
      */
-    public function index(Request $request)
+    public function index(Request $request, $revision_id)
     {
-        $revisionId = $request->query('revision_id');
-        
-        if ($revisionId) {
-            $controlLists = ControlList::where('revision_id', $revisionId)->get();
+        if ($revision_id) {
+            $controlLists = ControlList::where('revision_id', $revision_id)->get();
         } else {
             $controlLists = ControlList::all();
         }

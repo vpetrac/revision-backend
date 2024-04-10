@@ -9,10 +9,8 @@ class InfedilityListController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, $revisionId)
     {
-        $revisionId = $request->query('revision_id');
-
         if ($revisionId) {
             $infidelityLists = \App\Models\InfedilityList::where('revision_id', $revisionId)->get();
         } else {
