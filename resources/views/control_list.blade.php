@@ -234,13 +234,15 @@
                         <th class="gray" colspan="5">{{ $subsection['title'] }}</th>
                     </tr>
                     @foreach ($subsection['questions'] as $question)
+                    @foreach ($subsection['questions'] as $question)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $question['text'] }}</td>
-                        <td>@if ($question['answer'] == "DA") X @else &nbsp; @endif</td>
-                        <td>@if ($question['answer'] == "NE") X @else &nbsp; @endif</td>
-                        <td>@if ($question['answer'] == "N/P") X @else &nbsp; @endif</td>
+                        <td>{{ isset($question['answer']) && $question['answer'] == "DA" ? 'X' : '' }}</td>
+                        <td>{{ isset($question['answer']) && $question['answer'] == "NE" ? 'X' : '' }}</td>
+                        <td>{{ isset($question['answer']) && $question['answer'] == "N/P" ? 'X' : '' }}</td>
                     </tr>
+                    @endforeach
                     @endforeach
                     @endforeach
                 </tbody>

@@ -248,13 +248,13 @@
                             @endphp
 
                             @foreach($responsibilityData as $index => $responsibility)
-                            {{ $responsibility['label'] ?? 'Nije uneseno' }}{{ $index !== $lastResponsibilityIndex ? ',' : '' }}
+                            {{ $responsibility['label'] ?? '' }}{{ $index !== $lastResponsibilityIndex ? ',' : '' }}
                             @endforeach
 
                             <br><br> {{-- Here's that little bit of personal space --}}
 
                             @foreach($partnerData as $index => $partner)
-                            {{ $partner['label'] ?? 'Nije uneseno' }}{{ $index !== $lastPartnerIndex ? ',' : '' }}
+                            {{ $partner['label'] ?? '' }}{{ $index !== $lastPartnerIndex ? ',' : '' }}
                             @endforeach
                         </td>
                         <td class="tg-0pky">

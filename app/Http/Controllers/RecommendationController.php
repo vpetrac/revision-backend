@@ -110,17 +110,32 @@ class RecommendationController extends Controller
             $query->whereIn('status', $statuses);
         }
 
-        // Adjusting for the new responsibility format
-        if (!empty($responsibilitiesQuery)) {
-            foreach ($responsibilitiesQuery as $responsibility) {
-                $query->whereJsonContains('responsibility', ['value' => $responsibility]);
-            }
-        }
-
         $recommendations = $query->get();
 
+        // Only apply manual filtering if $responsibilitiesQuery is not empty
+        if (!empty($responsibilitiesQuery)) {
+            $filteredRecommendations = $recommendations->filter(function ($recommendation) use ($responsibilitiesQuery) {
+                // Decode the JSON string into an array
+                $responsibilities = json_decode($recommendation->responsibility, true);
+
+                // Check if any of the responsibilities in the current recommendation matches any in $responsibilitiesQuery
+                foreach ($responsibilities as $responsibility) {
+                    if (in_array($responsibility['value'], $responsibilitiesQuery)) {
+                        return true; // Keep this recommendation in the collection
+                    }
+                }
+
+                return false; // Exclude this recommendation from the collection
+            });
+        } else {
+            $filteredRecommendations = $recommendations; // No filtering needed, keep all recommendations
+        }
+
+        // If you need the filtered results to be reindexed
+        $filteredRecommendations = $filteredRecommendations->values();
+
         // Further filter recommendations by date range
-        $filteredRecommendations = $recommendations->filter(function ($recommendation) use ($startDate, $endDate) {
+        $filteredRecommendations = $filteredRecommendations->filter(function ($recommendation) use ($startDate, $endDate) {
 
             if (!$startDate && !$endDate) {
                 return true;

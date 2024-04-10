@@ -244,46 +244,46 @@
                     </tr>
                     <tr>
                         <td>1. Ocijenite suradnju unutarnje revizije s revidiranim subjektom</td>
-                        <td>@if ($content[0]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[0]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[0]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[0]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[0]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[0]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>2. Tijekom obavljanja revizije unutarnjim revizorima smo omogućili neograničeno pravo pristupa cjelokupnoj dokumentaciji, podacima i informacijama (na svim nositeljima podataka) te rukovoditeljima revidiranog subjekta, zaposlenicima i materijalnoj imovini</td>
-                        <td>@if ($content[1]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[1]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>3. Unutarnja revizija prilikom obavljanja revizije je stručno, savjesno obavila revizijski rad</td>
-                        <td>@if ($content[2]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[2]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[2]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[2]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[2]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[2]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td class="gray" colspan="6">UNUTARNJI REVIZORI</td>
                     </tr>
                     <tr>
                         <td>4. Objektivnost unutarnjih revizora</td>
-                        <td>@if ($content[3]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[3]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[3]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[3]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[3]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[3]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>5. Profesionalizam unutarnjih revizora</td>
-                        <td>@if ($content[4]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[4]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[4]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[4]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[4]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[4]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>6. Revizorski tim razumije moje procese i ima dostatno znanje o istima za provođenje revizije</td>
@@ -294,70 +294,70 @@
                         <td>@if ($content[5]['answer'] == '1') X @else &nbsp; @endif</td>
                     <tr>
                         <td>7. Revizorski tim je fleksibilan za vrijeme obavljanja revizije i revizori imaju izražene interpersonalne vještine</td>
-                        <td>@if ($content[6]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[6]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[6]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[6]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[6]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[6]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>8. Revizorski tim je pokazao profesionalnost, ljubaznost i konstruktivan i pozitivan pristup te je bio u mogućnosti uspostaviti učinkovite odnose s osobljem</td>
-                        <td>@if ($content[7]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[7]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[7]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[7]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[7]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[7]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td class="gray" colspan="6">REVIZIJSKI PROCES I IZVJEŠĆE</td>
                     </tr>
                     <tr>
                         <td>9. Ciljevi, opseg, trajanje te metode obavljanja revizije su jasno priopćeni</td>
-                        <td>@if ($content[8]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[8]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[8]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[8]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[8]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[8]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>10. Tijekom provođenja revizije komunikacija je bila dobra i nalazi i preporuke su jasno priopćeni i dostatno raspravljeni </td>
-                        <td>@if ($content[9]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[9]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[9]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[9]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[9]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[9]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>11. Trajanje revizije</td>
-                        <td>@if ($content[10]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[10]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[10]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[10]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[10]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[10]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>12. Pravovremenost revizijskog izvješća</td>
-                        <td>@if ($content[1]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[1]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[1]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>13. Jasnoća revizijskog izvješća</td>
-                        <td>@if ($content[12]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[12]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[12]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[12]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[12]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[12]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                     <tr>
                         <td>14. Korisnost revizije u poboljšanju poslovnih procesa i kontrola </td>
-                        <td>@if ($content[13]['answer'] == '5') X @else &nbsp; @endif</td>
                         <td>@if ($content[13]['answer'] == '4') X @else &nbsp; @endif</td>
                         <td>@if ($content[13]['answer'] == '3') X @else &nbsp; @endif</td>
                         <td>@if ($content[13]['answer'] == '2') X @else &nbsp; @endif</td>
                         <td>@if ($content[13]['answer'] == '1') X @else &nbsp; @endif</td>
+                        <td>@if ($content[13]['answer'] == '0') X @else &nbsp; @endif</td>
                     </tr>
                 </tbody>
             </table>

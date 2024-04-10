@@ -101,6 +101,9 @@ class DocumentController extends Controller
                 $pdf->setPaper('a2', 'landscape'); // Customize as needed
                 $htmlContent = $this->generateRevisionBook($revision);
                 break;
+            case 'report_template':
+                $this->generateFinalRevisionReport($revision);
+                break;
             default:
                 return response()->json(['error' => 'Invalid document type provided'], 400);
         }
