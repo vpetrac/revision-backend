@@ -1,3 +1,4 @@
+@foreach ($controlLists as $controlList)
 <!DOCTYPE html>
 <html>
 
@@ -201,7 +202,7 @@
         </div>
     </header>
     <h1>KONTROLNA LISTA</h1>
-    @foreach ($controlLists as $controlList)
+
     <!-- Assuming 'content' is a JSON-encoded string that needs to be decoded -->
     @php
     $content = $controlList->content;
@@ -234,9 +235,8 @@
                         <th class="gray" colspan="5">{{ $subsection['title'] }}</th>
                     </tr>
                     @foreach ($subsection['questions'] as $question)
-                    @foreach ($subsection['questions'] as $question)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $question['id'] }}.</td>
                         <td>{{ $question['text'] }}</td>
                         <td>{{ isset($question['answer']) && $question['answer'] == "DA" ? 'X' : '' }}</td>
                         <td>{{ isset($question['answer']) && $question['answer'] == "NE" ? 'X' : '' }}</td>
@@ -244,13 +244,11 @@
                     </tr>
                     @endforeach
                     @endforeach
-                    @endforeach
                 </tbody>
             </table>
         </div>
 
     </div>
-    @endforeach
     @endforeach
     <table class="tg" style="width: 100%; max-width:100;">
         <colgroup>
@@ -292,3 +290,4 @@
 </body>
 
 </html>
+@endforeach
