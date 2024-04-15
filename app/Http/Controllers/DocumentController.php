@@ -65,7 +65,7 @@ class DocumentController extends Controller
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateInfidelityDeclaration($revision);
                 break;
-            case 'infidelity_declaration_user':
+            case 'infidelity_declaration_single':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateInfidelityDeclarationForUser($revision);
                 break;
