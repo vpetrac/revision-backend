@@ -65,7 +65,7 @@ class DocumentController extends Controller
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateInfidelityDeclaration($revision);
                 break;
-            case 'infidelity_declaration_single':
+            case 'infidelity_declaration_user':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateInfidelityDeclarationForUser($revision);
                 break;
@@ -232,7 +232,7 @@ class DocumentController extends Controller
         Log::debug($revision);
 
         // Render the view with the infidelity list and revision
-        return view('infidelity_declaration_single', compact(['revision', 'infidelityList']))->render();
+        return view('infidelity_declaration_user', compact(['revision', 'infidelityList']))->render();
     }
 
 
