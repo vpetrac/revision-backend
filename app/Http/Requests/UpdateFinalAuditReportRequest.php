@@ -19,7 +19,7 @@ class UpdateFinalAuditReportRequest extends FormRequest
             'audit_opinion' => 'nullable|string',
             'basis_for_implementation_and_audit_period' => 'nullable|string',
             'summary_of_significant_findings_and_recommendations' => 'nullable|string',
-            'reference_number' => 'nullable|string|unique:final_audit_reports,reference_number',
+            'reference_number' => 'nullable|string',
             'conclusion' => 'nullable|string',
             'revision_id' => 'required|integer|exists:revisions,id',
         ];

@@ -6,6 +6,8 @@ use App\Exports\RevisionsBookExport;
 use App\Http\Requests\StoreRevisionRequest;
 use App\Http\Requests\UpdateRevisionRequest;
 use App\Http\Resources\RevisionResource;
+use App\Models\DraftAuditReport;
+use App\Models\FinalAuditReport;
 use App\Models\Goal;
 use App\Models\Revision;
 use Illuminate\Http\Request;
@@ -85,6 +87,19 @@ class RevisionController extends Controller
         $this->createRevisionFolders($baseDir, '1. Faza planiranja');
         $this->createRevisionFolders($baseDir, '2. Faza testiranja');
         $this->createRevisionFolders($baseDir, '3. Faza izvještavanja');
+
+        // Creating associated draft and final audit reports
+        $draftAuditReport = new DraftAuditReport([
+            'revision_id' => $revision->id,
+            // Additional fields can be set up here
+        ]);
+        $draftAuditReport->save();
+
+        $finalAuditReport = new FinalAuditReport([
+            'revision_id' => $revision->id,
+            // Additional fields can be set up here
+        ]);
+        $finalAuditReport->save();
 
 
         return response()->json($revision, 201); // HTTP 201 Created

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\ControlList;
+use App\Models\FinalAuditReport;
+use App\Models\Finding;
 use App\Models\Goal;
+use App\Models\InfedilityList;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Models\Revision;
 use App\Models\SurveyResponse;
 use Barryvdh\DomPDF\PDF;
+use Dompdf\FontMetrics;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File; // Add this at the top for file operations
@@ -42,19 +46,6 @@ class DocumentController extends Controller
         // Prepare the PDF
         $pdf = App::make('dompdf.wrapper');
         $htmlContent = '';
-
-        // Handling direct download for 'final_revision_report_temp'
-        if ($documentType === 'final_revision_report') {
-            $filePath = public_path('/final_revision_report_temp.pdf');
-            if (File::exists($filePath)) {
-                return response()->download($filePath, 'final_revision_report_temp_' . time() . '.pdf', [
-                    'Content-Type' => 'application/pdf',
-                    'Content-Disposition' => 'inline; filename="' . $documentType . '_' . time() . '.pdf"',
-                ]);
-            } else {
-                return response()->json(['error' => 'File not found'], 404);
-            }
-        }
 
         switch ($documentType) {
             case 'revision_plan_and_program':
@@ -101,8 +92,12 @@ class DocumentController extends Controller
                 $pdf->setPaper('a2', 'landscape'); // Customize as needed
                 $htmlContent = $this->generateRevisionBook($revision);
                 break;
-            case 'report_template':
-                $this->generateFinalRevisionReport($revision);
+            case 'draft_report_template':
+                $this->generateDraftRevisionReport($revision);
+                break;
+            case 'final_report_template':
+                $pdf->setPaper('a4', 'portrait'); // Customize as needed
+                $htmlContent = $this->generateFinalRevisionReport($revision);
                 break;
             default:
                 return response()->json(['error' => 'Invalid document type provided'], 400);
@@ -160,23 +155,87 @@ class DocumentController extends Controller
 
     protected function generateInfidelityDeclaration($revision)
     {
-        $infidelityLists = \App\Models\InfedilityList::where('revision_id', $revision->id)->get();
-        $infidelityLists->load('user');
-        Log::debug($infidelityLists);
-        Log::debug($revision);
+        $infidelityLists = InfedilityList::where('revision_id', $revision->id)->with('user')->get();
+
+        // Define default questions
+        $defaultQuestions = [
+            'Imate li poslovni, financijski ili obiteljski interes koji može utjecati na reviziju na bilo koji način?',
+            'Imate li izravne izvršene zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?',
+            'Imate li izravne ili neizravne rukovodne i upravljačke zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?',
+            'Jeste li donosili odluke, odobrili nalog za službeni put, račune, naloge za plaćanje za revidirani subjekt u posljednjih godinu dana?',
+        ];
+
+        // Prepare default content
+        $defaultContent = array_map(function ($question) {
+            return ['question' => $question, 'answer' => null];
+        }, $defaultQuestions);
+
+        // Decode the JSON string from revision subjects
+        $subjects = json_decode($revision->subjects, true);
+
+        // Get all user IDs already in the infidelity lists
+        $existingUserIds = $infidelityLists->pluck('user_id')->toArray();
+
+        // Extract user IDs from the decoded subjects
+        $requiredUserIds = array_column($subjects, 'value');
+
+        // Create temporary InfidelityList entries for missing users
+        foreach ($requiredUserIds as $userId) {
+            if (!in_array($userId, $existingUserIds)) {
+                $tempUser = \App\Models\User::find($userId);
+                if ($tempUser) {
+                    $tempInfidelityList = new InfedilityList([
+                        'user_id' => $userId,
+                        'revision_id' => $revision->id,
+                        'content' => $defaultContent
+                    ]);
+                    $tempInfidelityList->setRelation('user', $tempUser);
+                    $infidelityLists->push($tempInfidelityList);
+                }
+            }
+        }
+
         return view('infidelity_declaration', compact(['revision', 'infidelityLists']))->render();
     }
 
     protected function generateInfidelityDeclarationForUser($revision)
     {
         $user = Auth::user();
-        $infidelityLists = \App\Models\InfedilityList::where('revision_id', $revision->id)
+
+        // Fetch the infidelity list entry for the current user and revision
+        $infidelityList = InfedilityList::where('revision_id', $revision->id)
             ->where('user_id', $user->id)
-            ->get();
-        $infidelityLists->load('user');
-        Log::debug($infidelityLists);
+            ->first();
+
+        // Define default questions if no list exists
+        if (!$infidelityList) {
+            $defaultQuestions = [
+                'Imate li poslovni, financijski ili obiteljski interes koji može utjecati na reviziju na bilo koji način?',
+                'Imate li izravne izvršene zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?',
+                'Imate li izravne ili neizravne rukovodne i upravljačke zadaće vezane uz revidirani proces ili ustrojstvenu jedinicu koja je uključena u taj proces?',
+                'Jeste li donosili odluke, odobrili nalog za službeni put, račune, naloge za plaćanje za revidirani subjekt u posljednjih godinu dana?',
+            ];
+
+            // Prepare default content
+            $defaultContent = array_map(function ($question) {
+                return ['question' => $question, 'answer' => 0];
+            }, $defaultQuestions);
+
+            // Create a temporary InfidelityList object (not saved to DB)
+            $infidelityList = new InfedilityList([
+                'revision_id' => $revision->id,
+                'user_id' => $user->id,
+                'content' => $defaultContent
+            ]);
+            $infidelityList->setRelation('user', $user);
+        }
+
+        // Log the found or created infidelity list
+        Log::debug($infidelityList);
         Log::debug($revision);
-        return view('infidelity_declaration', compact(['revision', 'infidelityLists']))->render();
+
+        // Render the view with the infidelity list and revision
+        return view('infidelity_declaration_single', compact(['revision', 'infidelityList']))->render();
     }
 
 
@@ -214,17 +273,40 @@ class DocumentController extends Controller
         return view('revision_book', compact('revision'))->render();
     }
 
+    protected function generateDraftRevisionReport($revision)
+    {
+        $report = FinalAuditReport::where('revision_id', $revision->id)->first();
+        $revisionId = $revision->id;
+        $revision->load('goals');
+        $revision->load('programs');
+        $revision->load('recommendations');
+
+        $findings = Finding::with(['recommendations'])
+            ->where('revision_id', $revisionId)
+            ->get();
+
+
+        Log::debug($findings);
+
+        return view('draft_revision_report', compact(['revision', 'report', 'findings']))->render();
+    }
+
     protected function generateFinalRevisionReport($revision)
     {
-        $filePath = public_path('path/to/your/pdf/final_revision_report_temp.pdf');
-        if (File::exists($filePath)) {
-            return response()->download($filePath, 'final_revision_report_temp_' . time() . '.pdf', [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . 'final_revision_report_temp' . '_' . time() . '.pdf"',
-            ]);
-        } else {
-            return response()->json(['error' => 'File not found'], 404);
-        }
+        $report = FinalAuditReport::where('revision_id', $revision->id)->first();
+        $revisionId = $revision->id;
+        $revision->load('goals');
+        $revision->load('programs');
+        $revision->load('recommendations');
+
+        $findings = Finding::with(['recommendations'])
+            ->where('revision_id', $revisionId)
+            ->get();
+
+
+        Log::debug($findings);
+
+        return view('final_revision_report', compact(['revision', 'report', 'findings']))->render();
     }
     // Add additional methods to generate other document types...
 }

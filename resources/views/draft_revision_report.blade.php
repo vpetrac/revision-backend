@@ -9,15 +9,7 @@
     <style>
         @page {
             size: A4 portrait;
-
-            margin: 25px 40px;
-            margin-top: 200px;
-        }
-
-        header {
-            position: fixed;
-            top: -150px;
-            height: 140px;
+            margin: 10mm;
         }
 
         * {
@@ -33,18 +25,6 @@
             font-size: 18px;
             padding-top: 6px;
             padding-bottom: 6px;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            font-size: 16px;
-        }
-
-        p,
-        li {
-            font-size: 13px !important;
         }
 
         .data table {
@@ -172,19 +152,19 @@
         }
 
         .front {
-            height: 600px;
+            height: 930px;
         }
 
-        .front .top {
-            width: 100%;
-            text-align: center;
-            margin-top: 35%;
+        .front h2 {
+            height: 930px;
+            margin: auto;
+            vertical-align: middle;
         }
     </style>
 </head>
 
 <body>
-    <header class="header">
+    <div class="header">
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
                 <colgroup>
@@ -215,19 +195,19 @@
                 </tbody>
             </table>
         </div>
-    </header>
+    </div>
 
     <div class="front">
-        <div class="top">
+        <div>
             <h1>Izvješće unutarnje revizije</h1>
             <h1>{{$revision->name}}</h1>
         </div>
-        <p style="text-align: center; margin-top: 40%">
-            Urbroj: {{$report->reference_number}}<br><br>
+        <div>
             Zagreb,<br>
-            {{ !empty($report->draft_date) ? \Carbon\Carbon::parse($report->draft_date)->format('d.m.Y') : '' }}
+            {{$report->draft_date}}
+            {{ !empty($report-draft_date) ? \Carbon\Carbon::parse($report->draft_date)->format('d.m.Y') : '' }}
 
-        </p>
+        </div>
     </div>
     <div style="page-break-after: always;"></div>
     <div class="sadrzaj">
@@ -239,7 +219,6 @@
             {!! $report->management_summary !!}
         </div>
     </div>
-    <div style="page-break-after: always;"></div>
     <div id="uvod">
         <div>
             <h2>1. UVOD</h2>
@@ -253,7 +232,7 @@
         </div>
         <div>
             <h3>1.1.1 Poslovni cilj procesa</h3>
-            <p>{!! $revision->revision_goals_descrption !!}</p>
+            <p>{{ $revision->revision_goals_descrption }}</p>
         </div>
         <div>
             <h3>1.1.2 Opis procesa</h3>
@@ -268,7 +247,7 @@
             </ul>
         </div>
     </div>
-    <div style="page-break-after: always;"></div>
+
     <div>
         <div>
             <h2>1.2 INFORMACIJE O PROVEDENOJ REVIZIJI</h2>
@@ -321,7 +300,6 @@
 
         </div>
     </div>
-    <div style="page-break-after: always;"></div>
     <div>
         <div>
             <h2>2. REVIZORSKO MIŠLJENJE</h2>
@@ -365,7 +343,7 @@
             <div>{!! $report->summary_of_significant_findings_and_recommendations !!}</div>
         </div>
     </div>
-    <div style="page-break-after: always;"></div>
+
     <div>
         <div>
             <h2>3. NALAZI I PREPORUKE</h2>
@@ -478,26 +456,13 @@
             @endforeach
         </div>
     </div>
-    <div style="page-break-after: always;"></div>
+
     <div>
         <h2>4. ZAKLJUČAK</h2>
         <div>
             {!! $report->management_summary !!}
         </div>
-        <table style="width: 100%; font-size: 14px; margin-top: 100px;">
-            <tr>
-                <td>Izvješće sastavio/la:</td>
-                <td></td>
-                <td>Izvješće odobrio/la:</td>
-            </tr>
-            <tr>
-                <td style="height: 100px; border-bottom: 1px solid #000;">Unutarnji/a revizor/ica </td>
-                <td style="width: 100px;"></td>
-                <td style="border-bottom: 1px solid #000;">Voditelj/ica Samostalne<br>Službe unutarnje revizije</td>
-            </tr>
-        </table>
     </div>
-    <div style="page-break-after: always;"></div>
     <div>
         <h2>5. PRILOZI</h2>
     </div>
