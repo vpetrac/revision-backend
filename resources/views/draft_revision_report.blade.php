@@ -319,10 +319,7 @@
             <h3>1.2.6 Odabir uzorka</h3>
             @foreach ($revision->samples as $sample)
             <p style="margin-bottom: 0; font-weight: bold;">Uzorak</p>
-            <p>
-                {{ $loop->index + 1 }}. {{ $sample->name }}<br>
-                {{ $sample->method_explanation }}
-            </p>
+            <p>{{ $sample->name }}<br>{{ $sample->method_explanation }}</p>
             @endforeach
         </div>
     </div>
