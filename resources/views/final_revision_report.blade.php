@@ -318,10 +318,30 @@
         </div>
         <div>
             <h3>1.2.6 Odabir uzorka</h3>
-            @foreach ($revision->samples as $sample)
-            <p style="margin-bottom: 0; font-weight: bold;">Uzorak</p>
-            <p>{{ $sample->name }}<br>{{ $sample->method_explanation }}</p>
-            @endforeach
+            <table class="tg" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="font-weight: bold; font-size: 12px; background-color: #ffce93;">Naziv</th>
+                        <th style="font-weight: bold; font-size: 12px; background-color: #ffce93;">Populacija</th>
+                        <th style="font-weight: bold; font-size: 12px; background-color: #ffce93;">Vrsta uzorkovanja</th>
+                        <th style="font-weight: bold; font-size: 12px; background-color: #ffce93;">Veličina uzorka</th>
+                        <th style="font-weight: bold; font-size: 12px; background-color: #ffce93;">Metoda odabira revizijskog uzorka</th>
+                        <th style="font-weight: bold; font-size: 12px; background-color: #ffce93;">Objašnjenje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($revision->samples as $sample)
+                    <tr>
+                        <td>{{$sample->sample_name}}</td>
+                        <td>{{$sample->population_size}}</td>
+                        <td>{{$sample->sampling_method}}</td>
+                        <td>{{$sample->sample_size}}</td>
+                        <td>{{$sample->collection_method}}</td>
+                        <td>{{$sample->method_explanation}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
     <div style="page-break-after: always;"></div>
@@ -499,10 +519,6 @@
                 <td style="border-bottom: 1px solid #000;">Voditelj/ica Samostalne<br>Službe unutarnje revizije</td>
             </tr>
         </table>
-    </div>
-    <div style="page-break-after: always;"></div>
-    <div>
-        <h2>5. PRILOZI</h2>
     </div>
 </body>
 
