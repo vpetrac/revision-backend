@@ -11,11 +11,8 @@ use App\Models\Report;
 use Illuminate\Http\Request;
 use App\Models\Revision;
 use App\Models\SurveyResponse;
-use Barryvdh\DomPDF\PDF;
-use Dompdf\FontMetrics;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File; // Add this at the top for file operations
 use Illuminate\Support\Facades\Log;
 
 class DocumentController extends Controller
