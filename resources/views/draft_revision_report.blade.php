@@ -2,14 +2,22 @@
 <html>
 
 <head>
-    <title>Konačno revizijsko izvješće
+    <title>Nacrt revizijskog izvješća
     </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <style>
         @page {
             size: A4 portrait;
-            margin: 10mm;
+
+            margin: 25px 40px;
+            margin-top: 200px;
+        }
+
+        header {
+            position: fixed;
+            top: -150px;
+            height: 140px;
         }
 
         * {
@@ -25,6 +33,18 @@
             font-size: 18px;
             padding-top: 6px;
             padding-bottom: 6px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-size: 16px;
+        }
+
+        p,
+        li {
+            font-size: 13px !important;
         }
 
         .data table {
@@ -152,19 +172,19 @@
         }
 
         .front {
-            height: 930px;
+            height: 600px;
         }
 
-        .front h2 {
-            height: 930px;
-            margin: auto;
-            vertical-align: middle;
+        .front .top {
+            width: 100%;
+            text-align: center;
+            margin-top: 35%;
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
+    <header class="header">
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
                 <colgroup>
@@ -176,7 +196,7 @@
                 <tbody>
                     <tr>
                         <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
-                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Konačno revizijsko izvješće</strong></td>
+                        <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Nacrt revizijskog izvješća</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
                     </tr>
@@ -195,19 +215,18 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </header>
 
     <div class="front">
-        <div>
+        <div class="top">
             <h1>Izvješće unutarnje revizije</h1>
             <h1>{{$revision->name}}</h1>
         </div>
-        <div>
+        <p style="text-align: center; margin-top: 40%">
             Zagreb,<br>
-            {{$report->draft_date}}
-            {{ !empty($report-draft_date) ? \Carbon\Carbon::parse($report->draft_date)->format('d.m.Y') : '' }}
+            {{ !empty($report->draft_date) ? \Carbon\Carbon::parse($report->draft_date)->format('d.m.Y') : '' }}
 
-        </div>
+        </p>
     </div>
     <div style="page-break-after: always;"></div>
     <div class="sadrzaj">
@@ -219,6 +238,7 @@
             {!! $report->management_summary !!}
         </div>
     </div>
+    <div style="page-break-after: always;"></div>
     <div id="uvod">
         <div>
             <h2>1. UVOD</h2>
@@ -232,7 +252,7 @@
         </div>
         <div>
             <h3>1.1.1 Poslovni cilj procesa</h3>
-            <p>{{ $revision->revision_goals_descrption }}</p>
+            <p>{!! $revision->revision_goals_descrption !!}</p>
         </div>
         <div>
             <h3>1.1.2 Opis procesa</h3>
@@ -247,7 +267,7 @@
             </ul>
         </div>
     </div>
-
+    <div style="page-break-after: always;"></div>
     <div>
         <div>
             <h2>1.2 INFORMACIJE O PROVEDENOJ REVIZIJI</h2>
@@ -275,12 +295,12 @@
         </div>
         <div>
             <h3>1.2.4 Revidirani subjekt</h3>
-            <div>@php
-                $subjects = json_decode($revision->subjects, true);
-                $subjectNames = array_column($subjects, 'label');
+            <p>@php
+                $auditTeamMembers = json_decode($revision->auditTeamMembers, true);
+                $subjectNames = array_column($auditTeamMembers, 'label');
                 @endphp
                 {{ implode(', ', $subjectNames) }}
-            </div>
+            </p>
         </div>
         <div>
             <h3>1.2.5 Revizor / revizorski tim koji je proveo reviziju</h3>
@@ -297,9 +317,16 @@
         </div>
         <div>
             <h3>1.2.6 Odabir uzorka</h3>
-
+            @foreach ($revision->samples as $sample)
+            <p style="margin-bottom: 0; font-weight: bold;">Uzorak</p>
+            <p>
+                {{ $loop->index + 1 }}. {{ $sample->name }}<br>
+                {{ $sample->method_explanation }}
+            </p>
+            @endforeach
         </div>
     </div>
+    <div style="page-break-after: always;"></div>
     <div>
         <div>
             <h2>2. REVIZORSKO MIŠLJENJE</h2>
@@ -343,7 +370,7 @@
             <div>{!! $report->summary_of_significant_findings_and_recommendations !!}</div>
         </div>
     </div>
-
+    <div style="page-break-after: always;"></div>
     <div>
         <div>
             <h2>3. NALAZI I PREPORUKE</h2>
@@ -402,12 +429,12 @@
             @if($finding->recommendations->contains('importance', 1))
             <div>
                 <span>Nalaz</span>
-                <p>{!! $finding->name !!}</p>
+                <p style="margin-top: 0">{!! $finding->name !!}</p>
                 @foreach ($finding->recommendations as $recommendation)
                 @if ($recommendation->importance == 1)
                 <div>
                     <span>Preporuka</span>
-                    <p>{!! $recommendation->content !!}</p>
+                    <p style="margin-top: 0">{!! $recommendation->content !!}</p>
                 </div>
                 @endif
                 @endforeach
@@ -456,13 +483,26 @@
             @endforeach
         </div>
     </div>
-
+    <div style="page-break-after: always;"></div>
     <div>
         <h2>4. ZAKLJUČAK</h2>
         <div>
             {!! $report->management_summary !!}
         </div>
+        <table style="width: 100%; font-size: 14px; margin-top: 100px;">
+            <tr>
+                <td>Izvješće sastavio/la:</td>
+                <td></td>
+                <td>Izvješće odobrio/la:</td>
+            </tr>
+            <tr>
+                <td style="height: 100px; border-bottom: 1px solid #000;">Unutarnji/a revizor/ica </td>
+                <td style="width: 100px;"></td>
+                <td style="border-bottom: 1px solid #000;">Voditelj/ica Samostalne<br>Službe unutarnje revizije</td>
+            </tr>
+        </table>
     </div>
+    <div style="page-break-after: always;"></div>
     <div>
         <h2>5. PRILOZI</h2>
     </div>

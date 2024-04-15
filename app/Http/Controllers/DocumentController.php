@@ -277,6 +277,7 @@ class DocumentController extends Controller
         $revision->load('goals');
         $revision->load('programs');
         $revision->load('recommendations');
+        $revision->load('samples');
 
         $findings = Finding::with(['recommendations'])
             ->where('revision_id', $revisionId)
@@ -295,6 +296,7 @@ class DocumentController extends Controller
         $revision->load('goals');
         $revision->load('programs');
         $revision->load('recommendations');
+        $revision->load('samples');
 
         $findings = Finding::with(['recommendations'])
             ->where('revision_id', $revisionId)

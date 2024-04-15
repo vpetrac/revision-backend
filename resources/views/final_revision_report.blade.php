@@ -296,12 +296,12 @@
         </div>
         <div>
             <h3>1.2.4 Revidirani subjekt</h3>
-            <div>@php
-                $subjects = json_decode($revision->subjects, true);
-                $subjectNames = array_column($subjects, 'label');
+            <p>@php
+                $auditTeamMembers = json_decode($revision->auditTeamMembers, true);
+                $subjectNames = array_column($auditTeamMembers, 'label');
                 @endphp
                 {{ implode(', ', $subjectNames) }}
-            </div>
+            </p>
         </div>
         <div>
             <h3>1.2.5 Revizor / revizorski tim koji je proveo reviziju</h3>
@@ -318,7 +318,10 @@
         </div>
         <div>
             <h3>1.2.6 Odabir uzorka</h3>
-
+            @foreach ($revision->samples as $sample)
+            <p style="margin-bottom: 0; font-weight: bold;">Uzorak</p>
+            <p>{{ $sample->name }}<br>{{ $sample->method_explanation }}</p>
+            @endforeach
         </div>
     </div>
     <div style="page-break-after: always;"></div>
@@ -424,12 +427,12 @@
             @if($finding->recommendations->contains('importance', 1))
             <div>
                 <span>Nalaz</span>
-                <p>{!! $finding->name !!}</p>
+                <p style="margin-top: 0">{!! $finding->name !!}</p>
                 @foreach ($finding->recommendations as $recommendation)
                 @if ($recommendation->importance == 1)
                 <div>
                     <span>Preporuka</span>
-                    <p>{!! $recommendation->content !!}</p>
+                    <p style="margin-top: 0">{!! $recommendation->content !!}</p>
                 </div>
                 @endif
                 @endforeach
