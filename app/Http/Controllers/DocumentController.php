@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ControlList;
+use App\Models\DraftAuditReport;
 use App\Models\FinalAuditReport;
 use App\Models\Finding;
 use App\Models\Goal;
@@ -90,7 +91,8 @@ class DocumentController extends Controller
                 $htmlContent = $this->generateRevisionBook($revision);
                 break;
             case 'draft_report_template':
-                $this->generateDraftRevisionReport($revision);
+                $pdf->setPaper('a4', 'portrait'); // Customize as needed
+                $htmlContent = $this->generateDraftRevisionReport($revision);
                 break;
             case 'final_report_template':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
@@ -272,7 +274,7 @@ class DocumentController extends Controller
 
     protected function generateDraftRevisionReport($revision)
     {
-        $report = FinalAuditReport::where('revision_id', $revision->id)->first();
+        $report = DraftAuditReport::where('revision_id', $revision->id)->first();
         $revisionId = $revision->id;
         $revision->load('goals');
         $revision->load('programs');

@@ -225,7 +225,6 @@
         <p style="text-align: center; margin-top: 40%">
             Zagreb,<br>
             {{ !empty($report->draft_date) ? \Carbon\Carbon::parse($report->draft_date)->format('d.m.Y') : '' }}
-
         </p>
     </div>
     <div style="page-break-after: always;"></div>
