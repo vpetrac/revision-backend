@@ -8,7 +8,15 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 10mm;
+
+            margin: 25px 40px;
+            margin-top: 180px;
+        }
+
+        .header {
+            position: fixed;
+            top: -150px;
+            height: 140px;
         }
 
         * {
@@ -126,13 +134,9 @@
             vertical-align: top
         }
 
-        table {
+        table {}
 
-        }
-
-        tr {
-
-        }
+        tr {}
 
         td {
             word-wrap: break-word;
@@ -161,7 +165,7 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
+                        <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ storage_path('/app/public/logos/app-logo.png') }}" alt=""></td>
                         <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Plan i program revizije</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
@@ -326,7 +330,6 @@
                         <td>{{$program->probability_value * $program->effect_value}}</td>
                     </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>
@@ -370,6 +373,7 @@
             </table>
         </div>
         <div class="page-break"></div>
+        @if($revision->revision_plans)
         <table class="tg" style="width: 100%; margin-bottom: 0;">
             <colgroup>
                 <col style="width: 138px">
@@ -407,6 +411,7 @@
                 @endforeach
             </tbody>
         </table>
+        
         <table class="tg" style="width: 100%;">
             <tbody>
                 <tr>
@@ -415,6 +420,7 @@
                 </tr>
             </tbody>
         </table>
+        @endif
         <table class="tg" style="width: 100%;">
             <colgroup>
                 <col style="width: 80px">

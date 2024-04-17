@@ -7,6 +7,6 @@
 <body>
     <p>Poštovani/a {{ $user->name }},</p>
     <p>molimo ispuniti uputnik za revidirani subjekt za potrebe revizije: {{ $revision->name }}.</p>
-    <a href="{{ url($url . '/survey/' . $token) }}">Link na upitnik</a>
+    <a href="{{ url($url) }}">Link na upitnik</a>
 </body>
 </html>

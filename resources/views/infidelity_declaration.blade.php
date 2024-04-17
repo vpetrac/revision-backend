@@ -171,7 +171,7 @@ array_unshift($subjects, ['label' => $revision->auditTeamHead]); // Adding audit
                 </colgroup>
                 <tbody>
                     <tr>
-                        <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
+                        <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ storage_path('/app/public/logos/app-logo.png') }}" alt=""></td>
                         <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Izjava o neovisnosti</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>

@@ -46,6 +46,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/users/{id}', [RegisteredUserController::class, 'update'])->where('id', '[0-9]+');
     Route::delete('/users/{id}', [RegisteredUserController::class, 'destroy'])->where('id', '[0-9]+');
 
+    Route::post('/user/password/update', [RegisteredUserController::class, 'passwordUpdate'])->name('password.update');
+
+
     // Revision-related routes
     Route::prefix('revisions')->group(function () {
         Route::get('/', [RevisionController::class, 'index']);

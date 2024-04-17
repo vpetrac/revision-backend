@@ -40,7 +40,13 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => [
+                'required',
+                Rules\Password::min(10)  // Minimum 10 characters
+                    ->mixedCase()  // Must contain at least one uppercase and one lowercase letter
+                    ->numbers()    // Must contain at least one number
+                    ->symbols()    // Must contain at least one special character
+            ],
         ]);
 
         $user = User::create([
@@ -61,7 +67,13 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => ['required', Rules\Password::defaults()],
+            'password' => [
+                'required',
+                Rules\Password::min(10)  // Minimum 10 characters
+                    ->mixedCase()  // Must contain at least one uppercase and one lowercase letter
+                    ->numbers()    // Must contain at least one number
+                    ->symbols()    // Must contain at least one special character
+            ],
             'organizational_unit_id' => ['nullable', 'exists:organizational_units,id'],
             'role' => ['nullable', 'exists:roles,name'], // Validate the role_id exists
         ]);
@@ -82,6 +94,7 @@ class RegisteredUserController extends Controller
 
         return response()->noContent();
     }
+
     /**
      * Update the specified user's information.
      *
@@ -96,20 +109,59 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['sometimes', 'required', 'string', 'max:255'],
             'email' => ['sometimes', 'required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'password' => [
+                'nullable', 'string',
+                Rules\Password::min(10)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+            ],
             'organizational_unit_id' => ['sometimes', 'required', 'exists:organizational_units,id'],
-            'role' => ['sometimes', 'required', 'exists:roles,name'], // Validate role_id if provided
+            'role' => ['sometimes', 'required', 'exists:roles,name'],
         ]);
 
-        $user->update($request->only('name', 'email', 'organizational_unit_id'));
+        $dataToUpdate = $request->only('name', 'email', 'organizational_unit_id');
+
+        if ($request->filled('password')) {
+            $dataToUpdate['password'] = Hash::make($request->password);
+        }
+
+        $user->update($dataToUpdate);
 
         if ($request->has('role')) {
-            // Find the role by ID and sync it to the user
             $role = Role::findByName($request->role, 'web');
             $user->syncRoles($role);
         }
 
         return response()->json($user);
     }
+
+    /**
+     * Update the authenticated user's password.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function passwordUpdate(Request $request)
+    {
+        $request->validate([
+            'password' => [
+                'required', 'string',
+                Rules\Password::min(10)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+            ]
+        ]);
+
+        $user = Auth::user(); // Get the authenticated user
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->noContent();
+    }
+
 
     /**
      * Remove the specified user from storage.

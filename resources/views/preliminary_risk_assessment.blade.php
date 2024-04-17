@@ -8,7 +8,14 @@
     <style>
         @page {
             size: A4 portrait;
-            margin: 10mm;
+
+            margin: 25px 40px;
+        }
+
+        header {
+            position: fixed;
+            top: -150px;
+            height: 140px;
         }
 
         * {
@@ -165,7 +172,7 @@
                 </colgroup>
                 <tbody>
                     <tr>
-                        <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ public_path('hl-logo.png') }}" alt=""></td>
+                        <td class="tg-cly1" rowspan="4"><img style="width: 100px; height: auto;" src="{{ storage_path('/app/public/logos/app-logo.png') }}" alt=""></td>
                         <td class="tg-cly2" rowspan="4"><strong>OBRAZAC<br>Preliminarna procjena glavnih rizika</strong></td>
                         <td class="tg-0lax">Klasifikacija</td>
                         <td class="tg-0lax"><span style="font-weight:bold">INTERNO</span></td>
