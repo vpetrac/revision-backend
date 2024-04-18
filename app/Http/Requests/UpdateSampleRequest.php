@@ -16,11 +16,11 @@ class UpdateSampleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sample_name' => 'sometimes|nullable|string|max:255',
+            'sample_name' => 'sometimes|nullable|string',
             'population_size' => 'sometimes|nullable|string',
-            'sampling_method' => 'sometimes|nullable|string|max:255',
+            'sampling_method' => 'sometimes|nullable|string',
             'sample_size' => 'sometimes|nullable|string',
-            'collection_method' => 'sometimes|nullable|string|max:255',
+            'collection_method' => 'sometimes|nullable|string',
             'method_explanation' => 'sometimes|nullable|string',
             'revision_id' => 'sometimes|required|exists:revisions,id',
             // Add any other fields that can be updated

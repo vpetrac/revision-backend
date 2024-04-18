@@ -217,7 +217,7 @@ class DocumentController extends Controller
 
             // Prepare default content
             $defaultContent = array_map(function ($question) {
-                return ['question' => $question, 'answer' => 0];
+                return ['question' => $question, 'answer' => null];
             }, $defaultQuestions);
 
             // Create a temporary InfidelityList object (not saved to DB)

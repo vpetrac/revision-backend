@@ -19,8 +19,16 @@
             height: 140px;
         }
 
-        * {
-            font-family: DejaVu Sans;
+        *,
+        h1,
+        h2,
+        h3,
+        h4,
+        span,
+        p,
+        li,
+        td {
+            font-family: DejaVu Sans !important;
         }
 
         body {
@@ -411,7 +419,7 @@
                 @endforeach
             </tbody>
         </table>
-        
+
         <table class="tg" style="width: 100%;">
             <tbody>
                 <tr>
@@ -457,7 +465,6 @@
         </table>
 
     </div>
-
 </body>
 
 </html>

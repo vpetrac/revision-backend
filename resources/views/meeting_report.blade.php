@@ -5,14 +5,37 @@
     <title>Zapisnik sa sastanka</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+
     <style>
         @page {
             size: A4 portrait;
-            margin: 10mm;
+
+            margin: 25px 40px;
+            margin-top: 180px;
         }
 
-        * {
-            font-family: DejaVu Sans;
+        .header {
+            position: fixed;
+            top: -150px;
+            height: 140px;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 20px;
+            height: 40px;
+        }
+
+        *,
+        h1,
+        h2,
+        h3,
+        h4,
+        span,
+        p,
+        li,
+        td {
+            font-family: DejaVu Sans !important;
         }
 
         body {
@@ -126,18 +149,11 @@
             vertical-align: top
         }
 
-        table {
-            page-break-after: auto;
-        }
+        table {}
 
-        tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
+        tr {}
 
         td {
-            page-break-inside: avoid;
-            page-break-after: auto;
             word-wrap: break-word;
             vertical-align: top;
         }
@@ -186,7 +202,7 @@
         </div>
     </div>
     <div class="report">
-        <h1>PLAN I PROGRAM REVIZIJE</h1>
+        <h1>ZAPISNIK SA SASTANKA</h1>
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
                 <thead>
@@ -225,7 +241,7 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th class="upper-header">Matrica zadataka</th>
+                        <th class="upper-header">Zapisnik</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -236,6 +252,9 @@
             </table>
             <table class="tg" style="width: 100%;">
                 <thead>
+                    <tr>
+                        <th colspan="5" class="upper-header">Matrica zadataka</th>
+                    </tr>
                     <tr>
                         <th style="font-weight: bold;">R.<br>br.</th>
                         <th style="font-weight: bold;">Zadatak</th>
@@ -257,10 +276,23 @@
                     @endforeach
                 </tbody>
             </table>
+            <table style="width: 100%; font-size: 14px; margin-top: 40px;">
+                <tr>
+                    <td style="font-weight: bold;">Sastavio/la:</td>
+                    <td></td>
+                    <td style="font-weight: bold;">Odobrio/la:</td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 50px;">Unutarnji/a revizor/ica </td>
+                    <td style="width: 150px;"></td>
+                    <td style="padding-top: 50px;">Voditelj/ica Samostalne Službe unutarnje revizije</td>
+                </tr>
+            </table>
         </div>
-    </div>
-
-    </div>
+    <footer>
+        <p style="font-size: 9px;">Za status unesite broj od 0 do 4 kako slijedi: 0 - novotvoreni zadatak; 1 - zadatak u tijeku s redovitim izvršavanjem; 2 - zadatak u tijeku s kašnjenjem; 3 - zadatak u planu; 4 - zadatak na čekanju.<br>
+            Rok se definira prilikom inicijalne dodjele zadatka. Ako se rok mijenja, izmjena mora biti navedena s obrazloženjem u samom tekstu zapisnika, a u ovu rubriku se unosi novi datum.</p>
+    </footer>
 </body>
 
 </html>
