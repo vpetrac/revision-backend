@@ -264,7 +264,7 @@
                     </tr>
                     <tr>
                         <td>Opis uspostavljenog sustava kotrola / Dijagram toka procesa</td>
-                        <td>{!! $revision->control_system !!}</td>
+                        <td><div style="max-width: 100%;">{!! $revision->control_system !!}</div></td>
                     </tr>
                 </tbody>
             </table>

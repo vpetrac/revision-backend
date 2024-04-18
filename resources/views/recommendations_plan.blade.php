@@ -238,9 +238,27 @@
                     <tr>
                         <td>{{$loop->index + 1}}.</td>
                         <td>{!! $recommendation->content !!}</td>
-                        <td style="background-color: #ffce93">{{$recommendation->importance}}</td>
-                        <td>{{$recommendation->activities}}</td>
-                        <td>{{$recommendation->activities}}</td>
+                        <td style="background-color: #ffce93; text-align: center;">{{$recommendation->importance}}</td>
+                        <td>{!! $recommendation->activities !!}</td>
+                        <td>
+                            @php
+                            $responsibilityData = json_decode($recommendation->responsibility, true);
+                            $partnerData = json_decode($recommendation->partner, true);
+
+                            $lastResponsibilityIndex = count($responsibilityData) - 1;
+                            $lastPartnerIndex = count($partnerData) - 1;
+                            @endphp
+
+                            @foreach($responsibilityData as $index => $responsibility)
+                            {{ $responsibility['label'] ?? '' }}{{ $index !== $lastResponsibilityIndex ? ',' : '' }}
+                            @endforeach
+
+                            <br><br> {{-- Here's that little bit of personal space --}}
+
+                            @foreach($partnerData as $index => $partner)
+                            {{ $partner['label'] ?? '' }}{{ $index !== $lastPartnerIndex ? ',' : '' }}
+                            @endforeach
+                        </td>
                         <td>
                             @if(is_array($recommendation->deadline) && count($recommendation->deadline))
                             @foreach($recommendation->deadline as $index => $deadline)

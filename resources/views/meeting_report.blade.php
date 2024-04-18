@@ -16,8 +16,8 @@
 
         .header {
             position: fixed;
-            top: -150px;
-            height: 140px;
+            top: -140px;
+            height: 130px;
         }
 
         footer {
@@ -123,7 +123,7 @@
         }
 
         .report .tg td {
-            border-color: #d3d3d3;
+            border-color: #000;
             border-style: solid;
             border-width: 1px;
 
@@ -132,7 +132,7 @@
         }
 
         .report .tg th {
-            border-color: #d3d3d3;
+            border-color: #000;
             border-style: solid;
             border-width: 1px;
 
@@ -143,7 +143,7 @@
 
         .report .tg .upper-header {
             background-color: #ffce93;
-            border-color: #d3d3d3;
+            border-color: #000;
             font-weight: bold;
             text-align: center;
             vertical-align: top
@@ -205,34 +205,29 @@
         <h1>ZAPISNIK SA SASTANKA</h1>
         <div class="tg-wrap">
             <table class="tg" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th class="upper-header" colspan="2">ZAPISNIK SA SASTANKA</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
-                        <td>Tema</td>
+                        <td style="background-color: #ffce93; width: 130px;">Tema</td>
                         <td>{{$report->theme}}</td>
                     </tr>
                     <tr>
-                        <td>Datum i vrijeme</td>
+                        <td style="background-color: #ffce93;">Datum i vrijeme</td>
                         <td>{{$report->datetime}}</td>
                     </tr>
                     <tr>
-                        <td>Mjesto</td>
+                        <td style="background-color: #ffce93;">Mjesto</td>
                         <td>{{$report->location}}</td>
                     </tr>
                     <tr>
-                        <td>Prisutni</td>
+                        <td style="background-color: #ffce93;">Prisutni</td>
                         <td>{{$report->attendees}}</td>
                     </tr>
                     <tr>
-                        <td>Odsutni</td>
+                        <td style="background-color: #ffce93;">Odsutni</td>
                         <td>{{$report->absentees}}</td>
                     </tr>
                     <tr>
-                        <td>Zapisničar</td>
+                        <td style="background-color: #ffce93;">Zapisničar</td>
                         <td>{{$report->compiled_by}}</td>
                     </tr>
                 </tbody>
