@@ -180,6 +180,9 @@
             text-align: center;
             margin-top: 35%;
         }
+        td img{
+            max-width: 100%;
+        }
     </style>
 </head>
 

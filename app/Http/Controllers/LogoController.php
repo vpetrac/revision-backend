@@ -22,10 +22,14 @@ class LogoController extends Controller
     public function setLogo(Request $request)
     {
         $request->validate([
-            'logo' => 'required|image|max:2048', // Limit logo size to 2MB
+            'logo' => 'required', // Update validation as needed
         ]);
 
-        Storage::disk('public')->put($this->logoPath, file_get_contents($request->logo));
+        // Decode Base64 and get image content
+        $imageData = explode(',', $request->logo);
+        $decodedData = base64_decode($imageData[1]);
+
+        Storage::disk('public')->put($this->logoPath, $decodedData);
 
         $url = Storage::disk('public')->url($this->logoPath);
         return response()->json(['message' => 'Logo updated successfully.', 'logo_url' => $url]);

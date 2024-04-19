@@ -157,6 +157,9 @@
         tfoot {
             display: table-footer-group;
         }
+        td img{
+            max-width: 100%;
+        }
     </style>
 </head>
 
@@ -239,7 +242,7 @@
                         <td>{{$loop->index + 1}}.</td>
                         <td>{!! $recommendation->content !!}</td>
                         <td style="background-color: #ffce93; text-align: center;">{{$recommendation->importance}}</td>
-                        <td>{!! $recommendation->activities !!}</td>
+                        <td>{!! nl2br(e($recommendation->activities)) !!}</td>
                         <td>
                             @php
                             $responsibilityData = json_decode($recommendation->responsibility, true);

@@ -158,6 +158,11 @@
         tfoot {
             display: table-footer-group;
         }
+
+        td img{
+            max-width: 100%;
+        }
+
     </style>
 </head>
 
