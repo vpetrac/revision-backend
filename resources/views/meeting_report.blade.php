@@ -11,12 +11,12 @@
             size: A4 portrait;
 
             margin: 25px 40px;
-            margin-top: 180px;
+            margin-top: 125px;
         }
 
         .header {
             position: fixed;
-            top: -140px;
+            top: -100px;
             height: 130px;
         }
 

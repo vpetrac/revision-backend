@@ -240,7 +240,7 @@
                             {{ $loop->index + 1 }}
                         </td>
                         <td class="tg-0pky">{!! $recommendation->content !!}</td>
-                        <td class="tg-0pky">{{ $recommendation->activities }}</td>
+                        <td class="tg-0pky">{!! nl2br(e($recommendation->activities)) !!}</td>
                         <td class="tg-0pky">
                             @php
                             $responsibilityData = json_decode($recommendation->responsibility, true);
@@ -260,9 +260,8 @@
                             {{ $partner['label'] ?? '' }}{{ $index !== $lastPartnerIndex ? ',' : '' }}
                             @endforeach
                         </td>
-                        <td class="tg-0pky">
-                            {{ $recommendation->responsible_users }}
-                        </td>
+                        <td class="tg-0pky">{!! nl2br(e($recommendation->responsible_users)) !!}</td>
+
                         <td class="tg-0pky">
                             {{ $recommendation->status }}
                         </td>
