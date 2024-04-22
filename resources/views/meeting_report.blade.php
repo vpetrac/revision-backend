@@ -165,8 +165,21 @@
         tfoot {
             display: table-footer-group;
         }
-        td img{
+
+        td img {
             max-width: 100%;
+            height: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        p,
+        span,
+        li {
+            font-size: 11px !important;
         }
     </style>
 </head>
@@ -287,10 +300,10 @@
                 </tr>
             </table>
         </div>
-    <footer>
-        <p style="font-size: 9px;">Za status unesite broj od 0 do 4 kako slijedi: 0 - novotvoreni zadatak; 1 - zadatak u tijeku s redovitim izvršavanjem; 2 - zadatak u tijeku s kašnjenjem; 3 - zadatak u planu; 4 - zadatak na čekanju.<br>
-            Rok se definira prilikom inicijalne dodjele zadatka. Ako se rok mijenja, izmjena mora biti navedena s obrazloženjem u samom tekstu zapisnika, a u ovu rubriku se unosi novi datum.</p>
-    </footer>
+        <footer>
+            <p style="font-size: 9px;">Za status unesite broj od 0 do 4 kako slijedi: 0 - novotvoreni zadatak; 1 - zadatak u tijeku s redovitim izvršavanjem; 2 - zadatak u tijeku s kašnjenjem; 3 - zadatak u planu; 4 - zadatak na čekanju.<br>
+                Rok se definira prilikom inicijalne dodjele zadatka. Ako se rok mijenja, izmjena mora biti navedena s obrazloženjem u samom tekstu zapisnika, a u ovu rubriku se unosi novi datum.</p>
+        </footer>
 </body>
 
 </html>

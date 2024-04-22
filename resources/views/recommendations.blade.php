@@ -175,8 +175,14 @@
         tfoot {
             display: table-footer-group;
         }
-        td img{
+        td img {
             max-width: 100%;
+            height: auto;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>

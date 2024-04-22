@@ -119,7 +119,6 @@
             border-color: #d3d3d3;
             border-style: solid;
             border-width: 1px;
-
             font-size: 11px;
             padding: 5px 5px;
         }
@@ -159,10 +158,18 @@
             display: table-footer-group;
         }
 
-        td img{
+        td img {
             max-width: 100%;
+            height: auto;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        p, span, li{
+            font-size: 11px !important;
+        }
     </style>
 </head>
 
@@ -269,7 +276,9 @@
                     </tr>
                     <tr>
                         <td>Opis uspostavljenog sustava kotrola / Dijagram toka procesa</td>
-                        <td><div style="max-width: 100%;">{!! $revision->control_system !!}</div></td>
+                        <td>
+                            <div style="max-width: 100%;">{!! $revision->control_system !!}</div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
