@@ -257,11 +257,11 @@
         </div>
         <div>
             <h3>1.1.1 Poslovni cilj procesa</h3>
-            <p>{!! $report->process_business_goal !!}</p>
+            <div>{!! $report->process_business_goal !!}</div>
         </div>
         <div>
             <h3>1.1.2 Opis procesa</h3>
-            <p>{{ $report->process_description }}</p>
+            <div>{!! $report->process_description !!}</div>
         </div>
         <div>
             <h3>1.1.3 Glavni rizici</h3>
