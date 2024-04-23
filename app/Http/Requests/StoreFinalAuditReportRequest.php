@@ -20,6 +20,8 @@ class StoreFinalAuditReportRequest extends FormRequest
             'basis_for_implementation_and_audit_period' => 'nullable|string',
             'summary_of_significant_findings_and_recommendations' => 'nullable|string',
             'conclusion' => 'nullable|string',
+            'process_business_goal' => 'nullable|string',
+            'process_description' => 'nullable|string',
             'revision_id' => 'required|integer|exists:revisions,id',
             'reference_number' => 'nullable|string',
         ];

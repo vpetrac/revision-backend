@@ -93,6 +93,7 @@ class RecommendationController extends Controller
     public function getRecommendationsRaw(Request $request)
     {
         $revisionIds = $request->query('revisionId', []);
+        $importances = $request->query('importances', []);
         $statuses = $request->query('status', []);
         $responsibilitiesQuery = $request->query('responsibility', []);
         $startDate = $request->query('startDate');
@@ -103,6 +104,10 @@ class RecommendationController extends Controller
         // Apply filtering based on provided revision IDs
         if (!empty($revisionIds)) {
             $query->whereIn('revision_id', $revisionIds);
+        }
+
+        if (!empty($importances)) {
+            $query->whereIn('importance', $importances);
         }
 
         // Apply filtering based on provided statuses

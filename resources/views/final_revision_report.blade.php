@@ -253,21 +253,17 @@
     <div id="uvod">
         <div>
             <h2>1. UVOD</h2>
-            <p> U sklopu ovog poglavlja izlaže se sljedeće:
-                informacije o poslovnom procesu koji je bio predmetom revizije te
-                informacije o provedenoj reviziji.</p>
         </div>
         <div>
             <h3>1.1 INFORMACIJE O POSLOVNOM PROCESU KOJI JE BIO PREDMETOM REVIZIJE</h3>
-            <p> U sklopu ovog poglavlja izlaže se sljedeće: poslovni cilj procesa, opis procesa, glavni rizici.</p>
         </div>
         <div>
             <h3>1.1.1 Poslovni cilj procesa</h3>
-            <p>{!! $revision->revision_goals_descrption !!}</p>
+            <p>{!! $report->process_business_goal !!}</p>
         </div>
         <div>
             <h3>1.1.2 Opis procesa</h3>
-            <p>{{ $revision->revision_scope }}</p>
+            <p>{{ $report->process_description }}</p>
         </div>
         <div>
             <h3>1.1.3 Glavni rizici</h3>

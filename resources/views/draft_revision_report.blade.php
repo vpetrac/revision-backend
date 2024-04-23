@@ -251,21 +251,17 @@
     <div id="uvod">
         <div>
             <h2>1. UVOD</h2>
-            <p> U sklopu ovog poglavlja izlaže se sljedeće:
-                informacije o poslovnom procesu koji je bio predmetom revizije te
-                informacije o provedenoj reviziji.</p>
         </div>
         <div>
             <h3>1.1 INFORMACIJE O POSLOVNOM PROCESU KOJI JE BIO PREDMETOM REVIZIJE</h3>
-            <p> U sklopu ovog poglavlja izlaže se sljedeće: poslovni cilj procesa, opis procesa, glavni rizici.</p>
         </div>
         <div>
             <h3>1.1.1 Poslovni cilj procesa</h3>
-            <p>{!! $revision->revision_goals_descrption !!}</p>
+            <p>{!! $report->process_business_goal !!}</p>
         </div>
         <div>
             <h3>1.1.2 Opis procesa</h3>
-            <p>{{ $revision->revision_scope }}</p>
+            <p>{{ $report->process_description }}</p>
         </div>
         <div>
             <h3>1.1.3 Glavni rizici</h3>
@@ -449,8 +445,14 @@
             </ul>
             </p>
         </div>
+        @php
+        $sectionNumber = 0;
+        @endphp
+
         <div>
-            <h2>3.2.1 Nalazi i preporuke visoke važnosti</h2>
+            @if($findings->contains(fn($finding) => $finding->recommendations->contains('importance', 1)))
+            @php $sectionNumber++; @endphp
+            <h2>3.2.{{ $sectionNumber }} Nalazi i preporuke visoke važnosti</h2>
             @foreach ($findings as $finding)
             @if($finding->recommendations->contains('importance', 1))
             <div>
@@ -467,10 +469,13 @@
             </div>
             @endif
             @endforeach
+            @endif
         </div>
 
         <div>
-            <h2>3.2.2 Nalazi i preporuke srednje važnosti</h2>
+            @if($findings->contains(fn($finding) => $finding->recommendations->contains('importance', 2)))
+            @php $sectionNumber++; @endphp
+            <h2>3.2.{{ $sectionNumber }} Nalazi i preporuke srednje važnosti</h2>
             @foreach ($findings as $finding)
             @if($finding->recommendations->contains('importance', 2))
             <div>
@@ -487,10 +492,13 @@
             </div>
             @endif
             @endforeach
+            @endif
         </div>
 
         <div>
-            <h2>3.2.3 Nalazi i preporuke niske važnosti</h2>
+            @if($findings->contains(fn($finding) => $finding->recommendations->contains('importance', 3)))
+            @php $sectionNumber++; @endphp
+            <h2>3.2.{{ $sectionNumber }} Nalazi i preporuke niske važnosti</h2>
             @foreach ($findings as $finding)
             @if($finding->recommendations->contains('importance', 3))
             <div>
@@ -507,6 +515,7 @@
             </div>
             @endif
             @endforeach
+            @endif
         </div>
     </div>
     <div style="page-break-after: always;"></div>

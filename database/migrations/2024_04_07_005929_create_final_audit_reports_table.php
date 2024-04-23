@@ -16,14 +16,16 @@ class CreateFinalAuditReportsTable extends Migration
         Schema::create('final_audit_reports', function (Blueprint $table) {
             $table->id();
             $table->date('draft_date')->nullable(); // Datum nacrta
-            $table->text('management_summary')->nullable(); // UPRAVLJAČKI SAŽETAK
-            $table->text('audit_opinion')->nullable(); // REVIZORSKO MIŠLJENJE
-            $table->text('positive_findings')->nullable(); // pozitivni nalazi
-            $table->text('management_comments')->nullable(); // komentar rukovodstva
-            $table->text('findings_and_recommendations_summary')->nullable(); // Sažetak nalaza i preporuka
-            $table->text('basis_for_implementation_and_audit_period')->nullable(); // Temelj za provedbu i razdoblje provedbe revizije
-            $table->text('summary_of_significant_findings_and_recommendations')->nullable(); // SAŽETAK NAJZNAČAJNIJIH NALAZA I PREPORUKA
-            $table->text('conclusion')->nullable();
+            $table->longText('management_summary')->nullable(); // UPRAVLJAČKI SAŽETAK
+            $table->longText('audit_opinion')->nullable(); // REVIZORSKO MIŠLJENJE
+            $table->longText('positive_findings')->nullable(); // pozitivni nalazi
+            $table->longText('management_comments')->nullable(); // komentar rukovodstva
+            $table->longText('findings_and_recommendations_summary')->nullable(); // Sažetak nalaza i preporuka
+            $table->longText('basis_for_implementation_and_audit_period')->nullable(); // Temelj za provedbu i razdoblje provedbe revizije
+            $table->longText('summary_of_significant_findings_and_recommendations')->nullable(); // SAŽETAK NAJZNAČAJNIJIH NALAZA I PREPORUKA
+            $table->longText('process_business_goal')->nullable();
+            $table->longText('process_description')->nullable();
+            $table->longText('conclusion')->nullable();
             $table->string('reference_number')->nullable(); // Urbroj
             $table->unsignedBigInteger('revision_id')->unique();
             $table->foreign('revision_id')->references('id')->on('revisions')->onDelete('cascade');

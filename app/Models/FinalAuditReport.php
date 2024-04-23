@@ -19,6 +19,8 @@ class FinalAuditReport extends Model
         'summary_of_significant_findings_and_recommendations', // SAŽETAK NAJZNAČAJNIJIH NALAZA I PREPORUKA
         'reference_number', // Urbroj
         'conclusion',
+        'process_business_goal',
+        'process_description',
         'revision_id'
     ];
 

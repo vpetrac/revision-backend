@@ -18,6 +18,8 @@ class DraftAuditReport extends Model
         'basis_for_implementation_and_audit_period', // Temelj za provedbu i razdoblje provedbe revizije
         'summary_of_significant_findings_and_recommendations', // SAŽETAK NAJZNAČAJNIJIH NALAZA I PREPORUKA
         'conclusion',
+        'process_business_goal',
+        'process_description', // REVIZORSKO MIŠLJENJE
         'revision_id'
     ];
 
