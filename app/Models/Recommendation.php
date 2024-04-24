@@ -23,6 +23,7 @@ class Recommendation extends Model
         'finished_date_confirmed', // Date when finish was confirmed
         'finished_date_concluded', // Boolean if finished was concluded
         'finished_date_confirmed_concluded', // Boolean if finish confirmation was concluded
+        'isFinal',
         'finding_id', // Foreign key to connect with 'Revision'
         'revision_id', // Foreign key to connect with 'Revision'
     ];

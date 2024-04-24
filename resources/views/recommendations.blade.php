@@ -226,11 +226,12 @@
             <table class="tg" style="width: 100%;">
                 <thead>
                     <tr>
-                        <td class="tg-mjdq" colspan="8">Revizija: {{$recommendations[0]->revision->code}} - {{$recommendations[0]->revision->name}}</td>
+                        <td class="tg-mjdq" colspan="9">Revizija: {{$recommendations[0]->revision->code}} - {{$recommendations[0]->revision->name}}</td>
                     </tr>
                     <tr>
                         <td class="tg-sj1f">Broj</td>
                         <td class="tg-sj1f">Preporuka</td>
+                        <td class="tg-sj1f">Važnost</td>
                         <td class="tg-sj1f">Mjere i aktivnosti</td>
                         <td class="tg-sj1f">Odgovornost za provedbu mjera i aktivnosti</td>
                         <td class="tg-sj1f">Odgovorne osobe</td>
@@ -246,6 +247,7 @@
                             {{ $loop->index + 1 }}
                         </td>
                         <td class="tg-0pky">{!! $recommendation->content !!}</td>
+                        <td class="tg-0pky" style="text-align: center;">{{ $recommendation->importance }}</td>
                         <td class="tg-0pky">{!! nl2br(e($recommendation->activities)) !!}</td>
                         <td class="tg-0pky">
                             @php

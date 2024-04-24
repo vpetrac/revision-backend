@@ -9,14 +9,15 @@
         @page {
             size: A4 landscape;
 
-            margin: 25px 40px;
-            margin-top: 25px;
+            margin: 15px 40px;
+            margin-top: 150px;
         }
 
-        header {
+        .header {
             position: fixed;
-            top: -150px;
+            top: -130px;
             height: 140px;
+            width: 100%;
         }
 
         * {
@@ -134,10 +135,6 @@
             vertical-align: top
         }
 
-        table {
-            page-break-after: auto;
-        }
-
         tr {
             page-break-inside: avoid;
             page-break-after: auto;
@@ -148,6 +145,7 @@
             page-break-after: auto;
             word-wrap: break-word;
             vertical-align: top;
+            font-size: 11px !important;
         }
 
         thead {
@@ -157,9 +155,11 @@
         tfoot {
             display: table-footer-group;
         }
-        td img{
+
+        td img {
             max-width: 100%;
         }
+
     </style>
 </head>
 
@@ -275,42 +275,10 @@
                     @endforeach
                 </tbody>
             </table>
-            <table class="tg" style="width: 100%;">
-                <colgroup>
-                    <col style="width: 80px">
-                    <col style="width: 95px">
-                    <col style="width: 104px">
-                    <col style="width: 122px">
-                    <col style="width: 134px">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Datum:</th>
-                        <th>Ime i prezime:</th>
-                        <th>Funkcija:</th>
-                        <th>Potpis:</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Izradio:</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Odobrio:</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
+        </div class="signature">
+        {!! $signature->recommendationPlanSignature !!}
+    </div>
 </body>
 
 </html>

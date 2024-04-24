@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('finished_date_concluded')->default(false);
             $table->date('finished_date_confirmed')->nullable();
             $table->boolean('finished_date_confirmed_concluded')->default(false);
+            $table->boolean('isFinal')->default(false)->nullable();
             $table->unsignedBigInteger('revision_id'); // Foreign key to revisions table
             $table->unsignedBigInteger('finding_id'); // Foreign key to revisions table
             $table->timestamps();

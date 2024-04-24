@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ControlList;
+use App\Models\DocumentField;
 use App\Models\DraftAuditReport;
 use App\Models\FinalAuditReport;
 use App\Models\Finding;
@@ -70,9 +71,13 @@ class DocumentController extends Controller
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
                 $htmlContent = $this->generateInfidelityDeclarationForUser($revision);
                 break;
-            case 'recommendations_plan':
+            case 'recommendations_plan_final':
                 $pdf->setPaper('a4', 'landscape'); // Customize as needed
-                $htmlContent = $this->generateRecommendationsPlan($revision);
+                $htmlContent = $this->generateRecommendationsPlanFinal($revision);
+                break;
+            case 'recommendations_plan_draft':
+                $pdf->setPaper('a4', 'landscape'); // Customize as needed
+                $htmlContent = $this->generateRecommendationsPlanDraft($revision);
                 break;
             case 'meeting_report':
                 $pdf->setPaper('a4', 'portrait'); // Customize as needed
@@ -238,11 +243,29 @@ class DocumentController extends Controller
     }
 
 
-    protected function generateRecommendationsPlan($revision)
+    protected function generateRecommendationsPlanFinal($revision)
     {
-        $revision->load('recommendations');
+        // Load recommendations with isFinal either false or null
+        $revision->load(['recommendations' => function ($query) {
+            $query->where('isFinal', true);
+        }]);
 
-        return view('recommendations_plan', compact('revision'))->render();
+        $signature = DocumentField::where('revisionId', $revision->id)->first();
+
+        return view('recommendations_plan', compact('revision', 'signature'))->render();
+    }
+
+    protected function generateRecommendationsPlanDraft($revision)
+    {
+        // Load recommendations with isFinal either false or null
+        $revision->load(['recommendations' => function ($query) {
+            $query->where('isFinal', false)
+                ->orWhereNull('isFinal');
+        }]);
+
+        $signature = DocumentField::where('revisionId', $revision->id)->first();
+
+        return view('recommendations_plan', compact('revision', 'signature'))->render();
     }
 
     protected function generateMeetingReport($report)
@@ -278,7 +301,10 @@ class DocumentController extends Controller
         $revisionId = $revision->id;
         $revision->load('goals');
         $revision->load('programs');
-        $revision->load('recommendations');
+        $revision->load(['recommendations' => function ($query) {
+            $query->where('isFinal', false)
+                ->orWhereNull('isFinal');
+        }]);
         $revision->load('samples');
 
         $findings = Finding::with(['recommendations'])
@@ -297,7 +323,9 @@ class DocumentController extends Controller
         $revisionId = $revision->id;
         $revision->load('goals');
         $revision->load('programs');
-        $revision->load('recommendations');
+        $revision->load(['recommendations' => function ($query) {
+            $query->where('isFinal', true);
+        }]);
         $revision->load('samples');
 
         $findings = Finding::with(['recommendations'])

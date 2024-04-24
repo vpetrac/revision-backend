@@ -35,6 +35,7 @@ class StoreRecommendationRequest extends FormRequest
             'finished_date_concluded' => 'nullable|boolean',
             'finished_date_confirmed' => 'nullable|date',
             'finished_date_confirmed_concluded' => 'nullable|boolean',
+            'isFinal' => 'nullable|boolean',
             'finding_id' => 'sometimes|required|exists:findings,id', // Make sure revision exists if provided
             'revision_id' => 'required|exists:revisions,id', // Make sure revision exists
         ];

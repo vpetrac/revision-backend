@@ -108,4 +108,9 @@ class Revision extends Model
     {
         return $this->hasOne(FinalAuditReport::class);
     }
+
+    public function documentField()
+    {
+        return $this->hasOne(DocumentField::class, 'revisionId');
+    }
 }

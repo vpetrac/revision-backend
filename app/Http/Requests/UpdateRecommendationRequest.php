@@ -35,6 +35,7 @@ class UpdateRecommendationRequest extends FormRequest
             'finished_date_concluded' => 'nullable|boolean',
             'finished_date_confirmed' => 'nullable|date',
             'finished_date_confirmed_concluded' => 'nullable|boolean',
+            'isFinal' => 'nullable|boolean',
             'revision_id' => 'sometimes|required|exists:revisions,id', // Make sure revision exists if provided
             'finding_id' => 'sometimes|required|exists:findings,id', // Make sure revision exists if provided
         ];

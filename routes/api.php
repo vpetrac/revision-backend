@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ControlListController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentFieldController;
 use App\Http\Controllers\DraftAuditReportController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\FileManagerController;
@@ -129,6 +130,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/{id}', [RecommendationController::class, 'destroy']);
     });
 
+
     Route::get('/get-recommendations', [RecommendationController::class, 'getRecommendations']);
     Route::get('/generate-recommendations-report', [RecommendationController::class, 'generateRecommendationsReport']);
     Route::get('/get-revision-book', [RevisionController::class, 'getFilteredRevisions']);
@@ -185,6 +187,17 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/control-lists', [ControlListController::class, 'store']);
     Route::put('/control-lists/{id}', [ControlListController::class, 'update']);
     Route::delete('/control-lists/{id}', [ControlListController::class, 'destroy']);
+
+    // Document Fields routes
+    Route::prefix('document-fields')->group(function () {
+        Route::get('/{revisionId}', [DocumentFieldController::class, 'index']);
+        Route::post('/', [DocumentFieldController::class, 'store']);
+        Route::get('/show/{id}', [DocumentFieldController::class, 'show']);
+        Route::put('/{id}', [DocumentFieldController::class, 'update']);
+        Route::delete('/delete/{id}', [DocumentFieldController::class, 'destroy']);
+    });
+
+    Route::post('/recommendations/duplicate/{revisionId}', [RecommendationController::class, 'duplicateForRevision']);
 });
 
 Route::get('/logo', [LogoController::class, 'getLogo']);

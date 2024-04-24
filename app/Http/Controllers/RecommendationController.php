@@ -106,6 +106,8 @@ class RecommendationController extends Controller
             $query->whereIn('revision_id', $revisionIds);
         }
 
+        $query->where('isFinal', 1);
+
         if (!empty($importances)) {
             $query->whereIn('importance', $importances);
         }
@@ -345,5 +347,38 @@ class RecommendationController extends Controller
         $url = Storage::url($fileName);
 
         return response()->json(['url' => $url]);
+    }
+
+    /**
+     * Duplicate all recommendations and their related implementation activities for a specified revision.
+     *
+     * @param  int  $revisionId
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function duplicateForRevision($revisionId)
+    {
+        // Fetch all recommendations related to the given revision ID
+        $recommendations = Recommendation::where('revision_id', $revisionId)->get();
+
+        if ($recommendations->isEmpty()) {
+            return response()->json(['message' => 'No recommendations found for this revision'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Iterate over the recommendations to duplicate them along with their implementation activities
+        foreach ($recommendations as $recommendation) {
+            // Duplicate the recommendation
+            $newRecommendation = $recommendation->replicate();
+            $newRecommendation->isFinal = true; // Set isFinal to true for the duplicate
+            $newRecommendation->save(); // Save the new recommendation
+
+            // Duplicate related implementation activities
+            foreach ($recommendation->implementationActivities as $activity) {
+                $newActivity = $activity->replicate();
+                $newActivity->recommendation_id = $newRecommendation->id; // Link to the new recommendation
+                $newActivity->save(); // Save the new activity
+            }
+        }
+
+        return response()->json(['message' => 'Recommendations and related activities duplicated successfully'], Response::HTTP_OK);
     }
 }
