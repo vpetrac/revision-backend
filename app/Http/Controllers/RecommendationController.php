@@ -341,12 +341,14 @@ class RecommendationController extends Controller
         $css = "<style>.page-break { page-break-after: always; }</style>";
         $pdf->loadHTML($css . $htmlContent);
 
-        $fileName = 'recommendations_report_' . time() . '.pdf';
-        $pdf->save(storage_path('app/public/' . $fileName));
+        // Output the PDF as a string
+        $output = $pdf->output();
 
-        $url = Storage::url($fileName);
-
-        return response()->json(['url' => $url]);
+        // Return the PDF as a response
+        return response()->make($output, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="baza_preporuka_' . time() . '.pdf"',
+        ]);
     }
 
     /**
