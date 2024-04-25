@@ -297,7 +297,7 @@
             </ul>
         </div>
         <div>
-            <h3>11.2.3 Djelokrug (opseg) revizije</h3>
+            <h3>1.2.3 Djelokrug (opseg) revizije</h3>
             <div>{!! $revision->revision_scope !!}</div>
         </div>
         <div>
