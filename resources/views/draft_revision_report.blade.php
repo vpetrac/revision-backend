@@ -450,39 +450,19 @@
         @endphp
 
         <div>
-            @if($findings->contains(fn($finding) => $finding->recommendations->contains('importance', 1)))
+            @foreach([1, 2, 3] as $importanceLevel)
+            @php
+            $importantFindings = $findings->filter(fn($finding) => $finding->recommendations->contains('importance', $importanceLevel));
+            @endphp
+            @if ($importantFindings->isNotEmpty())
             @php $sectionNumber++; @endphp
-            <h2>3.2.{{ $sectionNumber }} Nalazi i preporuke visoke važnosti</h2>
-            @foreach ($findings as $finding)
-            @if($finding->recommendations->contains('importance', 1))
-            <div>
-                <span>Nalaz</span>
-                <p style="margin-top: 0">{!! $finding->name !!}</p>
-                @foreach ($finding->recommendations as $recommendation)
-                @if ($recommendation->importance == 1)
-                <div>
-                    <span>Preporuka</span>
-                    <p style="margin-top: 0">{!! $recommendation->content !!}</p>
-                </div>
-                @endif
-                @endforeach
-            </div>
-            @endif
-            @endforeach
-            @endif
-        </div>
-
-        <div>
-            @if($findings->contains(fn($finding) => $finding->recommendations->contains('importance', 2)))
-            @php $sectionNumber++; @endphp
-            <h2>3.2.{{ $sectionNumber }} Nalazi i preporuke srednje važnosti</h2>
-            @foreach ($findings as $finding)
-            @if($finding->recommendations->contains('importance', 2))
+            <h2>3.2.{{ $sectionNumber }} Nalazi i preporuke {{ ['visoke', 'srednje', 'niske'][$importanceLevel - 1] }} važnosti</h2>
+            @foreach ($importantFindings as $finding)
             <div>
                 <span>Nalaz</span>
                 <p>{!! $finding->name !!}</p>
                 @foreach ($finding->recommendations as $recommendation)
-                @if ($recommendation->importance == 2)
+                @if ($recommendation->importance == $importanceLevel)
                 <div>
                     <span>Preporuka</span>
                     <p>{!! $recommendation->content !!}</p>
@@ -490,32 +470,9 @@
                 @endif
                 @endforeach
             </div>
-            @endif
             @endforeach
             @endif
-        </div>
-
-        <div>
-            @if($findings->contains(fn($finding) => $finding->recommendations->contains('importance', 3)))
-            @php $sectionNumber++; @endphp
-            <h2>3.2.{{ $sectionNumber }} Nalazi i preporuke niske važnosti</h2>
-            @foreach ($findings as $finding)
-            @if($finding->recommendations->contains('importance', 3))
-            <div>
-                <span>Nalaz</span>
-                <p>{!! $finding->name !!}</p>
-                @foreach ($finding->recommendations as $recommendation)
-                @if ($recommendation->importance == 3)
-                <div>
-                    <span>Preporuka</span>
-                    <p>{!! $recommendation->content !!}</p>
-                </div>
-                @endif
-                @endforeach
-            </div>
-            @endif
             @endforeach
-            @endif
         </div>
     </div>
     <div style="page-break-after: always;"></div>

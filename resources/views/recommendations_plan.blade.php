@@ -10,12 +10,12 @@
             size: A4 landscape;
 
             margin: 15px 40px;
-            margin-top: 150px;
+            margin-top: 130px;
         }
 
         .header {
             position: fixed;
-            top: -130px;
+            top: -105px;
             height: 140px;
             width: 100%;
         }
@@ -243,25 +243,7 @@
                         <td>{!! $recommendation->content !!}</td>
                         <td style="background-color: #ffce93; text-align: center;">{{$recommendation->importance}}</td>
                         <td>{!! nl2br(e($recommendation->activities)) !!}</td>
-                        <td>
-                            @php
-                            $responsibilityData = json_decode($recommendation->responsibility, true);
-                            $partnerData = json_decode($recommendation->partner, true);
-
-                            $lastResponsibilityIndex = count($responsibilityData) - 1;
-                            $lastPartnerIndex = count($partnerData) - 1;
-                            @endphp
-
-                            @foreach($responsibilityData as $index => $responsibility)
-                            {{ $responsibility['label'] ?? '' }}{{ $index !== $lastResponsibilityIndex ? ',' : '' }}
-                            @endforeach
-
-                            <br><br> {{-- Here's that little bit of personal space --}}
-
-                            @foreach($partnerData as $index => $partner)
-                            {{ $partner['label'] ?? '' }}{{ $index !== $lastPartnerIndex ? ',' : '' }}
-                            @endforeach
-                        </td>
+                        <td>{!! nl2br(e($recommendation->responsible_users)) !!}</td>
                         <td>
                             @if(is_array($recommendation->deadline) && count($recommendation->deadline))
                             @foreach($recommendation->deadline as $index => $deadline)

@@ -307,8 +307,10 @@ class DocumentController extends Controller
         }]);
         $revision->load('samples');
 
-        $findings = Finding::with(['recommendations'])
-            ->where('revision_id', $revisionId)
+        $findings = Finding::with(['recommendations' => function ($query) {
+            $query->where('isFinal', false)
+                ->orWhereNull('isFinal');
+        }])->where('revision_id', $revisionId)
             ->get();
 
 
@@ -328,8 +330,9 @@ class DocumentController extends Controller
         }]);
         $revision->load('samples');
 
-        $findings = Finding::with(['recommendations'])
-            ->where('revision_id', $revisionId)
+        $findings = Finding::with(['recommendations' => function ($query) {
+            $query->where('isFinal', true);
+        }])->where('revision_id', $revisionId)
             ->get();
 
 
